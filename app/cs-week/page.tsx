@@ -3,7 +3,6 @@ import CSWeekHero from '@/components/cs-week/cs-week-hero';
 import CSWeekInfo from '@/components/cs-week/cs-week-info';
 import CSWeekSchedule from '@/components/cs-week/cs-week-schedule';
 import CSWeekSponsors from '@/components/cs-week/cs-week-prize-providers';
-import Footer from '@/components/footer';
 import Image from 'next/image';
 
 const grassSprites = [
@@ -27,7 +26,7 @@ const grassDecorations = Array.from({ length: 42 }, (_, index) => {
 
 export default async function CSGuidePage() {
     return (
-        <main className="min-h-screen overflow-x-clip">
+        <div className="legacy-content min-h-screen overflow-x-clip">
             <CSWeekHero />
             <CSWeekInfo />
             <div className="pointer-events-none relative z-10 h-20 w-full overflow-hidden bg-[#7A8F56] sm:h-24 md:h-28">
@@ -56,7 +55,6 @@ export default async function CSGuidePage() {
                 </div>
             </div>
             <CSWeekSponsors />
-            <Footer />
-        </main>
+        </div>
     );
 }

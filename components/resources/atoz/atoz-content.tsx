@@ -1,4 +1,5 @@
 'use client';
+import { useState } from 'react';
 
 import {
     Book,
@@ -79,7 +80,7 @@ const allSections = [
             {
                 term: 'CS109',
                 description:
-                    "Introduction course that gives you the big picture of CS, the department, and the university. Also helps you start building your CS community early on.",
+                    'Introduction course that gives you the big picture of CS, the department, and the university. Also helps you start building your CS community early on.',
             },
             {
                 term: 'CS312',
@@ -140,7 +141,8 @@ const allSections = [
             },
             {
                 term: 'South Tower',
-                description: 'The half of the GDC that is to the right of the atrium as you enter from Speedway.',
+                description:
+                    'The half of the GDC that is to the right of the atrium as you enter from Speedway.',
             },
             {
                 term: 'TA Stations',
@@ -462,8 +464,7 @@ const allSections = [
         items: [
             {
                 term: 'Peter Stone',
-                description:
-                    'Head of UT School of Computing. Research focus on AI and robotics.',
+                description: 'Head of UT School of Computing. Research focus on AI and robotics.',
             },
             {
                 term: 'Scott Aaronson',
@@ -472,8 +473,7 @@ const allSections = [
             },
             {
                 term: 'Mike Scott',
-                description:
-                    'Teaches CS314 (Data Structures).',
+                description: 'Teaches CS314 (Data Structures).',
             },
             {
                 term: 'Alison Norman',
@@ -496,7 +496,8 @@ const allSections = [
             },
             {
                 term: 'Angela Beasley',
-                description: 'Teaches CS312 (Introduction to Programming) and CS363M (Principles of Machine Learning I).',
+                description:
+                    'Teaches CS312 (Introduction to Programming) and CS363M (Principles of Machine Learning I).',
             },
             {
                 term: 'And Many More...',
@@ -721,17 +722,10 @@ function SectionContent({ items }: { items: SectionItem[] }) {
     return (
         <div className="space-y-4">
             {items.map((item) => (
-                <div
-                    key={item.term}
-                    className="border-b border-gray-200 pb-4"
-                >
-                    <h3 className="mb-2 text-lg font-semibold text-gray-900">
-                        {item.term}
-                    </h3>
+                <div key={item.term} className="border-b border-gray-200 pb-4">
+                    <h3 className="mb-2 text-lg font-semibold text-gray-900">{item.term}</h3>
 
-                    <p className="text-gray-600">
-                        {item.description}
-                    </p>
+                    <p className="text-gray-600">{item.description}</p>
 
                     {item.url && (
                         <a
@@ -749,14 +743,38 @@ function SectionContent({ items }: { items: SectionItem[] }) {
     );
 }
 
-
 export default function AtoZContent() {
+    const [search, setSearch] = useState('');
+    const filtered = allSections
+        .map((section) => ({
+            ...section,
+            items: section.items.filter((item) =>
+                `${section.title} ${item.term} ${item.description}`
+                    .toLowerCase()
+                    .includes(search.toLowerCase()),
+            ),
+        }))
+        .filter((section) => section.items.length);
     return (
         <section>
+            <div className="glossary-tools">
+                <label htmlFor="glossary-search" className="sr-only">
+                    Search CS A–Z
+                </label>
+                <input
+                    id="glossary-search"
+                    placeholder="Search terms, tools, and UTCS life…"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                />
+                <p role="status">
+                    {filtered.reduce((sum, s) => sum + s.items.length, 0)} terms found
+                </p>
+            </div>
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="mx-auto max-w-4xl">
                     <div className="space-y-6">
-                        {allSections.map((section) => (
+                        {filtered.map((section) => (
                             <div
                                 key={section.title}
                                 className="rounded-lg border border-gray-200 shadow-sm"
@@ -778,4 +796,3 @@ export default function AtoZContent() {
         </section>
     );
 }
-

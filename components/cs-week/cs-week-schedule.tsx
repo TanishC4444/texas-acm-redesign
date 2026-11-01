@@ -1,4 +1,3 @@
-import Header from '@/components/header';
 import Image from 'next/image';
 import Link from 'next/link';
 import CSWeekScheduleEvent from './cs-week-schedule-event';
@@ -303,7 +302,6 @@ export default function CSWeekSchedule() {
                     />
                 ))}
             </div>
-            <Header hideHeader={true} />
             <div className="container relative z-20 px-4 pb-96 pt-12 text-center sm:px-6 sm:pb-[26rem] md:pb-[30rem] lg:px-8">
                 <h1 className="mb-4 font-pagkaki text-6xl font-bold text-white">Schedule</h1>
                 <div className="grid grid-cols-1 gap-4 px-2 py-8 sm:px-4 lg:grid-cols-1 lg:px-8">

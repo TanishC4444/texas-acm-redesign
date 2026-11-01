@@ -1,32 +1,37 @@
 import type React from 'react';
+import type { Metadata } from 'next';
 import '@/app/globals.css';
-import { Inter } from 'next/font/google';
-import { ThemeProvider } from '@/components/theme-provider';
-
-const inter = Inter({ subsets: ['latin'] });
-
-export const metadata = {
-    title: "Texas ACM - UT Austin's Largest Computer Science Organization",
+import '@/app/studio.css';
+import '@/app/fonts.css';
+import { SiteHeader, SiteFooter } from '@/components/revamp/site-shell';
+import { Toaster } from '@/components/ui/toaster';
+export const metadata: Metadata = {
+    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.texasacm.org'),
+    title: { default: 'Texas ACM — Your people. Your next big thing.', template: '%s | Texas ACM' },
     description:
-        'The Association for Computing Machinery at The University of Texas at Austin. Join us for tech talks, workshops, social events, and more!',
-    generator: 'v0.dev',
+        'Your people in computer science at UT Austin. Explore Texas ACM events, student resources, and a community open to every major.',
+    openGraph: {
+        title: 'Texas ACM — Your people. Your next big thing.',
+        description: 'A little curiosity. A lot of community. Find your people at UT Austin.',
+        images: ['/home-page-slides/acmformal25.jpg'],
+        type: 'website',
+    },
 };
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
-        <html lang="en" suppressHydrationWarning>
-            <body className={inter.className}>
-                <ThemeProvider
-                    attribute="class"
-                    defaultTheme="light"
-                    enableSystem
-                    disableTransitionOnChange
-                >
+        <html lang="en">
+            <body>
+                {process.env.NODE_ENV === 'development' &&
+                    process.env.NEXT_PUBLIC_FIGMA_CAPTURE === '1' && (
+                        <script async src="https://mcp.figma.com/mcp/html-to-design/capture.js" />
+                    )}
+                <SiteHeader />
+                <main id="main-content" tabIndex={-1}>
                     {children}
-                </ThemeProvider>
+                </main>
+                <SiteFooter />
+                <Toaster />
             </body>
         </html>
     );
 }
-
-import './globals.css';

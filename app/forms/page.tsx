@@ -1,13 +1,15 @@
-import Footer from '@/components/footer';
+import { PublishedCards } from '@/components/revamp/live-content';
 import Forms from '@/components/resources/forms/forms';
 import FormsHero from '@/components/resources/forms/forms-hero';
 
 export default function FormsPage() {
     return (
-        <main className="min-h-screen">
+        <div className="legacy-content min-h-screen">
             <FormsHero />
+            <div className="studio-section">
+                <PublishedCards kind="form" />
+            </div>
             <Forms />
-            <Footer />
-        </main>
+        </div>
     );
 }

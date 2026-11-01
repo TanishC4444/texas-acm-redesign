@@ -1,10 +1,8 @@
-import Header from '@/components/header';
 import Image from 'next/image';
 
 export default function CSWeekInfo() {
     return (
         <section className="bg-[#FCF1DB]">
-            <Header hideHeader={true} />
             <div className="container relative px-4 pb-40 pt-16 text-center sm:px-6 sm:py-20 sm:pb-48 md:py-24 md:pb-56 lg:px-8">
                 <div
                     className="pointer-events-none absolute inset-y-0 left-1/2 z-0 w-screen -translate-x-1/2"

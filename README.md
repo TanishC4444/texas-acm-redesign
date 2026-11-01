@@ -4,6 +4,18 @@ A working copy of the [Texas ACM website](https://www.texasacm.org/) for plannin
 
 **Baseline reviewed: November 1, 2026 (America/Chicago).** This README records the existing experience, its code structure, and proposed improvements. The redesign has not been implemented. Screenshots show the live original site, not a deployment of this fork; calendar events and other time-sensitive content will change.
 
+## Redesign implementation — November 1, 2026
+
+The redesign branch adds **Campus Studio**, the alternate **After Hours** homepage, a shared site design system, searchable CS A–Z, and a Firebase-backed officer content workspace with mandatory authenticator 2FA. The inventory below remains the historical baseline of the original website.
+
+- [Design directions and Figma file](docs/DESIGN-DIRECTIONS.md)
+- [Officer setup, permissions, and current Firebase blocker](docs/OFFICER-SETUP.md)
+- Local routes: `/designs`, `/designs/night`, `/officer`, and `/resources`.
+- **Firebase is not live:** the account’s new-project quota is exhausted. No existing Firebase project was modified. Live sign-in and production editing remain blocked until configuration is completed.
+- Content editors can manage events, announcements, resources, and forms. Other existing content remains source-managed.
+- Use npm and `package-lock.json` for this implementation. Node 22+ is required; Node 24 LTS is recommended for Firebase tooling compatibility.
+- Additional checks: `npm run typecheck`, `npm test`, and `npm run test:rules` (the last command needs Java and the Firebase CLI emulator).
+
 ## Current website screenshots
 
 Actual browser captures are stored in [`docs/screenshots`](docs/screenshots). Desktop captures use a 1280 px wide viewport; mobile captures use 390 × 844. Most interior pages are captured in full. The homepage is captured in separate viewport images because its full-height hero does not make a useful full-page reference. Accordion contents and officer dialogs are closed in the baseline captures. The embedded Google Calendar did not visibly render event content in the capture environment; this is not confirmation that it fails for all visitors.
@@ -16,8 +28,8 @@ Actual browser captures are stored in [`docs/screenshots`](docs/screenshots). De
 
 ### Homepage and menu — mobile
 
-| Homepage | Menu open |
-| --- | --- |
+| Homepage                                                                       | Menu open                                                                     |
+| ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
 | ![Current homepage at a 390 px mobile width](docs/screenshots/home-mobile.jpg) | ![Current expanded mobile navigation](docs/screenshots/navigation-mobile.jpg) |
 
 ### Interior pages
@@ -107,21 +119,21 @@ Open a section to see the full-page baseline. These images document the current 
 
 All 13 routes below exist in the source: 12 content pages and one redirect. The 12 content pages were opened for the screenshot baseline; external submissions were not completed.
 
-| Route | Current content / behavior | Main source |
-| --- | --- | --- |
-| `/` | Five-photo rotating hero; Join Us anchor; About and partnership links; scrolling ACM Network logos; next two calendar events; Google Calendar/iCal subscription links; mailing-list signup; Discord and social links. | [`app/page.tsx`](app/page.tsx), [`components/hero.tsx`](components/hero.tsx), [`components/featured-events.tsx`](components/featured-events.tsx), [`components/join-section.tsx`](components/join-section.tsx) |
-| `/about` | Mission; Industry, Academics, and Community pillars; leadership/officer grid with profile dialogs. | [`app/about/page.tsx`](app/about/page.tsx), [`components/officer-team.tsx`](components/officer-team.tsx), [`lib/officers.ts`](lib/officers.ts) |
-| `/events` | Next two upcoming events, followed by examples of corporate, academic, and social activities with photos and descriptions. | [`app/events/page.tsx`](app/events/page.tsx), event components in [`components`](components) |
-| `/calendar` | Embedded public Google Calendar, subscription action, and iCal download. | [`components/google-calendar.tsx`](components/google-calendar.tsx) |
-| `/partnership` | Partnership benefits, corporate contact email with copy action, mailto action, and partners grouped into Platinum/Gold/Silver/Bronze tiers. | [`app/partnership/page.tsx`](app/partnership/page.tsx), [`components/current-partners.tsx`](components/current-partners.tsx) |
-| `/forms` | Pinned and latest external form cards; deadline-based archive logic and collapsible archive when applicable. Current enabled data includes Event Sign In and Academic Workshop Interest Form. | [`lib/forms-data.tsx`](lib/forms-data.tsx), [`components/resources/forms/forms.tsx`](components/resources/forms/forms.tsx) |
-| `/atoz` | Long categorized glossary covering campus, courses, organizations, development tools, computing concepts, careers, and more. Some terms link to learning resources. All sections render together; no search or alphabetical index is implemented. | [`components/resources/atoz/atoz-content.tsx`](components/resources/atoz/atoz-content.tsx) |
-| `/cs-guide` | Quick-access resource cards plus expandable information for prospective/current students, UTCS topics, and opportunities. | [`components/resources/cs-guide`](components/resources/cs-guide) |
-| `/faq` | Seven expandable answers on ACM, majors, dues, involvement, careers, officer applications, and elections. | [`components/resources/faq/faq.tsx`](components/resources/faq/faq.tsx) |
-| `/resume-book` | Resume submission recommendations; external UTCS submission portal; CNS templates, tips, appointments, and Discord advice links. This site does not host a resume-upload service. | [`components/resources/resume-book/resume-book.tsx`](components/resources/resume-book/resume-book.tsx) |
-| `/cs-week` | Separate illustrated CS Week 2026 campaign with custom font/artwork, multi-day schedule, event details, and prize providers. | [`app/cs-week/page.tsx`](app/cs-week/page.tsx), [`components/cs-week`](components/cs-week) |
-| `/election/26` | 2026–27 executive board candidate sections, photos, and statements. | [`app/election/26/page.tsx`](app/election/26/page.tsx), [`lib/elections/Candidates2627.ts`](lib/elections/Candidates2627.ts) |
-| `/signin` | Redirect to the external event attendance form; not account authentication. | [`app/signin/page.tsx`](app/signin/page.tsx), [`lib/constants.ts`](lib/constants.ts) |
+| Route          | Current content / behavior                                                                                                                                                                                                                        | Main source                                                                                                                                                                                                    |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/`            | Five-photo rotating hero; Join Us anchor; About and partnership links; scrolling ACM Network logos; next two calendar events; Google Calendar/iCal subscription links; mailing-list signup; Discord and social links.                             | [`app/page.tsx`](app/page.tsx), [`components/hero.tsx`](components/hero.tsx), [`components/featured-events.tsx`](components/featured-events.tsx), [`components/join-section.tsx`](components/join-section.tsx) |
+| `/about`       | Mission; Industry, Academics, and Community pillars; leadership/officer grid with profile dialogs.                                                                                                                                                | [`app/about/page.tsx`](app/about/page.tsx), [`components/officer-team.tsx`](components/officer-team.tsx), [`lib/officers.ts`](lib/officers.ts)                                                                 |
+| `/events`      | Next two upcoming events, followed by examples of corporate, academic, and social activities with photos and descriptions.                                                                                                                        | [`app/events/page.tsx`](app/events/page.tsx), event components in [`components`](components)                                                                                                                   |
+| `/calendar`    | Embedded public Google Calendar, subscription action, and iCal download.                                                                                                                                                                          | [`components/google-calendar.tsx`](components/google-calendar.tsx)                                                                                                                                             |
+| `/partnership` | Partnership benefits, corporate contact email with copy action, mailto action, and partners grouped into Platinum/Gold/Silver/Bronze tiers.                                                                                                       | [`app/partnership/page.tsx`](app/partnership/page.tsx), [`components/current-partners.tsx`](components/current-partners.tsx)                                                                                   |
+| `/forms`       | Pinned and latest external form cards; deadline-based archive logic and collapsible archive when applicable. Current enabled data includes Event Sign In and Academic Workshop Interest Form.                                                     | [`lib/forms-data.tsx`](lib/forms-data.tsx), [`components/resources/forms/forms.tsx`](components/resources/forms/forms.tsx)                                                                                     |
+| `/atoz`        | Long categorized glossary covering campus, courses, organizations, development tools, computing concepts, careers, and more. Some terms link to learning resources. All sections render together; no search or alphabetical index is implemented. | [`components/resources/atoz/atoz-content.tsx`](components/resources/atoz/atoz-content.tsx)                                                                                                                     |
+| `/cs-guide`    | Quick-access resource cards plus expandable information for prospective/current students, UTCS topics, and opportunities.                                                                                                                         | [`components/resources/cs-guide`](components/resources/cs-guide)                                                                                                                                               |
+| `/faq`         | Seven expandable answers on ACM, majors, dues, involvement, careers, officer applications, and elections.                                                                                                                                         | [`components/resources/faq/faq.tsx`](components/resources/faq/faq.tsx)                                                                                                                                         |
+| `/resume-book` | Resume submission recommendations; external UTCS submission portal; CNS templates, tips, appointments, and Discord advice links. This site does not host a resume-upload service.                                                                 | [`components/resources/resume-book/resume-book.tsx`](components/resources/resume-book/resume-book.tsx)                                                                                                         |
+| `/cs-week`     | Separate illustrated CS Week 2026 campaign with custom font/artwork, multi-day schedule, event details, and prize providers.                                                                                                                      | [`app/cs-week/page.tsx`](app/cs-week/page.tsx), [`components/cs-week`](components/cs-week)                                                                                                                     |
+| `/election/26` | 2026–27 executive board candidate sections, photos, and statements.                                                                                                                                                                               | [`app/election/26/page.tsx`](app/election/26/page.tsx), [`lib/elections/Candidates2627.ts`](lib/elections/Candidates2627.ts)                                                                                   |
+| `/signin`      | Redirect to the external event attendance form; not account authentication.                                                                                                                                                                       | [`app/signin/page.tsx`](app/signin/page.tsx), [`lib/constants.ts`](lib/constants.ts)                                                                                                                           |
 
 ### Shared experience and visual assets
 
@@ -133,16 +145,16 @@ All 13 routes below exist in the source: 12 content pages and one redirect. The 
 
 ### Integrations and content ownership
 
-| Item | How it currently works | Redesign implication |
-| --- | --- | --- |
-| Upcoming events | Server fetch in [`lib/calendar.ts`](lib/calendar.ts) uses `GOOGLE_CAL_ID` and `GOOGLE_CAL_API_KEY`; home and Events request two upcoming items. Dates are displayed in America/Chicago. | Preserve the shared calendar as the source of event timing; distinguish fetch errors from a truly empty calendar. |
-| Calendar embed / subscriptions | Public calendar URLs are separately hardcoded in the calendar and featured-event components. | Centralize the calendar identifier so cards, embed, and subscription links stay aligned. |
-| Flyers and RSVP links | `eventExtras` in [`components/featured-events.tsx`](components/featured-events.tsx) matches exact calendar event titles. | Prefer a stable event identifier or a structured event record; changing a title currently breaks the match. |
-| Mailing list | [`components/EmailSignupForm.tsx`](components/EmailSignupForm.tsx) validates the email and posts a hidden form to Mailchimp in a new tab, with a honeypot. | Preserve the integration and explain the handoff; verify success/error feedback before launch. |
-| Forms and sign-in | External Qualtrics/Google Forms and other destinations; URLs in [`lib/constants.ts`](lib/constants.ts), records in [`lib/forms-data.tsx`](lib/forms-data.tsx). | Keep destinations centralized, track deadlines, and confirm which forms should remain active. |
-| Officer/election content | Stored in source files; profile UI lives in components. | Establish a semester/year update checklist and a clear owner for roster changes. |
-| Sponsors | Tiered source data in `current-partners.tsx`; separate officer-employer logo strip in `ui/acm-network.tsx`. | Preserve the distinction between current sponsors and companies where officers have worked. |
-| Resources, FAQ, campaigns | Mostly content embedded directly in components. | Consider structured content files or a CMS if non-developers need frequent edits; a CMS is not currently implemented. |
+| Item                           | How it currently works                                                                                                                                                                  | Redesign implication                                                                                                  |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Upcoming events                | Server fetch in [`lib/calendar.ts`](lib/calendar.ts) uses `GOOGLE_CAL_ID` and `GOOGLE_CAL_API_KEY`; home and Events request two upcoming items. Dates are displayed in America/Chicago. | Preserve the shared calendar as the source of event timing; distinguish fetch errors from a truly empty calendar.     |
+| Calendar embed / subscriptions | Public calendar URLs are separately hardcoded in the calendar and featured-event components.                                                                                            | Centralize the calendar identifier so cards, embed, and subscription links stay aligned.                              |
+| Flyers and RSVP links          | `eventExtras` in [`components/featured-events.tsx`](components/featured-events.tsx) matches exact calendar event titles.                                                                | Prefer a stable event identifier or a structured event record; changing a title currently breaks the match.           |
+| Mailing list                   | [`components/EmailSignupForm.tsx`](components/EmailSignupForm.tsx) validates the email and posts a hidden form to Mailchimp in a new tab, with a honeypot.                              | Preserve the integration and explain the handoff; verify success/error feedback before launch.                        |
+| Forms and sign-in              | External Qualtrics/Google Forms and other destinations; URLs in [`lib/constants.ts`](lib/constants.ts), records in [`lib/forms-data.tsx`](lib/forms-data.tsx).                          | Keep destinations centralized, track deadlines, and confirm which forms should remain active.                         |
+| Officer/election content       | Stored in source files; profile UI lives in components.                                                                                                                                 | Establish a semester/year update checklist and a clear owner for roster changes.                                      |
+| Sponsors                       | Tiered source data in `current-partners.tsx`; separate officer-employer logo strip in `ui/acm-network.tsx`.                                                                             | Preserve the distinction between current sponsors and companies where officers have worked.                           |
+| Resources, FAQ, campaigns      | Mostly content embedded directly in components.                                                                                                                                         | Consider structured content files or a CMS if non-developers need frequent edits; a CMS is not currently implemented. |
 
 ## What may need to change
 
@@ -150,14 +162,14 @@ The items below are proposed work, not fixes already made. **Observed** means vi
 
 ### Priority 1 — navigation, accessibility, and trustworthy states
 
-| Finding | Evidence | Suggested change |
-| --- | --- | --- |
-| **Observed:** Desktop Resources is controlled only by mouse enter/leave. Its button has no click or keyboard-open handler. | [`components/header.tsx`](components/header.tsx) | Use an accessible disclosure/menu with click and keyboard support, focus behavior, and expanded state. |
-| **Observed:** Multiple sections instantiate their own fixed Header. About renders it in both its About and Officer heroes; Events and CS Week repeat this pattern. Several pages also use multiple top-level `h1` headings. | Hero components, [`app/about/page.tsx`](app/about/page.tsx), [`app/events/page.tsx`](app/events/page.tsx), [`components/cs-week`](components/cs-week) | Render one header per page/layout and use a consistent heading hierarchy. |
-| **Observed:** Missing calendar configuration and request failures both return `[]`, which the event cards label “No Upcoming Events.” | [`lib/calendar.ts`](lib/calendar.ts), [`components/featured-events.tsx`](components/featured-events.tsx) | Separate unavailable, empty, and successful results; offer a direct calendar fallback. |
-| **Observed:** Footer/join social links are icon-only without explicit accessible labels. Mobile menu state is not exposed with `aria-expanded`. | [`components/footer.tsx`](components/footer.tsx), [`components/join-section.tsx`](components/join-section.tsx), [`components/header.tsx`](components/header.tsx) | Add meaningful names and disclosure state; verify keyboard navigation, focus visibility, and touch targets. |
-| **Observed:** Hero advances every five seconds, all five hero images use `priority`, and the hero has no pause control or explicit reduced-motion handling. The logo strip already has reduced-motion CSS. | [`components/hero.tsx`](components/hero.tsx), [`components/ui/acm-network.tsx`](components/ui/acm-network.tsx) | Consider a single strong image or accessible carousel controls; prioritize the first image and respect reduced-motion preferences throughout. |
-| **Observed:** Navigation differs by device: Forms is top-level on desktop and nested on mobile. | Desktop/mobile captures and `header.tsx` | Make the information hierarchy consistent and keep Join, next event, and key resources easy to find. |
+| Finding                                                                                                                                                                                                                     | Evidence                                                                                                                                                         | Suggested change                                                                                                                              |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Observed:** Desktop Resources is controlled only by mouse enter/leave. Its button has no click or keyboard-open handler.                                                                                                  | [`components/header.tsx`](components/header.tsx)                                                                                                                 | Use an accessible disclosure/menu with click and keyboard support, focus behavior, and expanded state.                                        |
+| **Observed:** Multiple sections instantiate their own fixed Header. About renders it in both its About and Officer heroes; Events and CS Week repeat this pattern. Several pages also use multiple top-level `h1` headings. | Hero components, [`app/about/page.tsx`](app/about/page.tsx), [`app/events/page.tsx`](app/events/page.tsx), [`components/cs-week`](components/cs-week)            | Render one header per page/layout and use a consistent heading hierarchy.                                                                     |
+| **Observed:** Missing calendar configuration and request failures both return `[]`, which the event cards label “No Upcoming Events.”                                                                                       | [`lib/calendar.ts`](lib/calendar.ts), [`components/featured-events.tsx`](components/featured-events.tsx)                                                         | Separate unavailable, empty, and successful results; offer a direct calendar fallback.                                                        |
+| **Observed:** Footer/join social links are icon-only without explicit accessible labels. Mobile menu state is not exposed with `aria-expanded`.                                                                             | [`components/footer.tsx`](components/footer.tsx), [`components/join-section.tsx`](components/join-section.tsx), [`components/header.tsx`](components/header.tsx) | Add meaningful names and disclosure state; verify keyboard navigation, focus visibility, and touch targets.                                   |
+| **Observed:** Hero advances every five seconds, all five hero images use `priority`, and the hero has no pause control or explicit reduced-motion handling. The logo strip already has reduced-motion CSS.                  | [`components/hero.tsx`](components/hero.tsx), [`components/ui/acm-network.tsx`](components/ui/acm-network.tsx)                                                   | Consider a single strong image or accessible carousel controls; prioritize the first image and respect reduced-motion preferences throughout. |
+| **Observed:** Navigation differs by device: Forms is top-level on desktop and nested on mobile.                                                                                                                             | Desktop/mobile captures and `header.tsx`                                                                                                                         | Make the information hierarchy consistent and keep Join, next event, and key resources easy to find.                                          |
 
 ### Priority 2 — clearer page structure and stronger identity
 
@@ -220,14 +232,14 @@ GOOGLE_CAL_API_KEY=your-calendar-api-key
 
 These variables are read on the server. Without them, the current implementation shows its empty-event state; the separately configured public calendar embed and subscription links do not depend on these variables. Use appropriate API restrictions and do not commit credentials. Updating this fork does not provide access to the original site's deployment settings or integration accounts.
 
-| Command | Purpose |
-| --- | --- |
-| `npm run dev` | Local development server |
-| `npm run build` | Production build; currently skips type/lint failures as noted above |
-| `npm start` | Serve an existing production build |
-| `npm run lint` | ESLint |
-| `npm run check` | Prettier formatting check |
-| `npm run format` | Rewrite files with Prettier |
+| Command          | Purpose                                                             |
+| ---------------- | ------------------------------------------------------------------- |
+| `npm run dev`    | Local development server                                            |
+| `npm run build`  | Production build; currently skips type/lint failures as noted above |
+| `npm start`      | Serve an existing production build                                  |
+| `npm run lint`   | ESLint                                                              |
+| `npm run check`  | Prettier formatting check                                           |
+| `npm run format` | Rewrite files with Prettier                                         |
 
 ### Review scope
 
