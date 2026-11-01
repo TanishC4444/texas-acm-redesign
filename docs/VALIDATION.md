@@ -12,8 +12,8 @@ Reviewed November 1, 2026.
 
 ## Not yet verified live
 
-Firebase project creation was blocked by the account’s project quota. Therefore actual email delivery, new-officer provisioning, production TOTP enrollment/challenge, and live content publishing could not be exercised. No existing Firebase project, billing plan, or original Texas ACM deployment was modified. The workspace fails closed when unconfigured.
+The separate Firebase project `texas-acm-1bb6b` and its web app were created on the newly selected account. Email/password and Identity Platform are enabled; the default Firestore database is in `nam5`, initialized with production-mode deny-all rules. The project remains on Spark. Browser configuration is stored locally in ignored `.env.local`. Actual email delivery, administrator provisioning, production TOTP enrollment/challenge, and live content publishing remain unverified. The original Texas ACM deployment was not modified.
 
 ## Launch requirements
 
-Resolve the Firebase project quota, configure the separate ACM project and TOTP provider, deploy the rules, bootstrap an approved admin, and test the complete sign-in/edit/publish path with that real account. Review both design directions and the content with the ACM team before replacing the current site.
+Configure the TOTP provider, deploy the application rules, bootstrap the approved admin (`tanishchauhan@utexas.edu`), and test the complete sign-in/edit/publish path with that real account. Review both design directions and the content with the ACM team before replacing the current site.

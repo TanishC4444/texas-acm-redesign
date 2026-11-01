@@ -1,6 +1,8 @@
 # Officer workspace setup
 
-The workspace at `/officer` is implemented, but it is **not connected to a live Firebase project yet**. On November 1, 2026, Firebase prevented creation of the requested separate Texas ACM project because this account had reached its project quota. No existing Eagle Shack project was modified. Until configuration is supplied, the public site remains readable and officer sign-in is explicitly unavailable.
+The workspace at `/officer` is implemented. On November 1, 2026, the separate **Texas ACM** Firebase project (`texas-acm-1bb6b`) and **Texas ACM Website** web app were created under the newly selected Google account. Local browser configuration is saved in ignored `.env.local`; `.firebaserc` selects this project. Email/password authentication and Identity Platform are enabled on the no-cost Spark plan. The default Firestore database is created in `nam5` with production-mode access denied by default. TOTP provider configuration, application-rule deployment, first-admin provisioning, and live sign-in verification remain pending. The requested first administrator is `tanishchauhan@utexas.edu`.
+
+The original account reached its project quota. At the user’s request, the unused `EagleShackAuth` project was moved into Firebase’s 30-day recoverable deletion flow; `Eagle Shack` remains. The original ACM website deployment has not been changed.
 
 ## Intended services
 
@@ -13,7 +15,7 @@ See [Firebase’s TOTP instructions](https://firebase.google.com/docs/auth/web/t
 
 ## Connect the project
 
-1. Resolve the Firebase project quota and create the separate Texas ACM project, or explicitly select another project.
+1. Use the created project `texas-acm-1bb6b` (selected by `.firebaserc`).
 2. Register a web app and copy its browser configuration into the four `NEXT_PUBLIC_FIREBASE_*` variables from `.env.example`. Add the eventual hosting domain and local development domain to Authentication’s authorized domains.
 3. Enable email/password authentication and email enumeration protection. Configure verification and password-reset email templates with the final site name and appropriate action domain.
 4. Upgrade Authentication to Identity Platform if needed, and enable TOTP as described in the official guide. Enabling only password authentication does not satisfy this workspace’s access rules.
@@ -65,4 +67,4 @@ The editor supports title, description, category, date/time, location, HTTPS det
 
 ## Verification performed
 
-Content validation tests and 12 emulator-backed Firestore rule tests cover public/draft separation, unapproved accounts, missing MFA, wrong second-factor type, unverified email, valid officer editing, role escalation, deactivation, immutable authorship, unsafe URLs, unknown collections, and deletion denial. Real email delivery, live account creation, authenticator enrollment/challenge, and production publishing remain unverified until the Firebase quota/configuration blocker is resolved.
+Content validation tests and 12 emulator-backed Firestore rule tests cover public/draft separation, unapproved accounts, missing MFA, wrong second-factor type, unverified email, valid officer editing, role escalation, deactivation, immutable authorship, unsafe URLs, unknown collections, and deletion denial. Real email delivery, live account creation, authenticator enrollment/challenge, and production publishing remain unverified until the remaining cloud configuration and administrator onboarding are completed.

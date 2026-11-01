@@ -9,9 +9,9 @@ A working copy of the [Texas ACM website](https://www.texasacm.org/) for plannin
 The redesign branch adds **Campus Studio**, the alternate **After Hours** homepage, a shared site design system, searchable CS A–Z, and a Firebase-backed officer content workspace with mandatory authenticator 2FA. The inventory below remains the historical baseline of the original website.
 
 - [Design directions and Figma file](docs/DESIGN-DIRECTIONS.md)
-- [Officer setup, permissions, and current Firebase blocker](docs/OFFICER-SETUP.md)
+- [Officer setup, permissions, and remaining launch steps](docs/OFFICER-SETUP.md)
 - Local routes: `/designs`, `/designs/night`, `/officer`, and `/resources`.
-- **Firebase is not live:** the account’s new-project quota is exhausted. No existing Firebase project was modified. Live sign-in and production editing remain blocked until configuration is completed.
+- **Firebase project created:** `texas-acm-1bb6b` has a registered web app, email/password authentication, Identity Platform, and a private production-mode Firestore database on Spark. Local configuration is saved. 2FA provider configuration, access-rule deployment, administrator onboarding, and live verification remain before production editing is available.
 - Content editors can manage events, announcements, resources, and forms. Other existing content remains source-managed.
 - Use npm and `package-lock.json` for this implementation. Node 22+ is required; Node 24 LTS is recommended for Firebase tooling compatibility.
 - Additional checks: `npm run typecheck`, `npm test`, and `npm run test:rules` (the last command needs Java and the Firebase CLI emulator).
