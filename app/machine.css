@@ -3496,3 +3496,14 @@ body::before {
         transform: none !important;
     }
 }
+
+/* Paint the introduction with the initial HTML, before React opens the modal. */
+dialog.identity-intro:not([open]) {
+    display: block;
+}
+.identity-camera .identity-lockup {
+    animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+    dialog.identity-intro:not([open]) { display: none; }
+}

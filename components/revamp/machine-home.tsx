@@ -12,7 +12,7 @@ import { PublishedCards } from './live-content';
 let played = false;
 export default function MachineHome() {
     const reduced = useReducedMotion();
-    const [intro, setIntro] = useState(false);
+    const [intro, setIntro] = useState(() => !played);
     const [paused, setPaused] = useState(false);
     const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
     function finish() {
