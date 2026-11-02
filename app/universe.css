@@ -1,7 +1,7 @@
 /* Alternate Universe — photo-led, maximalist, and deliberately off-grid. */
 .universe {
     --acid: #ffa05a;
-    --violet: #b5c7f4;
+    --violet: #b5f4cf;
     --space: #242226;
     --u-paper: #f3efe5;
     background: var(--u-paper);
@@ -13,7 +13,7 @@
     border-bottom: 1px solid #24222630;
 }
 .universe-header .acm-symbol {
-    color: #2454df;
+    color: #24df72;
 }
 .universe-controls {
     display: flex;
@@ -129,7 +129,7 @@
     width: clamp(45px, 8vw, 125px);
     flex-shrink: 0;
     margin: 0 0.06em 0 0.1em;
-    color: #2454df;
+    color: #24df72;
     animation: u-spin 25s linear infinite;
 }
 .hero-serif {
@@ -141,7 +141,7 @@
     margin-top: 20px;
 }
 .hero-serif em {
-    color: #2454df;
+    color: #24df72;
 }
 .orbit-photo {
     position: absolute;
@@ -205,7 +205,7 @@
     background: radial-gradient(circle at 30% 25%, #f6ecff, #b2a0e6 40%, #6f49b1 70%, #33223f);
     box-shadow:
         inset -10px -6px 25px #1c132750,
-        0 15px 40px #2454df30;
+        0 15px 40px #24df7230;
 }
 .planet-one span {
     position: absolute;
@@ -306,7 +306,7 @@
 }
 .universe-marquee b {
     margin: 0 27px;
-    color: #2454df;
+    color: #24df72;
 }
 .universe-label {
     font: 10px/1.5 monospace;
@@ -334,7 +334,7 @@
 .universe-manifesto h2 > span {
     display: inline-block;
     position: relative;
-    color: #2454df;
+    color: #24df72;
 }
 .universe-manifesto h2 svg {
     position: absolute;
@@ -400,7 +400,7 @@
     padding-top: 27px;
     transform: rotate(-15deg);
     font: 11px/1.5 monospace;
-    color: #2454df;
+    color: #24df72;
 }
 .universe-worlds {
     background: var(--space);
@@ -448,7 +448,7 @@
 }
 .world-card {
     display: block;
-    background: #b5c7f4;
+    background: #b5f4cf;
     color: var(--space);
     border-radius: 180px 180px 8px 8px;
     overflow: hidden;
@@ -588,7 +588,7 @@
     padding: 0 7%;
 }
 .wall-heading h2 em {
-    color: #2454df;
+    color: #24df72;
 }
 .wall-heading p {
     font-size: 14px;
@@ -686,7 +686,7 @@
         italic 28px/0.9 'Instrument Serif',
         serif;
     transform: rotate(-15deg);
-    color: #2454df;
+    color: #24df72;
 }
 .archive-credit {
     position: absolute;
@@ -772,7 +772,7 @@
 .universe-join {
     position: relative;
     padding: 100px 7%;
-    background: #2454df;
+    background: #24df72;
     color: var(--u-paper);
     isolation: isolate;
 }
@@ -1427,7 +1427,7 @@
     }
 }
 .design-universe {
-    background: #b5c7f4;
+    background: #b5f4cf;
 }
 .design-universe h2 {
     letter-spacing: -0.06em;
@@ -1550,9 +1550,9 @@
 }
 .planet-one {
     background:
-        repeating-linear-gradient(0deg, transparent 0 24px, #2454df40 25px 26px),
-        repeating-linear-gradient(90deg, transparent 0 24px, #2454df40 25px 26px);
-    border: 1px solid #2454df;
+        repeating-linear-gradient(0deg, transparent 0 24px, #24df7240 25px 26px),
+        repeating-linear-gradient(90deg, transparent 0 24px, #24df7240 25px 26px);
+    border: 1px solid #24df72;
     box-shadow: none;
     border-radius: 0;
     transform: rotate(45deg);
@@ -1560,7 +1560,7 @@
     height: 120px;
 }
 .planet-one span {
-    border: 1px solid #2454df;
+    border: 1px solid #24df72;
     border-radius: 0;
     inset: 20%;
     transform: none;
@@ -1573,7 +1573,7 @@
     height: 30px;
 }
 .chapter-feed {
-    background: #e5e9ef;
+    background: #e5efe9;
     padding: 100px 7%;
     color: #242226;
     border-block: 1px solid #242226;
@@ -1594,7 +1594,7 @@
     text-transform: uppercase;
 }
 .chapter-feed h2 em {
-    color: #2454df;
+    color: #24df72;
 }
 .chapter-feed-heading > a {
     justify-self: end;
@@ -1661,7 +1661,7 @@
     font:
         35px 'IBM Plex Mono',
         monospace;
-    color: #2454df;
+    color: #24df72;
 }
 .chapter-feed-fallback h3 {
     font-size: 38px;
@@ -1689,7 +1689,7 @@
     position: fixed;
     inset: 0;
     z-index: 250;
-    background: #141619;
+    background: #141916;
     color: #f3efe5;
     overflow: hidden;
     font:
@@ -1787,7 +1787,7 @@
     position: absolute;
     left: 30px;
     bottom: 90px;
-    color: #c2c8d0;
+    color: #c2d0c8;
     display: flex;
     flex-direction: column;
 }

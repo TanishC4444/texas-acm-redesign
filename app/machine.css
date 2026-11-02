@@ -1,11 +1,11 @@
 :root {
     --paper: #eeeee7;
     --ink: #18191b;
-    --mint: #dce5ed;
-    --mint-light: #e3e8eb;
+    --mint: #dcede3;
+    --mint-light: #e3ebe6;
     --orange: #f47721;
     --line: #18191b35;
-    --machine-blue: #087ac5;
+    --machine-green: #08c557;
     --machine-orange: #f47721;
     --machine-muted: #53565a;
     color-scheme: light;
@@ -13,10 +13,10 @@
 :root[data-theme='dark'] {
     --paper: #111214;
     --ink: #f0f0e9;
-    --mint: #1e252b;
-    --mint-light: #20292f;
+    --mint: #1e2b23;
+    --mint-light: #202f26;
     --line: #f0f0e940;
-    --machine-blue: #27a9f5;
+    --machine-green: #27f57d;
     --machine-muted: #aaadb2;
     --background: 220 8% 7%;
     --foreground: 60 20% 94%;
@@ -114,7 +114,7 @@ button:disabled {
     inset: 0;
     pointer-events: none;
     z-index: 240;
-    background: var(--machine-blue);
+    background: var(--machine-green);
     animation: machine-wipe 0.6s cubic-bezier(0.7, 0, 0.2, 1) both;
 }
 @keyframes machine-wipe {
@@ -179,7 +179,7 @@ button:disabled {
     margin: 10px 0 40px;
 }
 .machine-hero h1 > span {
-    color: var(--machine-blue);
+    color: var(--machine-green);
 }
 .machine-hero-image {
     position: relative;
@@ -253,7 +253,7 @@ button:disabled {
     border: 0;
 }
 .machine-hero-links > a:hover {
-    background: var(--machine-blue);
+    background: var(--machine-green);
     color: #fff;
 }
 .machine-section-bar {
@@ -329,7 +329,7 @@ button:disabled {
 }
 .machine-program-title > span {
     display: inline-block;
-    background: var(--machine-blue);
+    background: var(--machine-green);
     color: white;
     padding: 8px 13px;
     font-size: 13px;
@@ -400,7 +400,7 @@ button:disabled {
     margin-bottom: 40px;
 }
 .machine-calendar-grid h2 span {
-    color: var(--machine-blue);
+    color: var(--machine-green);
 }
 .machine-calendar-grid iframe {
     width: 100%;
@@ -440,7 +440,7 @@ button:disabled {
         background 0.3s;
 }
 .machine-tool-list > a:hover {
-    background: var(--machine-blue);
+    background: var(--machine-green);
     color: white;
     padding-left: 30px;
 }
@@ -473,7 +473,7 @@ button:disabled {
     letter-spacing: -0.025em;
 }
 .machine-instagram .chapter-feed h2 em {
-    color: var(--machine-blue);
+    color: var(--machine-green);
     font-family: inherit;
     font-style: normal;
 }
@@ -538,7 +538,7 @@ button:disabled {
     display: inline-flex;
     gap: 35px;
     align-items: center;
-    background: var(--machine-blue);
+    background: var(--machine-green);
     color: white;
     padding: 24px 30px;
     font-weight: 700;
@@ -546,7 +546,7 @@ button:disabled {
     margin-top: 30px;
 }
 .machine-discord:hover {
-    background: #005a9a;
+    background: #009a40;
 }
 .machine-social {
     display: block;
@@ -628,7 +628,7 @@ button:disabled {
     animation: machine-board 4s ease both;
 }
 .reveal-circuit {
-    stroke: #169fe8;
+    stroke: #16e86e;
     stroke-width: 1.5;
 }
 .reveal-circuit path {
@@ -643,7 +643,7 @@ button:disabled {
 }
 .reveal-diamond {
     border-radius: 0;
-    border: 1px solid #169fe8;
+    border: 1px solid #16e86e;
     animation: machine-chip 3.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 .reveal-corner,
@@ -659,15 +659,15 @@ button:disabled {
     bottom: 95px;
 }
 .reveal-terminal span:nth-child(3) {
-    color: #169fe8;
+    color: #16e86e;
 }
 .reveal-scan {
-    background: #169fe8;
-    box-shadow: 0 0 25px 8px #169fe820;
+    background: #16e86e;
+    box-shadow: 0 0 25px 8px #16e86e20;
     animation-duration: 2s;
 }
 .reveal-shutter {
-    background: #087ac5;
+    background: #08c557;
 }
 .shutter-left,
 .shutter-right {
@@ -804,7 +804,7 @@ button:disabled {
     content: '';
     position: absolute;
     inset: 8px -8px -8px 8px;
-    border: 1px solid var(--machine-blue);
+    border: 1px solid var(--machine-green);
     z-index: -1;
 }
 .space-cta {
@@ -848,7 +848,7 @@ button:disabled {
     letter-spacing: 0;
 }
 .studio-footer {
-    background: #0a0b0d;
+    background: #0a0d0b;
     color: #eee;
     border-top: 1px solid #eee5;
     border-radius: 0;
@@ -1243,7 +1243,7 @@ button:disabled {
     width: 11px;
     height: 11px;
     flex-shrink: 0;
-    border: 2px solid var(--machine-blue);
+    border: 2px solid var(--machine-green);
 }
 .machine-hero-links > a > svg {
     margin-left: auto;
@@ -1259,7 +1259,7 @@ button:disabled {
     height: 12px;
     width: 12px;
     flex-shrink: 0;
-    background: var(--machine-blue);
+    background: var(--machine-green);
 }
 .machine-program-title > a:hover:before {
     background: var(--machine-orange);
@@ -1272,7 +1272,7 @@ button:disabled {
     position: absolute;
     width: 6px;
     height: 6px;
-    background: var(--machine-blue);
+    background: var(--machine-green);
     left: -12px;
     top: calc(50% - 3px);
 }
@@ -1304,7 +1304,7 @@ button:disabled {
     color: #aaa;
 }
 .studio-footer .button-mint {
-    background: #087ac5;
+    background: #08c557;
     color: #fff;
 }
 .reveal-logo .logo-slice {
@@ -1459,7 +1459,7 @@ button:disabled {
     opacity: 0;
 }
 .program-rail > a[aria-current] {
-    color: var(--machine-blue);
+    color: var(--machine-green);
 }
 .program-rail > a[aria-current] .rail-contact {
     border-color: var(--machine-orange);
@@ -1507,7 +1507,7 @@ button:disabled {
     display: inline-flex;
     align-items: center;
     gap: 25px;
-    color: var(--machine-blue);
+    color: var(--machine-green);
     padding: 20px 0;
     border-bottom: 1px solid;
     font-size: 20px;
@@ -1556,7 +1556,7 @@ button:disabled {
     pointer-events: none;
     position: absolute;
     inset: 0;
-    background: repeating-linear-gradient(0deg, transparent 0 3px, #087ac518 3px 4px);
+    background: repeating-linear-gradient(0deg, transparent 0 3px, #08c55718 3px 4px);
     opacity: 0;
     transition: opacity 0.3s;
 }
@@ -1620,7 +1620,7 @@ button:disabled {
     width: 100%;
     height: 65svh;
     object-fit: contain;
-    background: #08090b;
+    background: #080b09;
 }
 .photo-viewer-controls p {
     font-size: 13px;
@@ -1643,7 +1643,7 @@ dialog.chapter-reveal {
     color: #f0f0e9;
 }
 dialog.chapter-reveal::backdrop {
-    background: #080c12;
+    background: #08120c;
 }
 .reveal-skip {
     position: absolute;
@@ -1652,7 +1652,7 @@ dialog.chapter-reveal::backdrop {
     padding: 12px 16px;
     border: 1px solid #ffffff80;
     color: white;
-    background: #0a111bcc;
+    background: #0a1b11cc;
     font:
         13px Archivo,
         sans-serif;
@@ -1682,7 +1682,7 @@ dialog.chapter-reveal::backdrop {
 }
 .pcb-pulse {
     fill: none;
-    stroke: #59d0ff;
+    stroke: #59ff9e;
     stroke-width: 2.5;
     stroke-dasharray: 8 130;
     opacity: 0.65;
@@ -1700,19 +1700,19 @@ dialog.chapter-reveal::backdrop {
     stroke: #f47721;
 }
 .pcb-pad {
-    fill: #0a111b;
+    fill: #0a1b11;
     stroke: #f47721;
     stroke-width: 1.6;
 }
 .pcb-component {
-    fill: #0c1725;
-    stroke: #25597b;
+    fill: #0c2516;
+    stroke: #257b49;
     stroke-width: 1.5;
 }
 .pcb-core {
-    fill: #0c1725;
+    fill: #0c2516;
     fill-opacity: 0.7;
-    stroke: #398eb6;
+    stroke: #39b66d;
     stroke-width: 1.2;
 }
 .pcb-core path {
@@ -1721,13 +1721,13 @@ dialog.chapter-reveal::backdrop {
 }
 .pcb-corners {
     fill: none;
-    stroke: #47748d;
+    stroke: #478d64;
     stroke-width: 1.5;
 }
 .pcb-vignette {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at center, transparent 15%, #050b1340 65%, #050b13c0);
+    background: radial-gradient(ellipse at center, transparent 15%, #05130b40 65%, #05130bc0);
 }
 .reveal-grid {
     opacity: 0.1;
@@ -1951,13 +1951,13 @@ dialog.chapter-reveal::backdrop {
 .login-window {
     max-width: 520px;
     background: color-mix(in srgb, var(--paper) 96%, transparent);
-    border-color: var(--machine-blue);
+    border-color: var(--machine-green);
     box-shadow:
         8px 8px 0 var(--machine-orange),
-        16px 16px 0 #087ac526;
+        16px 16px 0 #08c55726;
 }
 .login-window .window-bar {
-    background: var(--machine-blue);
+    background: var(--machine-green);
     color: white;
 }
 .login-body h2 {
@@ -1981,7 +1981,7 @@ dialog.chapter-reveal::backdrop {
 .login-body .button-dark {
     min-height: 52px;
     background: var(--machine-orange);
-    color: #152033;
+    color: #153322;
     font-weight: 750;
     justify-content: center;
 }
@@ -2024,7 +2024,7 @@ button:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-    outline: 3px solid var(--machine-blue);
+    outline: 3px solid var(--machine-green);
     outline-offset: 4px;
 }
 
@@ -2037,7 +2037,7 @@ select:focus-visible {
     --mint-light: #f0f3f0;
     --orange: #ff792b;
     --machine-orange: #ff792b;
-    --machine-blue: #147fa5;
+    --machine-green: #14a550;
     --machine-muted: #56645d;
 }
 :root[data-theme='dark'] {
@@ -2046,7 +2046,7 @@ select:focus-visible {
     --line: #f4f2eb2b;
     --mint: #20312e;
     --mint-light: #233632;
-    --machine-blue: #75c9df;
+    --machine-green: #75dfa1;
     --machine-orange: #ff994f;
     --orange: #ff994f;
     --machine-muted: #b7c3bd;
@@ -2209,7 +2209,7 @@ body {
     line-height: 1.8;
 }
 .chapter-pillar-grid svg {
-    color: var(--machine-blue);
+    color: var(--machine-green);
 }
 .chapter-pillar-grid span {
     margin-top: auto;
@@ -2350,17 +2350,17 @@ body {
     transform: none;
 }
 .pcb-trace {
-    stroke: #83b5be;
+    stroke: #83be9c;
     opacity: 0.25;
 }
 .pcb-pulse {
-    stroke: #83b5be;
+    stroke: #83be9c;
     stroke-width: 1.2;
     opacity: 0.65;
 }
 .pcb-pad {
-    stroke: #83b5be;
-    fill: #101a24;
+    stroke: #83be9c;
+    fill: #102418;
 }
 @media (max-width: 1100px) {
     .desktop-nav {
@@ -2429,7 +2429,7 @@ body {
 a:focus-visible,
 button:focus-visible,
 input:focus-visible {
-    outline: 3px solid var(--machine-blue);
+    outline: 3px solid var(--machine-green);
     outline-offset: 4px;
 }
 @media (max-width: 450px) {
@@ -2644,7 +2644,7 @@ input:focus-visible {
     position: absolute;
     inset: 0;
     overflow: hidden;
-    background: #09131b;
+    background: #091b11;
 }
 .reveal-atmosphere svg {
     width: 100%;
@@ -2657,7 +2657,7 @@ input:focus-visible {
 .opening-bloom {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at 50% 50%, #89dcf518, transparent 55%);
+    background: radial-gradient(ellipse at 50% 50%, #89f5b618, transparent 55%);
     animation: opening-breathe 4s ease both;
 }
 @keyframes engraving-arrive {
@@ -2750,8 +2750,8 @@ html:has(.resources-document) {
 .resources-document:has(#resume:target) nav a[href='#resume'],
 .resources-document:has(#forms:target) nav a[href='#forms'],
 .resources-document:has(#faq:target) nav a[href='#faq'] {
-    color: var(--machine-blue);
-    border-color: var(--machine-blue);
+    color: var(--machine-green);
+    border-color: var(--machine-green);
 }
 @media (max-width: 1000px) {
     .studio-header {
@@ -3024,7 +3024,7 @@ html:has(.resources-document) {
     color: #fff;
     padding: 10px 14px;
     border: 1px solid #ffffff60;
-    background: #0c151d80;
+    background: #0c1d1380;
 }
 .mark-circle,
 .mark-diamond {
@@ -3039,7 +3039,7 @@ html:has(.resources-document) {
 .mark-shade {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at center, #0c151d00 20%, #0c151d50 65%, #0c151dc0);
+    background: radial-gradient(ellipse at center, #0c1d1300 20%, #0c1d1350 65%, #0c1d13c0);
 }
 @keyframes circle-arrival {
     0% {
@@ -3245,35 +3245,35 @@ dialog.identity-intro {
 /* Orange and blue lead; green is reserved for small status indicators. */
 :root {
     --paper: #f8f7f3;
-    --ink: #172b3b;
-    --line: #172b3b26;
-    --mint: #e7f1f8;
-    --mint-light: #eff5f9;
+    --ink: #1c3026;
+    --line: #1c302626;
+    --mint: #e7f8ee;
+    --mint-light: #eff9f3;
     --orange: #ff791d;
     --machine-orange: #ff791d;
-    --machine-blue: #008fd5;
-    --machine-muted: #526373;
+    --machine-green: #16945b;
+    --machine-muted: #527360;
 }
 :root[data-theme='dark'] {
-    --paper: #111d2a;
+    --paper: #121f19;
     --ink: #f5f5ef;
     --line: #f5f5ef29;
-    --mint: #1b3148;
-    --mint-light: #20384f;
+    --mint: #1b482e;
+    --mint-light: #204f34;
     --orange: #ff8a30;
     --machine-orange: #ff8a30;
-    --machine-blue: #42bfff;
-    --machine-muted: #afc1cf;
+    --machine-green: #63d99a;
+    --machine-muted: #afcfbc;
 }
 .minimal-hero h1 > span:first-child {
     color: var(--machine-orange);
 }
 .minimal-hero h1 > span:last-child {
-    color: var(--machine-blue);
+    color: var(--machine-green);
 }
 .chapter-page-hero h1,
 .resources-document > header h1 {
-    color: var(--machine-blue);
+    color: var(--machine-green);
 }
 .minimal-cover {
     border-radius: 52px 10px 52px 10px;
@@ -3282,7 +3282,7 @@ dialog.identity-intro {
     border-radius: 32px 8px 32px 8px;
 }
 .simple-footer {
-    background: #10263b;
+    background: #122b20;
 }
 .minimal-resource > a {
     border-left: 4px solid var(--machine-orange);
@@ -3294,7 +3294,7 @@ dialog.identity-intro {
     align-items: center;
     gap: 30px;
     padding: 40px !important;
-    background: var(--machine-blue) !important;
+    background: var(--machine-green) !important;
     color: #fff;
     border: 0 !important;
     border-radius: 35px 8px 35px 8px;
@@ -3374,22 +3374,22 @@ dialog.identity-intro {
     }
 }
 :root {
-    --machine-blue: #0077b8;
+    --machine-green: #167348;
 }
 .minimal-hero h1 > span:first-child {
     color: #df6208;
 }
 .minimal-hero h1 > span:last-child {
-    color: #008fd5;
+    color: #16945b;
 }
 [data-theme='dark'] .minimal-hero h1 > span:first-child {
     color: #ff8a30;
 }
 [data-theme='dark'] .minimal-hero h1 > span:last-child {
-    color: #42bfff;
+    color: #63d99a;
 }
 .chapter-social-feature {
-    background: #0077b8 !important;
+    background: #167348 !important;
 }
 
 /* Broad washes on warm paper: color at the edges, calm behind the content. */
@@ -3397,7 +3397,7 @@ body {
     background-color: var(--paper);
     background-image:
         radial-gradient(ellipse 65% 48% at 108% 9%, #ff942b30 0%, #ff942b12 48%, transparent 74%),
-        radial-gradient(ellipse 55% 50% at -12% 40%, #009de52b 0%, #009de510 48%, transparent 75%),
+        radial-gradient(ellipse 55% 50% at -12% 40%, #20a66a2b 0%, #20a66a10 48%, transparent 75%),
         radial-gradient(ellipse 65% 35% at 90% 88%, #ff942b20 0%, transparent 75%);
     background-size: 100% 1500px;
     background-repeat: repeat-y;
@@ -3412,8 +3412,8 @@ body::before {
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23778088' opacity='.2' filter='url(%23n)' d='M0 0h180v180H0z'/%3E%3C/svg%3E");
 }
 :root[data-theme='dark'] body {
-    background-color: #111d2a;
-    background-image: linear-gradient(135deg, #152638 0%, #111d2a 65%);
+    background-color: #121f19;
+    background-image: linear-gradient(135deg, #153824 0%, #121f19 65%);
     background-size: 100% 100vh;
     background-repeat: no-repeat;
 }
@@ -3618,7 +3618,7 @@ dialog.identity-intro:not([open]) {
     transform: translateY(0) scale(0.98);
 }
 .minimal-section-heading > a:hover {
-    color: var(--machine-blue);
+    color: var(--machine-green);
     transform: translateX(3px);
 }
 .chapter-involvement-card:focus-visible img {
@@ -3715,19 +3715,19 @@ dialog.identity-intro:not([open]) {
 @media (hover: hover) and (pointer: fine) {
     :where(.button, .space-cta, .join-button, .officer-link):not(:disabled):hover {
         transform: translateY(-2px);
-        box-shadow: 0 7px 18px #10263b12;
+        box-shadow: 0 7px 18px #122b2012;
     }
     :where(.officer-card, .story-card):hover {
         transform: translateY(-4px);
-        box-shadow: 0 14px 30px #10263b14;
+        box-shadow: 0 14px 30px #122b2014;
     }
     .minimal-resource > a:hover {
         transform: translateX(5px);
-        border-color: var(--machine-blue);
+        border-color: var(--machine-green);
     }
     .photo-library button:hover {
         transform: translateY(-3px);
-        box-shadow: 0 0 0 2px var(--machine-blue);
+        box-shadow: 0 0 0 2px var(--machine-green);
     }
     .officer-sidebar button:hover,
     .content-toolbar button:hover {
@@ -3745,11 +3745,11 @@ dialog.identity-intro:not([open]) {
     transform: scale(0.98);
 }
 :where(a, button, summary, input, select, textarea):focus-visible {
-    outline: 3px solid var(--machine-blue);
+    outline: 3px solid var(--machine-green);
     outline-offset: 4px;
 }
 :where(.story-card, .officer-card):focus-within {
-    box-shadow: 0 0 0 2px var(--machine-blue);
+    box-shadow: 0 0 0 2px var(--machine-green);
 }
 @media (prefers-reduced-motion: reduce) {
     .chapter-page-transition {

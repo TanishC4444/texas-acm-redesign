@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const guideSections = [
     {
-        icon: <Compass size={28} className="text-blue-500" />,
+        icon: <Compass size={28} className="text-emerald-500" />,
         theme: 'Getting Started at UTCS',
         description: 'Everything you need to know to get through your first year in UTCS.',
         links: [

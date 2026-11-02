@@ -154,7 +154,7 @@ const scheduleDays = [
                             href="https://tinyurl.com/easterEggsploration2026"
                             target="_blank"
                             rel="noreferrer"
-                            className="font-medium text-[#0F6E91] underline underline-offset-2"
+                            className="font-medium text-[#0f9145] underline underline-offset-2"
                         >
                             here
                         </Link>

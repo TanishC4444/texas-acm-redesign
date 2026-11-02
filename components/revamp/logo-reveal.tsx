@@ -48,7 +48,7 @@ export default function ChapterReveal({ onSkip }: { onSkip: () => void }) {
                                 transform="rotate(-45 86.655 131)"
                                 stroke="#ff791d"
                             />
-                            <circle cx="109.5" cy="130.351" r="95" stroke="#008fd5" />
+                            <circle cx="109.5" cy="130.351" r="95" stroke="#16945b" />
                         </g>
                         <mask
                             id="identity-wordmark"

@@ -1,3 +1,5 @@
+> Palette update: the active redesign now uses orange and green throughout, including matte logo variants, page transitions, backgrounds, focus states, and dark mode. Historical screenshots and promo videos below may show the earlier blue palette.
+
 # Texas ACM — redesign workspace
 
 A working copy of the [Texas ACM website](https://www.texasacm.org/) for planning and building a redesign. Forked from [texasacm/website](https://github.com/texasacm/website).

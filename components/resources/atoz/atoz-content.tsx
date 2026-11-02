@@ -24,7 +24,7 @@ import {
 const allSections = [
     {
         title: 'UT Campus',
-        icon: <Building2 className="h-5 w-5 text-blue-500" />,
+        icon: <Building2 className="h-5 w-5 text-emerald-500" />,
         items: [
             {
                 term: 'Speedway',
@@ -460,7 +460,7 @@ const allSections = [
     },
     {
         title: 'UT CS Figures',
-        icon: <User className="h-5 w-5 text-blue-400" />,
+        icon: <User className="h-5 w-5 text-emerald-400" />,
         items: [
             {
                 term: 'Peter Stone',
@@ -602,7 +602,7 @@ const allSections = [
     },
     {
         title: 'Cloud Services',
-        icon: <Cloud className="h-5 w-5 text-sky-500" />,
+        icon: <Cloud className="h-5 w-5 text-emerald-500" />,
         items: [
             {
                 term: 'AWS',
@@ -732,7 +732,7 @@ function SectionContent({ items }: { items: SectionItem[] }) {
                             href={item.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="mt-2 inline-block font-medium text-blue-600 underline-offset-4 hover:underline"
+                            className="mt-2 inline-block font-medium text-emerald-600 underline-offset-4 hover:underline"
                         >
                             View learning resource
                         </a>

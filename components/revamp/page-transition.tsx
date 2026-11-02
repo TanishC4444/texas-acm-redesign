@@ -45,7 +45,7 @@ export default function PageTransition() {
                         />
                     </g>
                     <g className="chapter-transition-circle">
-                        <circle cx="109.5" cy="130.351" r="95" stroke="#008fd5" />
+                        <circle cx="109.5" cy="130.351" r="95" stroke="#16945b" />
                     </g>
                 </svg>
             </div>
