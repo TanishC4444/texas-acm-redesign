@@ -6,13 +6,13 @@ A working copy of the [Texas ACM website](https://www.texasacm.org/) for plannin
 
 ## Redesign implementation — November 1, 2026
 
-The redesign now opens with **Chapter Space**, an interactive Texas ACM scene explorer. Choose Chapter, People, Events, Toolkit, or Connect instead of traversing a long homepage. The original logo remains unchanged; ACM-inspired blue/cyan and UT orange tie together glass surfaces, perspective photo cards, looping 3D CSS rings/cube, and an original-logo intro that flows into the scene. A glass page dock, persistent light/dark themes with a color-wave transition, and photo-led headers carry the visual system into the other pages.
+The redesign now uses a **vertical, computing-machinery-inspired layout**: oversized upright type, full-width chapter photography, hard-edged panels, and connector-like navigation. The original Texas ACM logo is unchanged. The opening animation builds it through circuit traces, eight moving logo slices, four-way shutters, and a perspective-to-flat assembly, then reveals the page. The scene switcher, glass dock, floating rings, and translucent card system have been removed from the active UI.
 
-![Chapter Space dark desktop](docs/redesign/space-dark.jpg)
+![Computing machinery homepage](docs/redesign/machine-desktop.jpg)
 
-The homepage includes selectable Original/Vivid/Blueprint photo treatments, keyboard-accessible scene navigation, perspective hover/mouse movement, and a motion pause. The calendar opens in an embedded panel; Connect brings together the real Discord invite, newsletter signup, chapter email, calendar, and Instagram feed panel. Instagram is still **not connected live** until its managing officer completes [the account connection](docs/INSTAGRAM-SETUP.md). Reduced-motion preferences bypass the intro and disable automatic scene animation. Long informational pages and overflowing mobile panels retain ordinary scrolling so their content remains reachable.
+The live Google Calendar is embedded directly in the homepage. Discord, the existing newsletter signup, chapter email, and Instagram are linked from their relevant sections. The Instagram API integration remains **pending the account manager’s connection**; see [setup instructions](docs/INSTAGRAM-SETUP.md). Light/dark mode remains available in the header, with a short wipe transition. The four-second logo intro can be replayed or skipped; reduced-motion preferences bypass automatic motion.
 
-[Mobile preview](docs/redesign/space-mobile.jpg) · [Light theme](docs/redesign/space-light.jpg) · [Logo reveal](docs/redesign/chapter-logo-reveal.jpg)
+[Mobile preview](docs/redesign/machine-mobile.jpg) · [Opening animation](docs/redesign/machine-intro.jpg)
 
 - [Design directions and Figma file](docs/DESIGN-DIRECTIONS.md)
 - [Officer setup, permissions, and remaining launch steps](docs/OFFICER-SETUP.md)

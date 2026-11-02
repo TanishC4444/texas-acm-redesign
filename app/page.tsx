@@ -1,4 +1,4 @@
-import ChapterExperience from '@/components/revamp/experience';
+import MachineHome from '@/components/revamp/machine-home';
 export default function HomePage() {
-    return <ChapterExperience />;
+    return <MachineHome />;
 }

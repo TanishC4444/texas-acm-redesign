@@ -56,3 +56,11 @@ Complete password setup, email verification, and authenticator enrollment for `t
 - Production build and TypeScript checks pass (lint skipped). All 17 public/design/officer page routes returned HTTP 200 in the production smoke check; unauthenticated officer provisioning still returns HTTP 401.
 - The development status badge is disabled through the supported Next.js configuration so it cannot cover the mobile dock. Runtime error reporting remains available.
 - Screenshots: `docs/redesign/space-dark.jpg`, `space-light.jpg`, `space-mobile.jpg`, `space-about-dark.jpg`, and `space-calendar.jpg`.
+
+## Vertical computing-machinery revision
+
+- Replaced the scene-based homepage with a vertical layout and removed the glass dock, scene controls, floating rings, and CSS 3D cards from the active UI.
+- Expanded the original-logo opening to four seconds, with eight slice assemblies, circuit traces, four shutters, and a perspective-to-flat transition. Original SVG logo files remain unchanged.
+- Desktop and mobile reviewed in browser; mobile document width equals the 390-pixel viewport. No glass dock or scene switcher is present, and computed inline italic text count is zero.
+- Embedded live Google Calendar, approved-officer content feed, newsletter signup, Discord, email, and Instagram integration/fallback retained. No messages were sent and no calendar data was edited during verification.
+- TypeScript and production build pass with lint skipped. Firebase rules/authentication and Instagram API logic are unchanged.

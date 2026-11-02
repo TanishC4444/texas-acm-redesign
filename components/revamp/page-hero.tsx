@@ -28,12 +28,8 @@ export default function ChapterPageHero({
                 )}
             </div>
             <div className="page-hero-art">
-                <div className="page-hero-orbit" aria-hidden="true" />
                 <div className="page-hero-photo">
                     <img src={`/studio/${image}.webp`} alt={alt} fetchPriority="high" />
-                </div>
-                <div className="page-hero-tile" aria-hidden="true">
-                    &lt;/&gt;
                 </div>
             </div>
         </section>

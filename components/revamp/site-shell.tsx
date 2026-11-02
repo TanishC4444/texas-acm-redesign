@@ -113,6 +113,7 @@ export function SiteHeader() {
                         ))}
                         <Link href="/calendar">Calendar</Link>
                         <Link href="/forms">Forms</Link>
+                        <a href="/#join">Join Texas ACM</a>
                         <Link href="/officer">Officer login</Link>
                     </nav>
                 )}
@@ -121,17 +122,15 @@ export function SiteHeader() {
     );
 }
 export function SiteFooter() {
-    const path = usePathname();
-    if (path === '/') return null;
     return (
         <footer className="studio-footer">
             <div className="footer-top">
                 <div>
                     <span className="eyebrow">YOUR PEOPLE. YOUR NEXT CHAPTER.</span>
                     <h2>
-                        Let’s make
+                        Texas ACM.
                         <br />
-                        something <em>of it.</em>
+                        UT Austin.
                         <span className="footer-star">✳</span>
                     </h2>
                     <a

@@ -7,7 +7,7 @@ export default function Resources() {
     return (
         <div className="resource-hub">
             <ChapterPageHero
-                title="Your student toolkit."
+                title="Student resources"
                 description="Find your footing, learn something new, and take your next step in UTCS."
                 image="pwp"
                 alt="UT Austin students and professors gathered together"

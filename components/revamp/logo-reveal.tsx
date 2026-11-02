@@ -39,12 +39,22 @@ export default function ChapterReveal({ onSkip }: { onSkip: () => void }) {
                 ASSOCIATION FOR COMPUTING MACHINERY
             </div>
             <span className="reveal-top-right">
-                CHAPTER_INIT
-                <br />[ TX / ATX ]
+                TEXAS ACM
+                <br />
+                UT AUSTIN
             </span>
             <div className="reveal-diamond" aria-hidden="true" />
             <div className="reveal-logo">
-                <img src="/texasacm-logo-white.svg" alt="Texas ACM" />
+                <img className="reveal-logo-base" src="/texasacm-logo-white.svg" alt="Texas ACM" />
+                {Array.from({ length: 8 }, (_, i) => (
+                    <img
+                        key={i}
+                        className={`logo-slice slice-${i}`}
+                        src="/texasacm-logo-white.svg"
+                        alt=""
+                        aria-hidden="true"
+                    />
+                ))}
                 <img
                     className="logo-channel channel-orange"
                     src="/texasacm-logo-white.svg"
@@ -60,9 +70,9 @@ export default function ChapterReveal({ onSkip }: { onSkip: () => void }) {
             </div>
             <div className="reveal-scan" aria-hidden="true" />
             <div className="reveal-terminal">
-                <span>&gt; connect students</span>
-                <span>&gt; exchange ideas</span>
-                <span>&gt; build community_</span>
+                <span>ACADEMICS</span>
+                <span>INDUSTRY</span>
+                <span>COMMUNITY</span>
             </div>
             <div className="reveal-bottom">
                 <span>UTCS. OPEN TO EVERY MAJOR.</span>
@@ -72,6 +82,8 @@ export default function ChapterReveal({ onSkip }: { onSkip: () => void }) {
             </div>
             <div className="reveal-shutter shutter-left" aria-hidden="true" />
             <div className="reveal-shutter shutter-right" aria-hidden="true" />
+            <div className="reveal-shutter shutter-top" aria-hidden="true" />
+            <div className="reveal-shutter shutter-bottom" aria-hidden="true" />
         </div>
     );
 }

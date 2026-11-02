@@ -2,7 +2,7 @@ import ChapterPageHero from '@/components/revamp/page-hero';
 export default function PartnershipHero() {
     return (
         <ChapterPageHero
-            title={'Meet your next generation.'}
+            title={'Corporate partnerships'}
             description={
                 'Connect with UT Austin students through Texas ACM talks, events, and partnerships.'
             }

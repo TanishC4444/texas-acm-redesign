@@ -10,7 +10,7 @@ export default function EventsPage() {
     return (
         <>
             <ChapterPageHero
-                title="Out of class. Into something."
+                title="Chapter events"
                 description="Tech talks, workshops, retreats, and community nights. Make your next plan with Texas ACM."
                 image="familyfeud25"
                 alt="Texas ACM community event"

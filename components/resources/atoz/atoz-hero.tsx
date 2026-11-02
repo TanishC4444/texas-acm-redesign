@@ -2,7 +2,7 @@ import ChapterPageHero from '@/components/revamp/page-hero';
 export default function AtoZHero() {
     return (
         <ChapterPageHero
-            title={'The UTCS vocabulary.'}
+            title={'CS A–Z'}
             description={
                 'A student guide to the terms, places, and shorthand you hear around the GDC.'
             }

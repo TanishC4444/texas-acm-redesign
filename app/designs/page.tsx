@@ -17,7 +17,7 @@ export default function Designs() {
             </p>
             <div className="design-options">
                 <Link href="/" className="design-option design-universe">
-                    <span className="eyebrow">CURRENT / CHAPTER SPACE</span>
+                    <span className="eyebrow">CURRENT / COMPUTING MACHINERY</span>
                     <h2>
                         Explore the
                         <br />
@@ -30,7 +30,7 @@ export default function Designs() {
                         collage, scroll choreography, and an interactive memory wall.
                     </p>
                     <span className="button button-dark">
-                        Enter Chapter Space <ArrowUpRight size={18} />
+                        Explore the current design <ArrowUpRight size={18} />
                     </span>
                 </Link>
                 <Link href="/designs/studio" className="design-option design-campus">
@@ -79,8 +79,8 @@ export default function Designs() {
                 </Link>
             </div>
             <p className="design-note">
-                Chapter Space is the current homepage. Campus Studio and After Hours remain
-                available for comparison.
+                The computing-machinery design is the current homepage. Campus Studio and After
+                Hours remain available for comparison.
             </p>
         </div>
     );

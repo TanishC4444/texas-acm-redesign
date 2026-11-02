@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import '@/app/globals.css';
 import '@/app/studio.css';
 import '@/app/universe.css';
-import '@/app/experience.css';
+import '@/app/machine.css';
 import VisualControls from '@/components/revamp/visual-controls';
 import '@/app/fonts.css';
 import { SiteHeader, SiteFooter } from '@/components/revamp/site-shell';

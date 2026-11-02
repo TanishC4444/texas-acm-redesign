@@ -2,7 +2,7 @@ import ChapterPageHero from '@/components/revamp/page-hero';
 export default function CSGuideHero() {
     return (
         <ChapterPageHero
-            title={'Your CS field guide.'}
+            title={'CS guide'}
             description={
                 'Classes, campus, and careers. Find your footing in UT Austin computer science.'
             }
