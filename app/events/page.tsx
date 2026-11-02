@@ -11,7 +11,7 @@ export default function EventsPage() {
         <>
             <ChapterPageHero
                 title="Chapter events"
-                description="Tech talks, workshops, retreats, and community nights. Make your next plan with Texas ACM."
+                description="Academic, industry, and community events hosted by Texas ACM."
                 image="familyfeud25"
                 alt="Texas ACM community event"
                 href="/calendar"

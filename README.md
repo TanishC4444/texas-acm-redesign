@@ -2,17 +2,21 @@
 
 A working copy of the [Texas ACM website](https://www.texasacm.org/) for planning and building a redesign. Forked from [texasacm/website](https://github.com/texasacm/website).
 
-**Baseline reviewed: November 1, 2026 (America/Chicago).** This README records the existing experience, its code structure, and proposed improvements. The redesign has not been implemented. Screenshots show the live original site, not a deployment of this fork; calendar events and other time-sensitive content will change.
+**Baseline reviewed: November 1, 2026 (America/Chicago).** This README records the existing experience, its code structure, and proposed improvements. The baseline screenshots below show the live original site, not a deployment of this fork; calendar events and other time-sensitive content will change.
 
-## Redesign implementation — November 1, 2026
+## Redesign implementation
 
-The redesign now uses a **vertical, computing-machinery-inspired layout**: oversized upright type, full-width chapter photography, hard-edged panels, and connector-like navigation. The original Texas ACM logo is unchanged. The opening animation builds it through circuit traces, eight moving logo slices, four-way shutters, and a perspective-to-flat assembly, then reveals the page. The scene switcher, glass dock, floating rings, and translucent card system have been removed from the active UI.
+The active design centers **Texas ACM at UT Austin**, with upright typography, real chapter photography, ACM blue and Texas orange accents, and a vertical computing-machinery layout. The original logo is unchanged. Its four-second opening assembles over a layered animated circuit board with etched traces, chips, pins, and traveling pulses. The opening captions and redundant homepage shortcut strip are removed.
 
-![Computing machinery homepage](docs/redesign/machine-desktop.jpg)
+![Texas ACM homepage](docs/redesign/texas-acm-desktop.jpg)
 
-The live Google Calendar is embedded directly in the homepage. Discord, the existing newsletter signup, chapter email, and Instagram are linked from their relevant sections. The Instagram API integration remains **pending the account manager’s connection**; see [setup instructions](docs/INSTAGRAM-SETUP.md). Light/dark mode remains available in the header, with a short wipe transition. The four-second logo intro can be replayed or skipped; reduced-motion preferences bypass automatic motion.
+Chapter photos unfold as visitors scroll and open into a full-screen gallery with previous/next controls, arrow keys, Escape, and focus restoration. A pinned Academics / Industry / Community selector tracks the section being read. Program names and descriptions reference actual chapter activities rather than computing wordplay. Light/dark mode, replay, motion pause, and reduced-motion support remain available.
 
-[Mobile preview](docs/redesign/machine-mobile.jpg) · [Opening animation](docs/redesign/machine-intro.jpg)
+[Mobile preview](docs/redesign/texas-acm-mobile.jpg) · [Circuit-board opening](docs/redesign/texas-acm-pcb-opening.jpg) · [Photo viewer](docs/redesign/chapter-gallery-viewer.jpg)
+
+The live Google Calendar is embedded on the homepage; Discord, chapter email, and Instagram remain connected through links. **Mailchimp exists in the inherited source, but account ownership and list health are unverified.** The active homepage signup is disabled by default with `NEXT_PUBLIC_NEWSLETTER_ENABLED=0`; enable it only after a chapter officer confirms the inherited list. No signup was submitted. The Instagram API integration remains **pending the account manager’s connection**; see [setup instructions](docs/INSTAGRAM-SETUP.md).
+
+Validation: production build and TypeScript checks passed. Manual browser checks covered the intro’s modal focus, gallery navigation/Escape/focus return, active program navigation, and a 390 px mobile layout without horizontal overflow. Image alternatives and unique IDs were checked. This is not a complete accessibility certification; external forms and administrator onboarding still need end-to-end verification.
 
 - [Design directions and Figma file](docs/DESIGN-DIRECTIONS.md)
 - [Officer setup, permissions, and remaining launch steps](docs/OFFICER-SETUP.md)

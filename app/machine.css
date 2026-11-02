@@ -1385,3 +1385,544 @@ button:disabled {
     --primary-foreground: 0 0% 100%;
     --ring: 203 92% 40%;
 }
+/* Identity first: real chapter content, no startup captions or redundant shortcut strip. */
+.machine-hero-top {
+    justify-content: flex-end;
+    padding: 23px 0;
+}
+.machine-chapter-description {
+    font-size: 17px;
+    line-height: 1.65;
+    max-width: 720px;
+    margin: -10px 0 32px;
+    color: var(--machine-muted);
+}
+.machine-hero h1 {
+    font-size: clamp(105px, 18.5vw, 280px);
+    line-height: 0.78;
+    margin: 12px 0 35px;
+}
+.machine-image-caption > p {
+    font-size: 15px;
+}
+.machine-statement h2 {
+    font-size: clamp(65px, 7.8vw, 125px);
+}
+.machine-statement {
+    align-items: center;
+}
+.machine-program-layout {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 5%;
+    border-top: 1px solid var(--ink);
+}
+.program-rail {
+    position: sticky;
+    top: 25px;
+    align-self: start;
+    padding: 40px 0;
+}
+.program-rail > a {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 21px 0;
+    font-size: 15px;
+    font-weight: 650;
+    color: var(--machine-muted);
+    position: relative;
+}
+.program-rail > a:after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    top: 50%;
+    left: 5px;
+    width: 1px;
+    background: var(--line);
+}
+.program-rail > a:last-child:after {
+    display: none;
+}
+.rail-contact {
+    width: 11px;
+    height: 11px;
+    border: 2px solid var(--machine-muted);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    background: var(--paper);
+}
+.program-rail > a > svg {
+    margin-left: auto;
+    opacity: 0;
+}
+.program-rail > a[aria-current] {
+    color: var(--machine-blue);
+}
+.program-rail > a[aria-current] .rail-contact {
+    border-color: var(--machine-orange);
+    background: var(--machine-orange);
+    box-shadow: 0 0 0 5px #f4772118;
+}
+.program-rail > a[aria-current] > svg {
+    opacity: 1;
+}
+.program-panels .machine-program,
+.program-panels .machine-program:nth-child(3) {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 50px 0;
+    scroll-margin-top: 25px;
+}
+.program-panels .machine-program-title {
+    order: 0;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    column-gap: 40px;
+}
+.program-panels .machine-program h2 {
+    grid-row: span 2;
+    font-size: clamp(50px, 5.2vw, 85px);
+}
+.program-panels .machine-program p {
+    margin: 0 0 20px;
+    max-width: none;
+}
+.program-panels .machine-program-title > a {
+    font-size: 14px;
+    align-self: end;
+}
+.program-panels .machine-program-image {
+    height: 380px;
+}
+.machine-program-image:before {
+    border-color: #ffffff45;
+}
+.machine-program-image img {
+    transition: none;
+}
+.machine-contact-officers {
+    display: inline-flex;
+    align-items: center;
+    gap: 25px;
+    color: var(--machine-blue);
+    padding: 20px 0;
+    border-bottom: 1px solid;
+    font-size: 20px;
+    font-weight: 650;
+}
+/* A scroll-unfolded contact sheet; every photograph has an accessible full-screen view. */
+.chapter-photo-gallery {
+    padding: 35px 0 65px;
+    perspective: 1200px;
+}
+.chapter-contact-sheet {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    align-items: center;
+}
+.chapter-contact-photo {
+    position: relative;
+    height: 330px;
+    overflow: hidden;
+    background: var(--ink);
+    border: 1px solid var(--ink);
+    text-align: left;
+    transform-origin: center bottom;
+}
+.chapter-contact-photo:nth-child(2) {
+    margin-top: 70px;
+}
+.chapter-contact-photo:nth-child(4) {
+    margin-top: 110px;
+}
+.chapter-contact-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition:
+        filter 0.5s,
+        scale 0.7s;
+}
+.chapter-contact-photo:hover img,
+.chapter-contact-photo:focus-visible img {
+    scale: 1.06;
+}
+.chapter-contact-photo:after {
+    content: '';
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent 0 3px, #087ac518 3px 4px);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.chapter-contact-photo:hover:after {
+    opacity: 1;
+}
+.photo-expand {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 17px;
+    background: #111214d9;
+    color: white;
+    transform: translateY(100%);
+    transition: transform 0.25s;
+    font-size: 13px;
+    z-index: 1;
+}
+.chapter-contact-photo:hover .photo-expand,
+.chapter-contact-photo:focus-visible .photo-expand {
+    transform: none;
+}
+.chapter-photo-viewer {
+    width: min(1100px, 95vw);
+    height: auto;
+    max-width: 95vw;
+    max-height: 94svh;
+    border: 1px solid #fff6;
+    padding: 0;
+    margin: auto;
+    background: #111214;
+    color: #f0f0e9;
+}
+.chapter-photo-viewer::backdrop {
+    background: #000d;
+    backdrop-filter: blur(12px);
+}
+.photo-viewer-tools,
+.photo-viewer-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 18px 22px;
+}
+.photo-viewer-tools p {
+    font-size: 18px;
+    font-weight: 700;
+}
+.photo-viewer-tools button,
+.photo-viewer-controls button {
+    padding: 9px;
+    border: 1px solid #fff6;
+    flex-shrink: 0;
+}
+.chapter-expanded-photo {
+    width: 100%;
+    height: 65svh;
+    object-fit: contain;
+    background: #08090b;
+}
+.photo-viewer-controls p {
+    font-size: 13px;
+    line-height: 1.5;
+    text-align: center;
+}
+.chapter-photo-viewer button:focus-visible {
+    outline: 3px solid #f47721;
+    outline-offset: 3px;
+}
+/* Detailed PCB depth under the unmodified chapter logo. */
+dialog.chapter-reveal {
+    width: 100vw;
+    height: 100svh;
+    max-width: none;
+    max-height: none;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    color: #f0f0e9;
+}
+dialog.chapter-reveal::backdrop {
+    background: #080c12;
+}
+.reveal-skip {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    padding: 12px 16px;
+    border: 1px solid #ffffff80;
+    color: white;
+    background: #0a111bcc;
+    font:
+        13px Archivo,
+        sans-serif;
+    z-index: 10;
+}
+.reveal-skip:focus-visible {
+    outline: 3px solid #f47721;
+    outline-offset: 4px;
+}
+.circuit-field {
+    position: absolute;
+    inset: -8%;
+    transform: perspective(1100px) rotateX(16deg) rotateZ(-4deg) scale(1.08);
+    animation: pcb-settle 3.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.circuit-field > svg {
+    width: 100%;
+    height: 100%;
+}
+.pcb-trace {
+    fill: none;
+    stroke: url(#pcb-wire);
+    stroke-width: 1.2;
+    opacity: 0.65;
+    stroke-dasharray: 1400;
+    animation: pcb-etch 2.4s ease both;
+}
+.pcb-pulse {
+    fill: none;
+    stroke: #59d0ff;
+    stroke-width: 2.5;
+    stroke-dasharray: 8 130;
+    opacity: 0.65;
+    animation: pcb-signal 4s linear infinite;
+}
+.pulse-1 {
+    animation-delay: -1s;
+    stroke: #f47721;
+}
+.pulse-2 {
+    animation-delay: -2s;
+}
+.pulse-3 {
+    animation-delay: -3s;
+    stroke: #f47721;
+}
+.pcb-pad {
+    fill: #0a111b;
+    stroke: #f47721;
+    stroke-width: 1.6;
+}
+.pcb-component {
+    fill: #0c1725;
+    stroke: #25597b;
+    stroke-width: 1.5;
+}
+.pcb-core {
+    fill: #0c1725;
+    fill-opacity: 0.7;
+    stroke: #398eb6;
+    stroke-width: 1.2;
+}
+.pcb-core path {
+    stroke: #f47721;
+    stroke-width: 2;
+}
+.pcb-corners {
+    fill: none;
+    stroke: #47748d;
+    stroke-width: 1.5;
+}
+.pcb-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 15%, #050b1340 65%, #050b13c0);
+}
+.reveal-grid {
+    opacity: 0.1;
+}
+.reveal-circuit {
+    opacity: 0.18;
+}
+.reveal-diamond {
+    display: none;
+}
+.reveal-logo {
+    filter: drop-shadow(0 12px 30px #000c);
+}
+@keyframes pcb-etch {
+    from {
+        stroke-dashoffset: 1400;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+@keyframes pcb-signal {
+    to {
+        stroke-dashoffset: -552;
+    }
+}
+@keyframes pcb-settle {
+    from {
+        transform: perspective(1100px) rotateX(55deg) rotateZ(-8deg) scale(1.4);
+    }
+    to {
+        transform: perspective(1100px) rotateX(0) rotateZ(0) scale(1);
+    }
+}
+@media (max-width: 700px) {
+    .machine-hero h1 {
+        font-size: 21vw;
+        margin: 10px 0 24px;
+    }
+    .machine-chapter-description {
+        font-size: 14px;
+        line-height: 1.7;
+        margin: 0 0 25px;
+    }
+    .machine-hero-top {
+        padding: 20px 0 10px;
+    }
+    .machine-statement h2 {
+        font-size: 18vw;
+    }
+    .chapter-photo-gallery {
+        padding: 20px 0 45px;
+    }
+    .chapter-contact-sheet {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+    .chapter-contact-photo {
+        height: 235px;
+    }
+    .chapter-contact-photo:nth-child(2) {
+        margin-top: 35px;
+    }
+    .chapter-contact-photo:nth-child(4) {
+        margin-top: 35px;
+    }
+    .photo-expand {
+        transform: none;
+        padding: 10px;
+        background: #111214b0;
+    }
+    .photo-expand > span {
+        display: none;
+    }
+    .photo-expand svg {
+        width: 17px;
+    }
+    .machine-program-layout {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    .program-rail {
+        display: flex;
+        top: 0;
+        z-index: 8;
+        padding: 0;
+        background: var(--paper);
+        border-bottom: 1px solid var(--ink);
+    }
+    .program-rail > a {
+        flex: 1;
+        font-size: 11px;
+        gap: 7px;
+        justify-content: center;
+        padding: 18px 3px;
+    }
+    .program-rail > a:after,
+    .program-rail > a > svg {
+        display: none;
+    }
+    .rail-contact {
+        height: 8px;
+        width: 8px;
+    }
+    .program-panels .machine-program {
+        scroll-margin-top: 60px;
+    }
+    .program-panels .machine-program-title {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+    .program-panels .machine-program h2 {
+        font-size: 62px;
+        grid-row: auto;
+    }
+    .program-panels .machine-program p {
+        margin: 0;
+    }
+    .program-panels .machine-program-image {
+        height: 280px;
+    }
+    .machine-contact-officers {
+        font-size: 18px;
+    }
+    .reveal-skip {
+        top: 18px;
+        right: 18px;
+        font-size: 12px;
+        padding: 10px 12px;
+    }
+    .photo-viewer-tools,
+    .photo-viewer-controls {
+        padding: 12px;
+    }
+    .chapter-expanded-photo {
+        height: 58svh;
+    }
+    .photo-viewer-controls p {
+        font-size: 12px;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .circuit-field,
+    .pcb-pulse,
+    .pcb-trace {
+        animation: none !important;
+    }
+    .chapter-contact-photo img,
+    .chapter-contact-photo:after,
+    .photo-expand {
+        transition: none;
+    }
+    .chapter-contact-photo:hover img {
+        scale: 1;
+    }
+}
+/* Accessible hit areas remain generous even when the visual control is compact. */
+.machine-hero-top button {
+    min-width: 44px;
+    min-height: 44px;
+    justify-content: center;
+}
+.machine-theme-toggle {
+    min-height: 44px;
+}
+.mobile-toggle {
+    min-width: 44px;
+    min-height: 44px;
+}
+.desktop-nav > a,
+.resource-disclosure > button {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+}
+.photo-viewer-tools button,
+.photo-viewer-controls button {
+    min-width: 44px;
+    min-height: 44px;
+}
+.social-icons > a {
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+@media (max-width: 700px) {
+    .program-rail > a {
+        font-size: 12px;
+    }
+    .login-body input,
+    .content-editor input,
+    .content-editor textarea,
+    .team-invite input {
+        font-size: 16px;
+    }
+}

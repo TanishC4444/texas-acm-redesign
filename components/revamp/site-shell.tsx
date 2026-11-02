@@ -4,10 +4,10 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, Menu, X, ChevronDown, Instagram, Github, Linkedin } from 'lucide-react';
 const links = [
-    { href: '/about', label: 'Our people' },
-    { href: '/events', label: 'What’s on' },
+    { href: '/about', label: 'About' },
+    { href: '/events', label: 'Events' },
     { href: '/resources', label: 'Resources' },
-    { href: '/partnership', label: 'Partner with us' },
+    { href: '/partnership', label: 'Partnerships' },
 ];
 export function SiteHeader() {
     const path = usePathname();
@@ -91,7 +91,7 @@ export function SiteHeader() {
                         Officer login <ArrowUpRight size={14} />
                     </Link>
                     <a className="join-button" href="/#join">
-                        Join the club <ArrowUpRight size={16} />
+                        Join Texas ACM <ArrowUpRight size={16} />
                     </a>
                     <button
                         className="mobile-toggle"
@@ -144,20 +144,20 @@ export function SiteFooter() {
                 </div>
                 <div className="footer-links">
                     <div>
-                        <h3>Find your way</h3>
-                        <Link href="/about">Our people</Link>
+                        <h3>Texas ACM</h3>
+                        <Link href="/about">About Texas ACM</Link>
                         <Link href="/events">Events</Link>
                         <Link href="/calendar">Calendar</Link>
                         <Link href="/partnership">Partnerships</Link>
                         <Link href="/officer">Officer workspace</Link>
                     </div>
                     <div>
-                        <h3>A little help</h3>
+                        <h3>Resources</h3>
                         <Link href="/resources">Resources</Link>
                         <Link href="/forms">Forms</Link>
                         <Link href="/faq">FAQ</Link>
                         <Link href="/resume-book">Resume book</Link>
-                        <a href="mailto:pres@texasacm.org">Say hello ↗</a>
+                        <a href="mailto:pres@texasacm.org">Contact officers ↗</a>
                     </div>
                 </div>
             </div>

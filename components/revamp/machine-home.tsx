@@ -2,8 +2,9 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { useReducedMotion, motion } from 'framer-motion';
-import { ArrowDown, ArrowUpRight, RotateCcw, Pause, Play } from 'lucide-react';
+import { ArrowUpRight, RotateCcw, Pause, Play } from 'lucide-react';
 import ChapterReveal from './logo-reveal';
+import ChapterGallery from './chapter-gallery';
 import InstagramFeed from './instagram-feed';
 import EmailSignupForm from '@/components/EmailSignupForm';
 import { PublishedCards } from './live-content';
@@ -11,26 +12,25 @@ let played = false;
 const activities = [
     {
         name: 'Academics',
-        title: 'Learn it. Then build it.',
-        description:
-            'Workshops, conversations with professors, and people to work through the hard parts with.',
+        title: 'Workshops & professors.',
+        description: 'Technical workshops, guest speakers, and Pancakes with Professors.',
         src: 'pwp',
         href: '/events#academics',
         alt: 'Texas ACM Pancakes with Professors gathering',
     },
     {
         name: 'Industry',
-        title: 'Meet the people making it.',
+        title: 'Tech talks & careers.',
         description:
-            'Tech talks, company connections, and a closer look at where computer science can take you.',
+            'Company tech talks, career workshops, and connections with our corporate partners.',
         src: 'acmformal25',
         href: '/events#industry',
         alt: 'Texas ACM student community at formal',
     },
     {
         name: 'Community',
-        title: 'Know someone in the room.',
-        description: 'Game nights, retreats, and friendships that stick around after class.',
+        title: 'Texas ACM, outside class.',
+        description: 'Game nights, retreats, mentorship, and CS Week.',
         src: 'familyfeud25',
         href: '/events#community',
         alt: 'Texas ACM Family Feud community event',
@@ -40,6 +40,23 @@ export default function MachineHome() {
     const reduced = useReducedMotion();
     const [intro, setIntro] = useState(false);
     const [paused, setPaused] = useState(false);
+    const [activeProgram, setActiveProgram] = useState('academics');
+    const page = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting)
+                        setActiveProgram((entry.target as HTMLElement).dataset.acmProgram!);
+                });
+            },
+            { rootMargin: '-15% 0px -35% 0px', threshold: 0.2 },
+        );
+        page.current
+            ?.querySelectorAll('[data-acm-program]')
+            .forEach((node) => observer.observe(node));
+        return () => observer.disconnect();
+    }, []);
     const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
     function finish() {
         setIntro(false);
@@ -76,16 +93,12 @@ export default function MachineHome() {
               };
     return (
         <div
+            ref={page}
             className={`machine-home ${paused || reduced ? 'machine-still' : ''} ${intro ? 'machine-intro-active' : 'machine-ready'}`}
         >
             {intro && <ChapterReveal onSkip={finish} />}
             <section className="machine-hero">
                 <div className="machine-hero-top">
-                    <span>
-                        Association for Computing Machinery
-                        <br />
-                        The University of Texas at Austin
-                    </span>
                     <div>
                         <button onClick={replay} disabled={!!reduced}>
                             <RotateCcw size={16} /> Replay the opening
@@ -101,10 +114,14 @@ export default function MachineHome() {
                     </div>
                 </div>
                 <h1>
-                    COMPUTING.
+                    TEXAS ACM.
                     <br />
-                    <span>WITH PEOPLE.</span>
+                    <span>UT AUSTIN.</span>
                 </h1>
+                <p className="machine-chapter-description">
+                    The student chapter of the Association for Computing Machinery at The University
+                    of Texas at Austin.
+                </p>
                 <div className="machine-hero-image">
                     <img
                         src="/studio/acmformal25.webp"
@@ -123,21 +140,6 @@ export default function MachineHome() {
                         </a>
                     </div>
                 </div>
-                <div className="machine-hero-links">
-                    <a href="#chapter">
-                        Meet the chapter <ArrowDown size={18} />
-                    </a>
-                    <Link href="/calendar">
-                        What’s coming up <ArrowUpRight size={18} />
-                    </Link>
-                    <a
-                        href="https://discord.gg/tspJCpFFKx"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Find us on Discord <ArrowUpRight size={18} />
-                    </a>
-                </div>
             </section>
             <section id="chapter" className="machine-about">
                 <div className="machine-section-bar">
@@ -148,64 +150,68 @@ export default function MachineHome() {
                 </div>
                 <motion.div className="machine-statement" {...enter}>
                     <h2>
-                        THE MACHINERY
+                        THE TEXAS ACM
                         <br />
-                        IS ONLY HALF
-                        <br />
-                        <span>THE STORY.</span>
+                        <span>COMMUNITY.</span>
                     </h2>
                     <div>
                         <p>
-                            We’re the UT Austin chapter of the Association for Computing Machinery.
-                            Computing brings us together. What we do with it—and who we do it
-                            with—is where it gets interesting.
+                            Texas ACM brings UT Austin students together through academic events,
+                            industry connections, and a community that extends beyond the classroom.
                         </p>
                         <p>
-                            Meet a professor over pancakes. Ask a question at a tech talk. Join a
-                            workshop, a retreat, or a game night. There’s room for you here.
+                            Come to Pancakes with Professors, a company tech talk, Family Feud, or a
+                            chapter retreat. All majors are welcome.
                         </p>
                     </div>
                 </motion.div>
-                <div className="machine-photo-strip">
-                    <img
-                        src="/studio/acmretreat25.webp"
-                        alt="Friends at an ACM retreat"
-                        loading="lazy"
-                    />
-                    <img
-                        src="/studio/acmhand25.webp"
-                        alt="Texas ACM members at a campus organization table"
-                        loading="lazy"
-                    />
-                </div>
+                <ChapterGallery still={paused} />
             </section>
-            <section className="machine-programs">
-                <div className="machine-section-bar">
-                    <span>What we do</span>
-                    <Link href="/events">
-                        All events <ArrowUpRight size={18} />
-                    </Link>
+            <section className="machine-programs" aria-label="Texas ACM programs">
+                <div className="machine-program-layout">
+                    <nav className="program-rail" aria-label="Chapter pillars">
+                        {activities.map((a) => (
+                            <a
+                                key={a.name}
+                                href={`#program-${a.name.toLowerCase()}`}
+                                aria-current={
+                                    activeProgram === a.name.toLowerCase() ? 'location' : undefined
+                                }
+                                onClick={() => setActiveProgram(a.name.toLowerCase())}
+                            >
+                                <span className="rail-contact" aria-hidden="true" />
+                                {a.name}
+                                <ArrowUpRight size={18} />
+                            </a>
+                        ))}
+                    </nav>
+                    <div className="program-panels">
+                        {activities.map((a) => (
+                            <motion.article
+                                key={a.name}
+                                id={`program-${a.name.toLowerCase()}`}
+                                data-acm-program={a.name.toLowerCase()}
+                                tabIndex={-1}
+                                aria-labelledby={`program-heading-${a.name.toLowerCase()}`}
+                                className="machine-program"
+                                {...enter}
+                            >
+                                <div className="machine-program-title">
+                                    <h2 id={`program-heading-${a.name.toLowerCase()}`}>
+                                        {a.title}
+                                    </h2>
+                                    <p>{a.description}</p>
+                                    <Link href={a.href}>
+                                        {a.name} events <ArrowUpRight size={20} />
+                                    </Link>
+                                </div>
+                                <div className="machine-program-image">
+                                    <img src={`/studio/${a.src}.webp`} alt={a.alt} loading="lazy" />
+                                </div>
+                            </motion.article>
+                        ))}
+                    </div>
                 </div>
-                {activities.map((a, i) => (
-                    <motion.article key={a.name} className="machine-program" {...enter}>
-                        <div className="machine-program-title">
-                            <span>{a.name}</span>
-                            <h2>{a.title}</h2>
-                            <p>{a.description}</p>
-                            <Link href={a.href}>
-                                Explore {a.name.toLowerCase()} <ArrowUpRight size={20} />
-                            </Link>
-                        </div>
-                        <Link
-                            href={a.href}
-                            className="machine-program-image"
-                            aria-label={`Explore ${a.name.toLowerCase()} events`}
-                        >
-                            <img src={`/studio/${a.src}.webp`} alt={a.alt} loading="lazy" />
-                            <span aria-hidden="true">↗</span>
-                        </Link>
-                    </motion.article>
-                ))}
             </section>
             <section className="machine-schedule">
                 <div className="machine-section-bar">
@@ -217,9 +223,9 @@ export default function MachineHome() {
                 <div className="machine-calendar-grid">
                     <div>
                         <h2>
-                            SHOW UP.
+                            TEXAS ACM
                             <br />
-                            <span>GET INTO IT.</span>
+                            <span>EVENTS.</span>
                         </h2>
                         <PublishedCards kind="event" limit={3} />
                     </div>
@@ -247,15 +253,15 @@ export default function MachineHome() {
                         },
                         {
                             title: 'Resume book',
-                            text: 'Put your work in front of sponsors.',
+                            text: 'Share your resume with chapter sponsors.',
                             href: '/resume-book',
                         },
                         {
                             title: 'Forms & signups',
-                            text: 'Get straight to the right link.',
+                            text: 'Chapter applications and event signups.',
                             href: '/forms',
                         },
-                        { title: 'FAQ', text: 'Good questions. Straight answers.', href: '/faq' },
+                        { title: 'FAQ', text: 'Membership and chapter information.', href: '/faq' },
                     ].map((r) => (
                         <Link href={r.href} key={r.href}>
                             <h3>{r.title}</h3>
@@ -277,11 +283,9 @@ export default function MachineHome() {
                     </a>
                 </div>
                 <h2>
-                    YOU DON’T HAVE
+                    JOIN
                     <br />
-                    TO FIGURE IT
-                    <br />
-                    <span>OUT ALONE.</span>
+                    <span>TEXAS ACM.</span>
                 </h2>
                 <div className="machine-join-bottom">
                     <div>
@@ -308,13 +312,28 @@ export default function MachineHome() {
                         </a>
                     </div>
                     <div className="machine-newsletter">
-                        <h3>
-                            Chapter news.
-                            <br />
-                            Straight to your inbox.
-                        </h3>
-                        <EmailSignupForm />
-                        <small>Continue to Mailchimp to subscribe.</small>
+                        {process.env.NEXT_PUBLIC_NEWSLETTER_ENABLED === '1' ? (
+                            <>
+                                <h3>Texas ACM newsletter.</h3>
+                                <EmailSignupForm />
+                                <small>Continue to Mailchimp to subscribe.</small>
+                            </>
+                        ) : (
+                            <>
+                                <h3>
+                                    Questions for
+                                    <br />
+                                    the chapter?
+                                </h3>
+                                <p>Contact the Texas ACM officers.</p>
+                                <a
+                                    className="machine-contact-officers"
+                                    href="mailto:pres@texasacm.org"
+                                >
+                                    pres@texasacm.org <ArrowUpRight size={22} />
+                                </a>
+                            </>
+                        )}
                     </div>
                 </div>
             </section>

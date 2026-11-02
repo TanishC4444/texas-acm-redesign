@@ -50,14 +50,12 @@ export function PublishedCards({ kind, limit }: { kind: ContentKind; limit?: num
                 <CalendarDays size={28} />
                 <div>
                     <h3>
-                        {state === 'unavailable'
-                            ? 'The calendar is your source of truth.'
-                            : 'Something good is always in the works.'}
+                        {state === 'unavailable' ? 'Texas ACM calendar' : 'Upcoming chapter events'}
                     </h3>
                     <p>
                         {state === 'unavailable'
                             ? 'The live event feed is unavailable here. Check our shared calendar for the current schedule.'
-                            : 'No upcoming events are published here yet. Explore the calendar for more.'}
+                            : 'Check the shared calendar for the current chapter schedule.'}
                     </p>
                 </div>
                 <a className="text-link" href="/calendar">

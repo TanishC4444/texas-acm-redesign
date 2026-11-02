@@ -1,15 +1,27 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import CircuitField from './circuit-field';
 export default function ChapterReveal({ onSkip }: { onSkip: () => void }) {
+    const dialog = useRef<HTMLDialogElement>(null);
     useEffect(() => {
-        const skip = (event: KeyboardEvent) => {
-            if (event.key === 'Escape') onSkip();
+        const previous = document.activeElement as HTMLElement | null;
+        dialog.current?.showModal();
+        return () => {
+            dialog.current?.close();
+            if (previous?.isConnected) previous.focus();
         };
-        document.addEventListener('keydown', skip);
-        return () => document.removeEventListener('keydown', skip);
-    }, [onSkip]);
+    }, []);
     return (
-        <div className="chapter-reveal" role="status" aria-label="Texas ACM chapter introduction">
+        <dialog
+            ref={dialog}
+            className="chapter-reveal"
+            aria-label="Texas ACM logo introduction"
+            onCancel={(e) => {
+                e.preventDefault();
+                onSkip();
+            }}
+        >
+            <CircuitField />
             <div className="reveal-grid" aria-hidden="true" />
             <svg className="reveal-circuit" viewBox="0 0 1200 700" fill="none" aria-hidden="true">
                 <g>
@@ -33,16 +45,6 @@ export default function ChapterReveal({ onSkip }: { onSkip: () => void }) {
                     ))}
                 </g>
             </svg>
-            <div className="reveal-corner">
-                UNIVERSITY OF TEXAS AT AUSTIN
-                <br />
-                ASSOCIATION FOR COMPUTING MACHINERY
-            </div>
-            <span className="reveal-top-right">
-                TEXAS ACM
-                <br />
-                UT AUSTIN
-            </span>
             <div className="reveal-diamond" aria-hidden="true" />
             <div className="reveal-logo">
                 <img className="reveal-logo-base" src="/texasacm-logo-white.svg" alt="Texas ACM" />
@@ -69,21 +71,13 @@ export default function ChapterReveal({ onSkip }: { onSkip: () => void }) {
                 />
             </div>
             <div className="reveal-scan" aria-hidden="true" />
-            <div className="reveal-terminal">
-                <span>ACADEMICS</span>
-                <span>INDUSTRY</span>
-                <span>COMMUNITY</span>
-            </div>
-            <div className="reveal-bottom">
-                <span>UTCS. OPEN TO EVERY MAJOR.</span>
-                <button autoFocus onClick={onSkip}>
-                    Skip intro [↗]
-                </button>
-            </div>
+            <button className="reveal-skip" autoFocus onClick={onSkip}>
+                Skip introduction ↗
+            </button>
             <div className="reveal-shutter shutter-left" aria-hidden="true" />
             <div className="reveal-shutter shutter-right" aria-hidden="true" />
             <div className="reveal-shutter shutter-top" aria-hidden="true" />
             <div className="reveal-shutter shutter-bottom" aria-hidden="true" />
-        </div>
+        </dialog>
     );
 }

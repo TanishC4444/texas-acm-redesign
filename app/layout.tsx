@@ -10,12 +10,13 @@ import { SiteHeader, SiteFooter } from '@/components/revamp/site-shell';
 import { Toaster } from '@/components/ui/toaster';
 export const metadata: Metadata = {
     metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.texasacm.org'),
-    title: { default: 'Texas ACM — Your people. Your next big thing.', template: '%s | Texas ACM' },
+    title: { default: 'Texas ACM — UT Austin', template: '%s | Texas ACM' },
     description:
-        'Your people in computer science at UT Austin. Explore Texas ACM events, student resources, and a community open to every major.',
+        'The UT Austin student chapter of the Association for Computing Machinery. Chapter events, student resources, industry connections, and community.',
     openGraph: {
-        title: 'Texas ACM — Your people. Your next big thing.',
-        description: 'A little curiosity. A lot of community. Find your people at UT Austin.',
+        title: 'Texas ACM — UT Austin',
+        description:
+            'Academic events, industry connections, and student community at The University of Texas at Austin.',
         images: ['/home-page-slides/acmformal25.jpg'],
         type: 'website',
     },

@@ -4,7 +4,7 @@ export default function AboutHero() {
         <ChapterPageHero
             title={'About Texas ACM'}
             description={
-                'The people, projects, and possibilities behind your UT Austin computing community.'
+                'Learn about Texas ACM, its three pillars, and the officers who lead the chapter.'
             }
             image={'acmretreat25'}
             alt={'ACM friends together at retreat'}
