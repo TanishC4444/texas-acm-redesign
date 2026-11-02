@@ -3505,5 +3505,99 @@ dialog.identity-intro:not([open]) {
     animation: none;
 }
 @media (prefers-reduced-motion: reduce) {
-    dialog.identity-intro:not([open]) { display: none; }
+    dialog.identity-intro:not([open]) {
+        display: none;
+    }
+}
+
+/* A brief brand interlude on route changes; never delays or captures navigation. */
+.chapter-page-transition {
+    position: fixed;
+    inset: 0;
+    z-index: 210;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+    background: var(--paper);
+    animation: chapter-page-uncover 0.52s cubic-bezier(0.65, 0, 0.2, 1) both;
+}
+.chapter-transition-mark {
+    width: clamp(85px, 12vw, 145px);
+    overflow: visible;
+    animation: chapter-mark-turn 0.48s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes chapter-page-uncover {
+    0%,
+    20% {
+        clip-path: inset(0 0 0 0);
+    }
+    100% {
+        clip-path: inset(0 0 100% 0);
+    }
+}
+@keyframes chapter-mark-turn {
+    0% {
+        opacity: 0;
+        transform: scale(0.72) rotate(-12deg);
+    }
+    32% {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(-20px) scale(1.06) rotate(6deg);
+    }
+}
+.studio-header .desktop-nav a {
+    position: relative;
+}
+.studio-header .desktop-nav a::after {
+    content: '';
+    position: absolute;
+    height: 3px;
+    background: var(--machine-orange);
+    left: 0;
+    right: 0;
+    bottom: -7px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+}
+.studio-header .desktop-nav a:hover::after,
+.studio-header .desktop-nav a:focus-visible::after,
+.studio-header .desktop-nav a[aria-current='page']::after {
+    transform: scaleX(1);
+}
+.minimal-hero-actions a,
+.simple-footer a,
+.minimal-section-heading > a {
+    transition:
+        transform 0.25s ease,
+        color 0.25s ease;
+}
+.minimal-hero-actions a:hover {
+    transform: translateY(-3px);
+}
+.minimal-hero-actions a:active {
+    transform: translateY(0) scale(0.98);
+}
+.minimal-section-heading > a:hover {
+    color: var(--machine-blue);
+    transform: translateX(3px);
+}
+.chapter-involvement-card:focus-visible img {
+    transform: scale(1.045);
+}
+@media (prefers-reduced-motion: reduce) {
+    .chapter-page-transition {
+        display: none;
+    }
+    .studio-header .desktop-nav a::after,
+    .minimal-hero-actions a,
+    .simple-footer a,
+    .minimal-section-heading > a {
+        transition: none;
+        transform: none !important;
+    }
 }

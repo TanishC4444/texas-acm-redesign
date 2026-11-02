@@ -8,6 +8,7 @@ import { SitePhotosProvider } from '@/components/revamp/site-photos';
 import SiteAnalytics from '@/components/revamp/site-analytics';
 import { SiteSoundProvider } from '@/components/revamp/site-sound';
 import VisualControls from '@/components/revamp/visual-controls';
+import PageTransition from '@/components/revamp/page-transition';
 import '@/app/fonts.css';
 import { SiteHeader, SiteFooter } from '@/components/revamp/site-shell';
 import { Toaster } from '@/components/ui/toaster';
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <SiteSoundProvider>
                     <SitePhotosProvider>
                         <SiteAnalytics />
+                        <PageTransition />
                         <SiteHeader />
                         <main id="main-content" tabIndex={-1}>
                             {children}
