@@ -10,6 +10,7 @@ export default function EventsPage() {
     return (
         <>
             <ChapterPageHero
+                photoSlot="events"
                 title="Chapter events"
                 description="Academic, industry, and community events hosted by Texas ACM."
                 image="familyfeud25"

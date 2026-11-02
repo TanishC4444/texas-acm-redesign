@@ -6,15 +6,21 @@ A working copy of the [Texas ACM website](https://www.texasacm.org/) for plannin
 
 ## Redesign implementation
 
-The active design uses a restrained vertical layout, real chapter photography, and a bolder header. The original logo remains unchanged. Its four-second introduction now combines the logo assembly with layered engraved geometry, lighting, and grain; the sweeping scan line is removed. Reduced-motion, skip, replay, and motion pause remain available.
+The active design uses a restrained vertical layout, real chapter photography, and a bolder header. The original logo remains unchanged. The 2.7-second introduction starts with the original symbol centered on a plain background, moves it left as the original “texas acm” wordmark appears, then fades into the page. Both pieces are cropped views of the unchanged official logo asset. The previous graphic design is removed: no chip, rings, layered background, glitches, shutters, or sweeping line. Reduced-motion, skip, replay, and motion pause remain available.
 
-![Detailed logo reveal](docs/redesign/engraved-opening.jpg)
+Optional synthesized sound is off by default. Enabling it from the homepage replays the reveal with two quiet notes; it can be muted in the introduction or shared footer. The reveal sound stops when the introduction closes. No external audio service is used, and fresh visits start muted.
+
+[Symbol first](docs/redesign/identity-symbol.jpg) · [Name revealed](docs/redesign/identity-name.jpg)
+
+![Minimal homepage](docs/redesign/minimal-home.jpg)
+
+The homepage now contains a short introduction, direct Discord/event links, one main photograph, the calendar, a compact chapter gallery, and one resources link. Repeated program panels, photo captions, resource tiles, and the oversized footer are removed. The Instagram feed appears only once the account is connected and posts exist. Other pages share the simpler footer and reduced heading scale.
 
 **One resource page:** `/resources` contains the CS guide, searchable CS A–Z, resume book, forms, and FAQ, with a left table of contents. Legacy resource URLs redirect to the corresponding section. Resource navigation is a direct link; mobile navigation exposes the main links without a menu. FAQs are immediately readable, and guide copy is shorter.
 
 [Consolidated resources](docs/redesign/resources-consolidated.jpg) · [Current About layout](docs/redesign/natural-about.jpg)
 
-**Officer dashboard:** Content, Photos, Analytics, and administrator-only Officer access. Photos lets approved officers replace ten homepage, gallery, program, and page-hero images from the chapter library or an HTTPS image URL, edit image descriptions, preview, and publish. This supports linked images, not file uploads. Public images update through one shared live listener with source-image fallbacks. Officer headshots and biography text remain source-managed.
+**Officer dashboard:** Content, Photos, Analytics, and administrator-only Officer access. Photos lets approved officers replace nine homepage, gallery, and page-hero images from the chapter library or an HTTPS image URL, edit image descriptions, preview, and publish. This supports linked images, not file uploads. Public images update through one shared live listener with source-image fallbacks. Officer headshots and biography text remain source-managed.
 
 **Analytics:** Public page views, link destinations, and selected explicitly named controls are recorded from this implementation forward. No visitor IDs, cookies, query strings, form values, passwords, or officer-page activity are collected. Do Not Track is respected. The dashboard shows the last 30 days within the latest 1,000 events, with per-page totals and top clicked destinations. Counts include preview/testing activity, are not unique visitors, and are client-generated rather than audit-grade. Events are append-only; only verified, MFA-approved officers can read them. There is no automatic deletion/retention job yet; dashboard filtering does not delete older records. This uses the project's Firestore quota.
 

@@ -31,7 +31,15 @@ export function usePublishedContent(kind: ContentKind) {
     }, [kind]);
     return { items, state };
 }
-export function PublishedCards({ kind, limit }: { kind: ContentKind; limit?: number }) {
+export function PublishedCards({
+    kind,
+    limit,
+    hideEmpty = false,
+}: {
+    kind: ContentKind;
+    limit?: number;
+    hideEmpty?: boolean;
+}) {
     const { items, state } = usePublishedContent(kind);
     const visible = (
         kind === 'event'
@@ -44,6 +52,7 @@ export function PublishedCards({ kind, limit }: { kind: ContentKind; limit?: num
                 Loading the latest from ACM…
             </p>
         );
+    if (!visible.length && hideEmpty) return null;
     if (!visible.length)
         return kind === 'event' ? (
             <div className="event-empty">

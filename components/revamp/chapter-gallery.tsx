@@ -16,8 +16,8 @@ export default function ChapterGallery({ still = false }: { still?: boolean }) {
     const dialog = useRef<HTMLDialogElement>(null);
     const trigger = useRef<HTMLElement | null>(null);
     const { scrollYProgress } = useScroll({ target: root, offset: ['start end', 'end start'] });
-    const fan = useTransform(scrollYProgress, [0, 0.45, 1], [-8, 0, 5]);
-    const rise = useTransform(scrollYProgress, [0, 0.5, 1], [60, 0, -30]);
+    const fan = useTransform(scrollYProgress, [0, 0.45, 1], [-2, 0, 1]);
+    const rise = useTransform(scrollYProgress, [0, 0.5, 1], [12, 0, -8]);
     useEffect(() => {
         if (selected === null) return;
         dialog.current?.showModal();

@@ -8,6 +8,7 @@ export default function ChapterPageHero({
     alt,
     href,
     action,
+    photoSlot,
 }: {
     title: string;
     description: string;
@@ -15,6 +16,7 @@ export default function ChapterPageHero({
     alt: string;
     href?: string;
     action?: string;
+    photoSlot?: string;
 }) {
     return (
         <section className="chapter-page-hero">
@@ -31,13 +33,7 @@ export default function ChapterPageHero({
             <div className="page-hero-art">
                 <div className="page-hero-photo">
                     <ManagedPhoto
-                        slot={
-                            image === 'acmretreat25'
-                                ? 'about'
-                                : image === 'familyfeud25'
-                                  ? 'events'
-                                  : 'academics'
-                        }
+                        slot={photoSlot || `hero-${image}`}
                         src={`/studio/${image}.webp`}
                         alt={alt}
                         fetchPriority="high"

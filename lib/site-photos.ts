@@ -18,20 +18,14 @@ export const photoSlots = [
         alt: 'Texas ACM community event',
     },
     {
-        id: 'academics',
-        label: 'Academics',
-        src: '/studio/pwp.webp',
-        alt: 'Pancakes with Professors',
-    },
-    {
         id: 'industry',
-        label: 'Industry',
+        label: 'Partnerships page',
         src: '/studio/acmformal25.webp',
         alt: 'Texas ACM chapter formal',
     },
     {
         id: 'community',
-        label: 'Community',
+        label: 'Calendar page',
         src: '/studio/familyfeud25.webp',
         alt: 'Texas ACM Family Feud',
     },

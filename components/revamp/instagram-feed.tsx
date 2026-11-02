@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { ArrowUpRight, Play, Layers } from 'lucide-react';
 import type { InstagramPost } from '@/lib/instagram-data';
-export default function InstagramFeed() {
+export default function InstagramFeed({ compact = false }: { compact?: boolean }) {
     const [posts, setPosts] = useState<InstagramPost[]>([]);
     const [status, setStatus] = useState('loading');
     useEffect(() => {
@@ -41,8 +41,9 @@ export default function InstagramFeed() {
             document.removeEventListener('visibilitychange', refresh);
         };
     }, []);
+    if (compact && (status !== 'connected' || !posts.length)) return null;
     return (
-        <section className="chapter-feed">
+        <section className={`chapter-feed ${compact ? 'compact-feed' : ''}`}>
             <div className="chapter-feed-heading">
                 <h2>
                     Fresh from

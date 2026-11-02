@@ -1,8 +1,14 @@
 'use client';
 import { useEffect, useRef } from 'react';
-import CircuitField from './circuit-field';
+import { SoundToggle, useSiteSound } from './site-sound';
+export const INTRO_DURATION = 2700;
 export default function ChapterReveal({ onSkip }: { onSkip: () => void }) {
     const dialog = useRef<HTMLDialogElement>(null);
+    const sound = useSiteSound();
+    useEffect(() => {
+        if (sound.enabled) sound.reveal();
+        return sound.stop;
+    }, [sound.enabled, sound.reveal, sound.stop]);
     useEffect(() => {
         const previous = document.activeElement as HTMLElement | null;
         dialog.current?.showModal();
@@ -14,45 +20,46 @@ export default function ChapterReveal({ onSkip }: { onSkip: () => void }) {
     return (
         <dialog
             ref={dialog}
-            className="chapter-reveal"
-            aria-label="Texas ACM logo introduction"
+            className="identity-intro"
+            aria-label="Texas ACM introduction"
             onCancel={(e) => {
                 e.preventDefault();
                 onSkip();
             }}
         >
-            <CircuitField />
-            <div className="reveal-logo">
-                <img className="reveal-logo-base" src="/texasacm-logo-white.svg" alt="Texas ACM" />
-                {Array.from({ length: 8 }, (_, i) => (
-                    <img
-                        key={i}
-                        className={`logo-slice slice-${i}`}
-                        src="/texasacm-logo-white.svg"
-                        alt=""
-                        aria-hidden="true"
-                    />
-                ))}
-                <img
-                    className="logo-channel channel-orange"
-                    src="/texasacm-logo-white.svg"
-                    alt=""
-                    aria-hidden="true"
-                />
-                <img
-                    className="logo-channel channel-blue"
-                    src="/texasacm-logo-white.svg"
-                    alt=""
-                    aria-hidden="true"
-                />
+            <div className="identity-intro-sound">
+                <SoundToggle />
             </div>
-            <button className="reveal-skip" autoFocus onClick={onSkip}>
-                Skip introduction ↗
+            <svg
+                className="identity-lockup"
+                viewBox="0 0 1144 262"
+                role="img"
+                aria-label="Texas ACM"
+            >
+                <defs>
+                    <clipPath id="identity-symbol-crop">
+                        <rect width="330" height="262" />
+                    </clipPath>
+                    <clipPath id="identity-name-crop">
+                        <rect className="identity-name-window" x="340" width="804" height="262" />
+                    </clipPath>
+                </defs>
+                {/* Both pieces are cropped views of the unchanged official logo asset. */}
+                <g className="identity-symbol" clipPath="url(#identity-symbol-crop)">
+                    <image href="/texasacm-logo-white.svg" width="1144" height="262" />
+                </g>
+                <g clipPath="url(#identity-name-crop)">
+                    <image href="/texasacm-logo-white.svg" width="1144" height="262" />
+                </g>
+            </svg>
+            <button
+                className="identity-intro-skip"
+                autoFocus
+                onClick={onSkip}
+                aria-label="Skip introduction"
+            >
+                Skip intro
             </button>
-            <div className="reveal-shutter shutter-left" aria-hidden="true" />
-            <div className="reveal-shutter shutter-right" aria-hidden="true" />
-            <div className="reveal-shutter shutter-top" aria-hidden="true" />
-            <div className="reveal-shutter shutter-bottom" aria-hidden="true" />
         </dialog>
     );
 }
