@@ -6,7 +6,13 @@ A working copy of the [Texas ACM website](https://www.texasacm.org/) for plannin
 
 ## Redesign implementation — November 1, 2026
 
-The redesign branch adds **Campus Studio**, the alternate **After Hours** homepage, a shared site design system, searchable CS A–Z, and a Firebase-backed officer content workspace with mandatory authenticator 2FA. The inventory below remains the historical baseline of the original website.
+The redesign branch now opens with **Alternate Universe**: a maximalist, photo-led homepage with a centered oversized wordmark, orbital graphics, acid green and violet sections, and interactive motion. The earlier Campus Studio and After Hours directions remain at `/designs/studio` and `/designs/night`. It also includes shared navigation, searchable CS A–Z, and a Firebase-backed officer workspace with mandatory authenticator 2FA. The inventory below remains the historical baseline of the original website.
+
+![Alternate Universe desktop](docs/redesign/alternate-universe-desktop.jpg)
+
+The new motion includes a skippable 1.5-second first-visit intro (with replay), floating photos, rotating graphics, scroll parallax, section reveals, an animated marquee, hover reactions, draggable photos with reset, route entrance transitions, and a route-loading screen. A pause control stops ambient motion; reduced-motion preferences disable automatic animation and the intro. Photos come from the existing ACM archive.
+
+[Mobile preview](docs/redesign/alternate-universe-mobile.jpg) · [Photo wall](docs/redesign/alternate-universe-photo-wall.jpg) · [Intro](docs/redesign/alternate-universe-intro.jpg)
 
 - [Design directions and Figma file](docs/DESIGN-DIRECTIONS.md)
 - [Officer setup, permissions, and remaining launch steps](docs/OFFICER-SETUP.md)

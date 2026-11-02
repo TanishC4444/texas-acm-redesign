@@ -39,3 +39,11 @@ The moving ribbon, hover treatments, and decorative graphics respect `prefers-re
 ### Officer entry while Firebase setup is blocked
 
 ![Officer workspace setup state](redesign/officer-workspace-entry.jpg)
+
+## Current direction: Alternate Universe
+
+The homepage now uses a new maximalist direction, rather than the earlier split-column Campus Studio composition. A centered, oversized TEXAS ACM wordmark sits among floating archive photos and orbital graphics. Subsequent sections shift between oversized editorial typography, asymmetrical arched photo portals, live officer content, a draggable photo wall, a circular toolkit graphic, and a violet invitation panel. Palette: paper, near-black, acid green, violet, and peach.
+
+Motion: timed, skippable first-visit intro with replay; CSS float/rotation; scroll-linked parallax; viewport entrance reveals; marquee; hover reactions; direct-manipulation photo dragging/reset; route loading and page entrances. Ambient motion can be paused; reduced-motion preferences disable automatic motion. The intro is a brand sequence, not a measure of network loading. The photo wall is temporary browser interaction and does not modify source photos or officer content.
+
+The Figma file still documents the two earlier concepts. This new direction is implemented in code; it has not yet been mirrored into Figma. Earlier homepages remain at `/designs/studio` and `/designs/night`.

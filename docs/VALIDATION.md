@@ -19,3 +19,12 @@ The separate Firebase project `texas-acm-1bb6b` and its web app were created on 
 ## Launch requirements
 
 Complete password setup, email verification, and authenticator enrollment for `tanishchauhan@utexas.edu`, then test the complete sign-in/edit/publish path with that real account. Configure production hosting and its server identity for invitations. Review both design directions and the content with the ACM team before replacing the current site.
+
+## Alternate Universe revision
+
+- New centered collage homepage, six archive photos, new design comparison entry, global route-loading screen, and page entrances.
+- Mobile browser reviewed at 390 × 844: document width equals viewport width; no failed loaded images.
+- Motion pause verified against computed marquee animation state. Pausing reveals all content immediately, including sections not previously viewed.
+- Photo dragging verified by pointer interaction and resulting translation; reset restores the wall.
+- Desktop hero, mobile hero, photo wall, and intro screenshots saved under `docs/redesign/`.
+- This revision does not change Firebase authentication or officer permissions. Password/2FA onboarding and production hosting remain as documented above.

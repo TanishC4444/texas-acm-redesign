@@ -40,7 +40,7 @@ export function SiteHeader() {
             <a className="skip-link" href="#main-content">
                 Skip to content
             </a>
-            <header className="studio-header">
+            <header className={`studio-header ${path === '/' ? 'universe-header' : ''}`}>
                 <Link className="wordmark" href="/" aria-label="Texas ACM home">
                     <span className="acm-symbol" aria-hidden="true">
                         ✳

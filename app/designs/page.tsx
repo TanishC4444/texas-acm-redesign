@@ -8,14 +8,32 @@ export default function Designs() {
             <h1>
                 Same people.
                 <br />
-                <em>Two possibilities.</em>
+                <em>Three possibilities.</em>
             </h1>
             <p>
-                Both directions draw from ACM’s Instagram: mint palettes, retro interfaces, collage,
-                and a friendly, student-first voice. Explore the full homepage in either direction.
+                These directions draw from ACM’s Instagram: mint palettes, retro interfaces,
+                collage, and a friendly, student-first voice. Explore the full homepage in each
+                direction.
             </p>
             <div className="design-options">
-                <Link href="/" className="design-option design-campus">
+                <Link href="/" className="design-option design-universe">
+                    <span className="eyebrow">CURRENT / ALTERNATE UNIVERSE</span>
+                    <h2>
+                        A little
+                        <br />
+                        out of the
+                        <br />
+                        <em>ordinary.</em>
+                    </h2>
+                    <p>
+                        Acid green. Orbital violet. A centered giant wordmark, floating photo
+                        collage, scroll choreography, and an interactive memory wall.
+                    </p>
+                    <span className="button button-dark">
+                        Enter the universe <ArrowUpRight size={18} />
+                    </span>
+                </Link>
+                <Link href="/designs/studio" className="design-option design-campus">
                     <span className="eyebrow">DIRECTION 01 / CAMPUS STUDIO</span>
                     <h2>
                         Your people.
@@ -61,8 +79,8 @@ export default function Designs() {
                 </Link>
             </div>
             <p className="design-note">
-                Campus Studio is the current implementation. After Hours is an alternate homepage
-                treatment for comparison.
+                Alternate Universe is the current homepage. Campus Studio and After Hours remain
+                available for comparison.
             </p>
         </div>
     );

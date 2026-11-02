@@ -1,4 +1,4 @@
-import StudioHome from '@/components/revamp/home';
+import UniverseHome from '@/components/revamp/universe';
 export default function HomePage() {
-    return <StudioHome />;
+    return <UniverseHome />;
 }

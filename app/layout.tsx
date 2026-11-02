@@ -2,6 +2,7 @@ import type React from 'react';
 import type { Metadata } from 'next';
 import '@/app/globals.css';
 import '@/app/studio.css';
+import '@/app/universe.css';
 import '@/app/fonts.css';
 import { SiteHeader, SiteFooter } from '@/components/revamp/site-shell';
 import { Toaster } from '@/components/ui/toaster';
