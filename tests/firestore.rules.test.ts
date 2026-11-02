@@ -200,3 +200,59 @@ describe('public content boundaries and validation', () => {
         await assertFails(setDoc(doc(actor('admin'), 'private', 'x'), { secret: 'x' }));
     });
 });
+
+describe('site photos and anonymous activity', () => {
+    it('allows public photo reads, but only verified MFA officers can publish valid slots', async () => {
+        const photo = {
+            url: '/studio/acmformal25.webp',
+            alt: 'Texas ACM formal',
+            updatedBy: 'editor',
+            updatedAt: serverTimestamp(),
+        };
+        await assertSucceeds(setDoc(doc(actor('editor'), 'sitePhotos', 'home'), photo));
+        await assertSucceeds(
+            getDoc(doc(env.unauthenticatedContext().firestore(), 'sitePhotos', 'home')),
+        );
+        await assertFails(setDoc(doc(actor('editor', ''), 'sitePhotos', 'home'), photo));
+        await assertFails(setDoc(doc(actor('editor'), 'sitePhotos', 'unknown'), photo));
+        await assertFails(
+            setDoc(doc(actor('editor'), 'sitePhotos', 'home'), {
+                ...photo,
+                url: 'javascript:alert(1)',
+            }),
+        );
+    });
+    it('accepts anonymous bounded activity but rejects private fields and officer paths', async () => {
+        const db = env.unauthenticatedContext().firestore();
+        const event = { type: 'view', path: '/about', target: '', recordedAt: serverTimestamp() };
+        await assertSucceeds(setDoc(doc(db, 'siteActivity', 'view'), event));
+        await assertFails(
+            setDoc(doc(db, 'siteActivity', 'private'), { ...event, email: 'person@example.com' }),
+        );
+        await assertFails(
+            setDoc(doc(db, 'siteActivity', 'officer'), { ...event, path: '/officer' }),
+        );
+        await assertFails(
+            setDoc(doc(db, 'siteActivity', 'bad-time'), {
+                ...event,
+                recordedAt: Timestamp.fromMillis(0),
+            }),
+        );
+        await assertFails(setDoc(doc(db, 'siteActivity', 'view'), event));
+    });
+    it('limits activity reads to active verified MFA officers', async () => {
+        await env.withSecurityRulesDisabled((c) =>
+            setDoc(doc(c.firestore(), 'siteActivity', 'sample'), {
+                type: 'view',
+                path: '/',
+                target: '',
+                recordedAt: Timestamp.now(),
+            }),
+        );
+        await assertFails(
+            getDocs(collection(env.unauthenticatedContext().firestore(), 'siteActivity')),
+        );
+        await assertFails(getDocs(collection(actor('editor', ''), 'siteActivity')));
+        await assertSucceeds(getDocs(collection(actor('editor'), 'siteActivity')));
+    });
+});

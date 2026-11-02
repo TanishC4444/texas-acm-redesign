@@ -1,8 +1,8 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, Menu, X, ChevronDown, Instagram, Github, Linkedin } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { ArrowUpRight, Menu, X, Instagram, Github, Linkedin } from 'lucide-react';
 const links = [
     { href: '/about', label: 'About' },
     { href: '/events', label: 'Events' },
@@ -12,27 +12,18 @@ const links = [
 export function SiteHeader() {
     const path = usePathname();
     const [open, setOpen] = useState(false);
-    const [resources, setResources] = useState(false);
-    const menuRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
         setOpen(false);
-        setResources(false);
     }, [path]);
     useEffect(() => {
         const close = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
                 setOpen(false);
-                setResources(false);
             }
         };
-        const outside = (e: PointerEvent) => {
-            if (!menuRef.current?.contains(e.target as Node)) setResources(false);
-        };
         document.addEventListener('keydown', close);
-        document.addEventListener('pointerdown', outside);
         return () => {
             document.removeEventListener('keydown', close);
-            document.removeEventListener('pointerdown', outside);
         };
     }, []);
     return (
@@ -54,37 +45,15 @@ export function SiteHeader() {
                     />
                 </Link>
                 <nav className="desktop-nav" aria-label="Main navigation">
-                    {links.map((l) =>
-                        l.href === '/resources' ? (
-                            <div className="resource-disclosure" ref={menuRef} key={l.href}>
-                                <button
-                                    aria-expanded={resources}
-                                    aria-controls="resource-menu"
-                                    onClick={() => setResources(!resources)}
-                                >
-                                    Resources <ChevronDown size={14} />
-                                </button>
-                                {resources && (
-                                    <div id="resource-menu" className="resource-menu">
-                                        <Link href="/resources">All resources</Link>
-                                        <Link href="/atoz">CS A–Z</Link>
-                                        <Link href="/cs-guide">CS Guide</Link>
-                                        <Link href="/faq">FAQ</Link>
-                                        <Link href="/forms">Forms</Link>
-                                        <Link href="/resume-book">Resume book</Link>
-                                    </div>
-                                )}
-                            </div>
-                        ) : (
-                            <Link
-                                key={l.href}
-                                href={l.href}
-                                aria-current={path === l.href ? 'page' : undefined}
-                            >
-                                {l.label}
-                            </Link>
-                        ),
-                    )}
+                    {links.map((l) => (
+                        <Link
+                            key={l.href}
+                            href={l.href}
+                            aria-current={path === l.href ? 'page' : undefined}
+                        >
+                            {l.label}
+                        </Link>
+                    ))}
                 </nav>
                 <div className="header-actions">
                     <Link className="officer-link" href="/officer">
@@ -112,7 +81,7 @@ export function SiteHeader() {
                             </Link>
                         ))}
                         <Link href="/calendar">Calendar</Link>
-                        <Link href="/forms">Forms</Link>
+                        <Link href="/resources#forms">Forms</Link>
                         <a href="/#join">Join Texas ACM</a>
                         <Link href="/officer">Officer login</Link>
                     </nav>
@@ -154,9 +123,9 @@ export function SiteFooter() {
                     <div>
                         <h3>Resources</h3>
                         <Link href="/resources">Resources</Link>
-                        <Link href="/forms">Forms</Link>
-                        <Link href="/faq">FAQ</Link>
-                        <Link href="/resume-book">Resume book</Link>
+                        <Link href="/resources#forms">Forms</Link>
+                        <Link href="/resources#faq">FAQ</Link>
+                        <Link href="/resources#resume">Resume book</Link>
                         <a href="mailto:pres@texasacm.org">Contact officers ↗</a>
                     </div>
                 </div>

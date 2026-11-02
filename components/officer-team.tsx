@@ -26,6 +26,7 @@ export default function OfficerTeam() {
                 {officers.map((officer) => (
                     <button
                         className="officer-card"
+                        data-track="open-officer-profile"
                         key={officer.name}
                         onClick={(e) => {
                             trigger.current = e.currentTarget;

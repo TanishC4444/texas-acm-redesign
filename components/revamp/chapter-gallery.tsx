@@ -1,4 +1,5 @@
 'use client';
+import ManagedPhoto from './site-photos';
 import { useEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { ArrowLeft, ArrowRight, X, Expand } from 'lucide-react';
@@ -35,6 +36,7 @@ export default function ChapterGallery({ still = false }: { still?: boolean }) {
                     <motion.button
                         key={photo.src}
                         className={`chapter-contact-photo contact-${i}`}
+                        data-track={`open-gallery-${i}`}
                         style={
                             reduced || still
                                 ? { rotate: 0, y: 0 }
@@ -46,7 +48,12 @@ export default function ChapterGallery({ still = false }: { still?: boolean }) {
                         }}
                         aria-label={`Open photo: ${photo.alt}`}
                     >
-                        <img src={`/studio/${photo.src}.webp`} alt={photo.alt} loading="lazy" />
+                        <ManagedPhoto
+                            slot={`gallery-${i}`}
+                            src={`/studio/${photo.src}.webp`}
+                            alt={photo.alt}
+                            loading="lazy"
+                        />
                         <span className="photo-expand">
                             <Expand size={20} />
                             <span>View photo</span>
@@ -80,7 +87,8 @@ export default function ChapterGallery({ still = false }: { still?: boolean }) {
                             <X />
                         </button>
                     </div>
-                    <img
+                    <ManagedPhoto
+                        slot={`gallery-${selected}`}
                         className="chapter-expanded-photo"
                         src={`/studio/${images[selected].src}.webp`}
                         alt={images[selected].alt}

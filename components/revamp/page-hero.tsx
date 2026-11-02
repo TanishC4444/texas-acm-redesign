@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import ManagedPhoto from './site-photos';
 import { ArrowUpRight } from 'lucide-react';
 export default function ChapterPageHero({
     title,
@@ -29,7 +30,18 @@ export default function ChapterPageHero({
             </div>
             <div className="page-hero-art">
                 <div className="page-hero-photo">
-                    <img src={`/studio/${image}.webp`} alt={alt} fetchPriority="high" />
+                    <ManagedPhoto
+                        slot={
+                            image === 'acmretreat25'
+                                ? 'about'
+                                : image === 'familyfeud25'
+                                  ? 'events'
+                                  : 'academics'
+                        }
+                        src={`/studio/${image}.webp`}
+                        alt={alt}
+                        fetchPriority="high"
+                    />
                 </div>
             </div>
         </section>

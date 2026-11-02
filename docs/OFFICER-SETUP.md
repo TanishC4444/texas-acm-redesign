@@ -68,3 +68,11 @@ The editor supports title, description, category, date/time, location, HTTPS det
 ## Verification performed
 
 Content validation tests and 12 emulator-backed Firestore rule tests cover public/draft separation, unapproved accounts, missing MFA, wrong second-factor type, unverified email, valid officer editing, role escalation, deactivation, immutable authorship, unsafe URLs, unknown collections, and deletion denial. Real email delivery, live account creation, authenticator enrollment/challenge, and production publishing remain unverified until administrator onboarding is completed. Cloud setup was verified using Google Cloud Shell with the user’s approved account authorization, without creating or downloading a service-account key.
+
+## Photos and site activity
+
+The officer sidebar now includes Photos and Analytics. Photos can publish ten named image slots from the bundled chapter library or an HTTPS image URL, together with an image description. This is linked-image management, not an upload service. Officer portraits and bios remain source-managed. Public images use one shared live listener with fallback images.
+
+Analytics records page views, links, and selected static button names. No user identifier, cookie, query string, password, form input, or officer-page activity is stored. Do Not Track is honored. The table summarizes 30 days within the latest 1,000 activity records; it includes preview/test activity and is not a unique-visitor metric. There is no automatic deletion task. Anonymous append-only events are bounded by schema; only active, verified-email, TOTP-approved officers can read them. Client-generated activity can be spoofed and should not be treated as audited traffic.
+
+These rules were deployed and read back from `texas-acm-1bb6b`. Fifteen emulator security tests pass, including photo writes, invalid image URLs, public activity writes, blocked private fields, immutable records, and officer-only analytics reads. Actual page views and resource navigation clicks were confirmed in Firestore. Dashboard publishing still requires completing administrator onboarding; no MFA bypass or public analytics-read access was introduced.

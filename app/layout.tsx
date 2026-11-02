@@ -4,6 +4,8 @@ import '@/app/globals.css';
 import '@/app/studio.css';
 import '@/app/universe.css';
 import '@/app/machine.css';
+import { SitePhotosProvider } from '@/components/revamp/site-photos';
+import SiteAnalytics from '@/components/revamp/site-analytics';
 import VisualControls from '@/components/revamp/visual-controls';
 import '@/app/fonts.css';
 import { SiteHeader, SiteFooter } from '@/components/revamp/site-shell';
@@ -36,13 +38,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     process.env.NEXT_PUBLIC_FIGMA_CAPTURE === '1' && (
                         <script async src="https://mcp.figma.com/mcp/html-to-design/capture.js" />
                     )}
-                <SiteHeader />
-                <main id="main-content" tabIndex={-1}>
-                    {children}
-                </main>
-                <SiteFooter />
-                <VisualControls />
-                <Toaster />
+                <SitePhotosProvider>
+                    <SiteAnalytics />
+                    <SiteHeader />
+                    <main id="main-content" tabIndex={-1}>
+                        {children}
+                    </main>
+                    <SiteFooter />
+                    <VisualControls />
+                    <Toaster />
+                </SitePhotosProvider>
             </body>
         </html>
     );

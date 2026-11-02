@@ -35,6 +35,7 @@ export default function VisualControls() {
             {wipe && <div className="machine-theme-wipe" aria-hidden="true" />}
             <button
                 className="machine-theme-toggle"
+                data-track="toggle-theme"
                 onClick={toggle}
                 aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
             >

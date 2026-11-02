@@ -46,7 +46,6 @@ export default function ChapterReveal({ onSkip }: { onSkip: () => void }) {
                     aria-hidden="true"
                 />
             </div>
-            <div className="reveal-scan" aria-hidden="true" />
             <button className="reveal-skip" autoFocus onClick={onSkip}>
                 Skip introduction ↗
             </button>

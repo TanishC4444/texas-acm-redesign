@@ -27,6 +27,7 @@ import {
     updateDoc,
 } from 'firebase/firestore';
 import QRCode from 'qrcode';
+import { PhotosPanel, AnalyticsPanel } from './site-panels';
 import {
     ArrowUpRight,
     Check,
@@ -100,7 +101,7 @@ export default function OfficerPortal() {
     const [notice, setNotice] = useState('');
     const [records, setRecords] = useState<ContentRecord[]>([]);
     const [recordsLoading, setRecordsLoading] = useState(true);
-    const [view, setView] = useState<'content' | 'team'>('content');
+    const [view, setView] = useState<'content' | 'team' | 'photos' | 'analytics'>('content');
     const [filter, setFilter] = useState('all');
     const [search, setSearch] = useState('');
     const editorRef = useRef<HTMLDivElement>(null);
@@ -671,11 +672,7 @@ export default function OfficerPortal() {
         <div className="officer-app">
             <aside className="officer-sidebar">
                 <span className="eyebrow">THE WORKSPACE</span>
-                <h2>
-                    Behind
-                    <br />
-                    the <em>scenes.</em>
-                </h2>
+                <h2>Texas ACM</h2>
                 <button
                     aria-current={view === 'content' ? 'page' : undefined}
                     onClick={() => {
@@ -683,7 +680,19 @@ export default function OfficerPortal() {
                         setError('');
                     }}
                 >
-                    <LayoutDashboard size={17} /> Content studio
+                    <LayoutDashboard size={17} /> Content
+                </button>
+                <button
+                    aria-current={view === 'photos' ? 'page' : undefined}
+                    onClick={() => setView('photos')}
+                >
+                    Photos
+                </button>
+                <button
+                    aria-current={view === 'analytics' ? 'page' : undefined}
+                    onClick={() => setView('analytics')}
+                >
+                    Analytics
                 </button>
                 {officer?.role === 'admin' && (
                     <button
@@ -712,14 +721,24 @@ export default function OfficerPortal() {
                             TEXAS ACM / {view === 'content' ? 'CONTENT STUDIO' : 'OFFICER TEAM'}
                         </span>
                         <h1>
-                            {view === 'content'
-                                ? 'Let’s make it happen.'
-                                : 'Your people, with access.'}
+                            {
+                                {
+                                    content: 'Website content',
+                                    team: 'Officer access',
+                                    photos: 'Website photos',
+                                    analytics: 'Site activity',
+                                }[view]
+                            }
                         </h1>
                         <p>
-                            {view === 'content'
-                                ? 'Draft it. Polish it. Put it out into the world.'
-                                : 'Only admins can add officers or change their access.'}
+                            {
+                                {
+                                    content: 'Manage events, announcements, resources, and forms.',
+                                    team: 'Only administrators can manage officer access.',
+                                    photos: 'Replace website images and descriptions.',
+                                    analytics: 'Page views and clicks across the public website.',
+                                }[view]
+                            }
                         </p>
                     </div>
                     {view === 'content' && (
@@ -731,7 +750,7 @@ export default function OfficerPortal() {
                                 setNotice('');
                             }}
                         >
-                            <Plus size={17} /> Create something
+                            <Plus size={17} /> New content
                         </button>
                     )}
                 </header>
@@ -770,7 +789,7 @@ export default function OfficerPortal() {
                                         key={kind}
                                         onClick={() => setFilter(kind)}
                                     >
-                                        {kind === 'all' ? 'Everything' : kind + 's'}
+                                        {kind === 'all' ? 'All content' : kind + 's'}
                                     </button>
                                 ))}
                             </div>
@@ -793,7 +812,7 @@ export default function OfficerPortal() {
                                     <h2>
                                         {records.length
                                             ? 'No matching content.'
-                                            : 'Your next big thing starts with a draft.'}
+                                            : 'No content yet.'}
                                     </h2>
                                     <p>
                                         {records.length
@@ -839,6 +858,10 @@ export default function OfficerPortal() {
                             )}
                         </div>
                     </>
+                ) : view === 'photos' ? (
+                    <PhotosPanel uid={user!.uid} />
+                ) : view === 'analytics' ? (
+                    <AnalyticsPanel />
                 ) : (
                     <TeamPanel team={team} currentUid={user!.uid} run={run} busy={busy} />
                 )}
@@ -856,7 +879,7 @@ export default function OfficerPortal() {
                             <div>
                                 <span className="eyebrow">CONTENT STUDIO</span>
                                 <h2 id="editor-title">
-                                    {editing.id ? 'Make it better.' : 'Start something good.'}
+                                    {editing.id ? 'Edit content' : 'New content'}
                                 </h2>
                             </div>
                             <button

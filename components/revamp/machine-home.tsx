@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import ManagedPhoto from './site-photos';
 import { useEffect, useRef, useState } from 'react';
 import { useReducedMotion, motion } from 'framer-motion';
 import { ArrowUpRight, RotateCcw, Pause, Play } from 'lucide-react';
@@ -100,10 +101,11 @@ export default function MachineHome() {
             <section className="machine-hero">
                 <div className="machine-hero-top">
                     <div>
-                        <button onClick={replay} disabled={!!reduced}>
+                        <button data-track="replay-intro" onClick={replay} disabled={!!reduced}>
                             <RotateCcw size={16} /> Replay the opening
                         </button>
                         <button
+                            data-track="toggle-motion"
                             onClick={() => setPaused(!paused)}
                             disabled={!!reduced}
                             aria-pressed={paused}
@@ -123,7 +125,8 @@ export default function MachineHome() {
                     of Texas at Austin.
                 </p>
                 <div className="machine-hero-image">
-                    <img
+                    <ManagedPhoto
+                        slot="home"
                         src="/studio/acmformal25.webp"
                         alt="Texas ACM students together at the chapter formal"
                         fetchPriority="high"
@@ -205,7 +208,12 @@ export default function MachineHome() {
                                     </Link>
                                 </div>
                                 <div className="machine-program-image">
-                                    <img src={`/studio/${a.src}.webp`} alt={a.alt} loading="lazy" />
+                                    <ManagedPhoto
+                                        slot={a.name.toLowerCase()}
+                                        src={`/studio/${a.src}.webp`}
+                                        alt={a.alt}
+                                        loading="lazy"
+                                    />
                                 </div>
                             </motion.article>
                         ))}
@@ -242,23 +250,27 @@ export default function MachineHome() {
                 </div>
                 <div className="machine-tool-list">
                     {[
-                        { title: 'CS A–Z', text: 'The UTCS vocabulary.', href: '/atoz' },
+                        { title: 'CS A–Z', text: 'The UTCS vocabulary.', href: '/resources#atoz' },
                         {
                             title: 'CS Guide',
                             text: 'Classes, campus, and what comes next.',
-                            href: '/cs-guide',
+                            href: '/resources#guide',
                         },
                         {
                             title: 'Resume book',
                             text: 'Share your resume with chapter sponsors.',
-                            href: '/resume-book',
+                            href: '/resources#resume',
                         },
                         {
                             title: 'Forms & signups',
                             text: 'Chapter applications and event signups.',
-                            href: '/forms',
+                            href: '/resources#forms',
                         },
-                        { title: 'FAQ', text: 'Membership and chapter information.', href: '/faq' },
+                        {
+                            title: 'FAQ',
+                            text: 'Membership and chapter information.',
+                            href: '/resources#faq',
+                        },
                     ].map((r) => (
                         <Link href={r.href} key={r.href}>
                             <h3>{r.title}</h3>

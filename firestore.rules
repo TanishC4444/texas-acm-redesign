@@ -51,6 +51,30 @@ service cloud.firestore {
         && request.resource.data.role in ['admin','editor'] && request.resource.data.active is bool;
       allow delete: if false;
     }
+    match /sitePhotos/{slot} {
+      allow read: if true;
+      allow create, update: if officer()
+        && slot in ['home','about','events','academics','industry','community','gallery-0','gallery-1','gallery-2','gallery-3']
+        && request.resource.data.keys().hasAll(['url','alt','updatedAt','updatedBy'])
+        && request.resource.data.keys().hasOnly(['url','alt','updatedAt','updatedBy'])
+        && request.resource.data.url is string && request.resource.data.url.size() <= 2048
+        && (request.resource.data.url.matches('https://[^\\s]+') || request.resource.data.url.matches('/studio/[a-zA-Z0-9/_-]+\\.webp'))
+        && request.resource.data.alt is string && request.resource.data.alt.size() > 0 && request.resource.data.alt.size() <= 240
+        && request.resource.data.updatedBy == request.auth.uid && request.resource.data.updatedAt == request.time;
+      allow delete: if false;
+    }
+    match /siteActivity/{id} {
+      // Anonymous, append-only activity. No visitor identifiers or form data are accepted.
+      allow create: if request.resource.data.keys().hasOnly(['type','path','target','recordedAt'])
+        && request.resource.data.keys().hasAll(['type','path','target','recordedAt'])
+        && request.resource.data.type in ['view','click']
+        && request.resource.data.path in ['/','/about','/events','/calendar','/partnership','/resources','/cs-week','/election/26']
+        && request.resource.data.target is string && request.resource.data.target.size() <= 180
+        && (request.resource.data.type == 'click' || request.resource.data.target == '')
+        && request.resource.data.recordedAt == request.time;
+      allow read: if officer();
+      allow update, delete: if false;
+    }
     match /{document=**} { allow read, write: if false; }
   }
 }

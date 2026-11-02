@@ -5,7 +5,7 @@ import { PublishedCards } from '@/components/revamp/live-content';
 import CorporateEvents from '@/components/corporate-events';
 import AcademicEvents from '@/components/academic-events';
 import SocialEvents from '@/components/social-events';
-export const metadata = { title: 'What’s on' };
+export const metadata = { title: 'Events' };
 export default function EventsPage() {
     return (
         <>
@@ -21,7 +21,7 @@ export default function EventsPage() {
                 <div className="section-heading">
                     <div>
                         <span className="eyebrow">COMING UP</span>
-                        <h2>Save your spot.</h2>
+                        <h2>Upcoming events</h2>
                     </div>
                     <a className="text-link" href="https://www.instagram.com/texas_acm/">
                         The latest on Instagram ↗
@@ -37,17 +37,17 @@ export default function EventsPage() {
             <div className="legacy-content">
                 <div id="industry" className="category-banner">
                     <span className="eyebrow">01 / INDUSTRY</span>
-                    <h2>Your next open door.</h2>
+                    <h2>Industry events</h2>
                 </div>
                 <CorporateEvents />
                 <div id="academics" className="category-banner">
                     <span className="eyebrow">02 / ACADEMICS</span>
-                    <h2>Stay curious. Make something.</h2>
+                    <h2>Academic events</h2>
                 </div>
                 <AcademicEvents />
                 <div id="community" className="category-banner">
                     <span className="eyebrow">03 / COMMUNITY</span>
-                    <h2>Your people are here.</h2>
+                    <h2>Community events</h2>
                 </div>
                 <SocialEvents />
             </div>
