@@ -185,6 +185,42 @@ export default function MachineHome() {
                     <ArrowUpRight size={28} />
                 </Link>
             </section>
+            <section className="chapter-get-started" aria-label="Get involved with Texas ACM">
+                <div>
+                    <h2>New to ACM?</h2>
+                    <p>
+                        All majors are welcome. Join the Discord to meet members and find your next
+                        event.
+                    </p>
+                    <a
+                        href="https://discord.gg/tspJCpFFKx"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Join the community <ArrowUpRight size={17} />
+                    </a>
+                </div>
+                <div>
+                    <h2>Make room for it.</h2>
+                    <p>
+                        Check the chapter calendar for times and locations. Follow each event’s RSVP
+                        link for registration details.
+                    </p>
+                    <Link href="/calendar">
+                        Open the calendar <ArrowUpRight size={17} />
+                    </Link>
+                </div>
+                <div>
+                    <h2>Have a question?</h2>
+                    <p>
+                        Find answers about membership and UTCS in our resource hub, or contact the
+                        chapter directly.
+                    </p>
+                    <a href="mailto:pres@texasacm.org">
+                        Email the chapter <ArrowUpRight size={17} />
+                    </a>
+                </div>
+            </section>
             <InstagramFeed compact />
         </div>
     );

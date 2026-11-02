@@ -718,7 +718,15 @@ export default function OfficerPortal() {
                 <header className="dashboard-heading">
                     <div>
                         <span className="eyebrow">
-                            TEXAS ACM / {view === 'content' ? 'CONTENT STUDIO' : 'OFFICER TEAM'}
+                            TEXAS ACM /{' '}
+                            {
+                                {
+                                    content: 'CONTENT',
+                                    photos: 'PHOTOS',
+                                    analytics: 'ANALYTICS',
+                                    team: 'OFFICER TEAM',
+                                }[view]
+                            }
                         </span>
                         <h1>
                             {
@@ -755,6 +763,22 @@ export default function OfficerPortal() {
                     )}
                 </header>
                 {feedback}
+                {view === 'content' && (
+                    <details className="officer-publishing-help">
+                        <summary>Publishing guide</summary>
+                        <p>
+                            <strong>Draft</strong> keeps an item private. <strong>Published</strong>{' '}
+                            makes it visible on the website immediately. <strong>Archived</strong>{' '}
+                            hides it while keeping it available for future edits.
+                        </p>
+                        <p>
+                            For events, include the date, time, location, and an HTTPS RSVP link.
+                            Enter dates in your device’s timezone; visitors see Central Time. Use
+                            Photos to update the available website image slots, then View website to
+                            check your changes.
+                        </p>
+                    </details>
+                )}
                 {view === 'content' ? (
                     <>
                         <div className="dashboard-stats">

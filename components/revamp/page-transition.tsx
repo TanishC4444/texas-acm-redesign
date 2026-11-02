@@ -14,7 +14,7 @@ export default function PageTransition() {
         if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
         setSequence((value) => value + 1);
         setVisible(true);
-        const timer = setTimeout(() => setVisible(false), 520);
+        const timer = setTimeout(() => setVisible(false), 760);
         return () => clearTimeout(timer);
     }, [pathname]);
 

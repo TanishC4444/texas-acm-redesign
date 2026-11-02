@@ -28,6 +28,11 @@ export default function EventsPage() {
                         The latest on Instagram ↗
                     </a>
                 </div>
+                <p className="event-attendance-note">
+                    Event times are shown in Central Time. Check each event’s details for its
+                    location, RSVP, cost, and any attendance requirements. The shared calendar has
+                    the current chapter schedule.
+                </p>
                 <PublishedCards kind="event" />
                 <nav className="event-category-links" aria-label="Event categories">
                     <a href="#industry">01 / Industry ↗</a>
