@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const guideSections = [
     {
-        icon: <Compass size={28} className="text-blue-500" />,
+        icon: <Compass size={28} className="text-emerald-500" />,
         theme: 'Getting Started at UTCS',
         description: 'Everything you need to know to get through your first year in UTCS.',
         links: [
@@ -60,11 +60,6 @@ const guideSections = [
 export default function QuickAccess() {
     return (
         <section>
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="mb-8 text-center">
-                    <h2 className="text-3xl font-bold text-gray-900">Quick Access</h2>
-                </div>
-            </div>
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="mx-auto grid max-w-4xl grid-cols-1 justify-items-center gap-4 lg:grid-cols-2">
                     {guideSections.map((section) => (

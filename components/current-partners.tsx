@@ -92,7 +92,7 @@ const currentPartners: Partner[] = [
 export const CurrentPartners: FC = (): JSX.Element => {
     const tierStyles: Record<Tier, { text: string; shadow: string }> = {
         Platinum: {
-            text: 'text-blue-600',
+            text: 'text-emerald-600',
             shadow: 'shadow-[0_0_20px_rgba(59,130,246,0.5)]',
         },
         Gold: {

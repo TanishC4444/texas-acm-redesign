@@ -1,31 +1,62 @@
-// app/events/page.tsx
-import AcademicEvents from '@/components/academic-events';
-import AcademicEventsHero from '@/components/academic-events-hero';
+import Link from 'next/link';
+import ChapterPageHero from '@/components/revamp/page-hero';
+import { ArrowUpRight } from 'lucide-react';
+import { PublishedCards } from '@/components/revamp/live-content';
 import CorporateEvents from '@/components/corporate-events';
-import CorporateEventsHero from '@/components/corporate-events-hero';
-import EventsHero from '@/components/events-hero';
-import FeaturedEvents from '@/components/featured-events';
-import Footer from '@/components/footer';
+import AcademicEvents from '@/components/academic-events';
 import SocialEvents from '@/components/social-events';
-import SocialEventsHero from '@/components/social-events-hero';
-import { getUpcomingEvents } from '@/lib/calendar';
-
-export const revalidate = 60;
-
-export default async function EventsPage() {
-    const events = await getUpcomingEvents(2);
-
+export const metadata = { title: 'Events' };
+export default function EventsPage() {
     return (
-        <main className="min-h-screen">
-            <EventsHero />
-            <FeaturedEvents events={events} />
-            <CorporateEventsHero />
-            <CorporateEvents />
-            <AcademicEventsHero />
-            <AcademicEvents />
-            <SocialEventsHero />
-            <SocialEvents />
-            <Footer />
-        </main>
+        <>
+            <ChapterPageHero
+                photoSlot="events"
+                title="Chapter events"
+                description="Academic, industry, and community events hosted by Texas ACM."
+                image="familyfeud25"
+                alt="Texas ACM community event"
+                href="/calendar"
+                action="Open the calendar"
+            />
+            <div className="studio-section">
+                <div className="section-heading">
+                    <div>
+                        <span className="eyebrow">COMING UP</span>
+                        <h2>Upcoming events</h2>
+                    </div>
+                    <a className="text-link" href="https://www.instagram.com/texas_acm/">
+                        The latest on Instagram ↗
+                    </a>
+                </div>
+                <p className="event-attendance-note">
+                    Event times are shown in Central Time. Check each event’s details for its
+                    location, RSVP, cost, and any attendance requirements. The shared calendar has
+                    the current chapter schedule.
+                </p>
+                <PublishedCards kind="event" />
+                <nav className="event-category-links" aria-label="Event categories">
+                    <a href="#industry">01 / Industry ↗</a>
+                    <a href="#academics">02 / Academics ↗</a>
+                    <a href="#community">03 / Community ↗</a>
+                </nav>
+            </div>
+            <div className="legacy-content">
+                <div id="industry" className="category-banner">
+                    <span className="eyebrow">01 / INDUSTRY</span>
+                    <h2>Industry events</h2>
+                </div>
+                <CorporateEvents />
+                <div id="academics" className="category-banner">
+                    <span className="eyebrow">02 / ACADEMICS</span>
+                    <h2>Academic events</h2>
+                </div>
+                <AcademicEvents />
+                <div id="community" className="category-banner">
+                    <span className="eyebrow">03 / COMMUNITY</span>
+                    <h2>Community events</h2>
+                </div>
+                <SocialEvents />
+            </div>
+        </>
     );
 }

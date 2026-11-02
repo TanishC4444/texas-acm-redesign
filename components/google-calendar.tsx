@@ -13,6 +13,14 @@ export default function GoogleCalendar() {
                             to stay updated!
                         </p>
                     </div>
+                    <a
+                        className="text-link mb-6"
+                        href="https://calendar.google.com/calendar/u/0/r?cid=utacm.org_tblt9l9gskpcunjovsjfh8ei0g@group.calendar.google.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Open calendar directly in Google Calendar ↗
+                    </a>
                     <div className="mb-8 overflow-hidden rounded-lg bg-white shadow-md">
                         <div className="aspect-[3/4] w-full sm:aspect-video">
                             <iframe

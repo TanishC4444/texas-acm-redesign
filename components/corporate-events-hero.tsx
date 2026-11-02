@@ -16,11 +16,11 @@ export default function CorporateEventsHero() {
             </div>
             <div className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2">
                 <div className="flex items-center gap-3 rounded-xl bg-black/80 px-8 py-8 shadow-xl">
-                    <div className="flex flex-col items-center text-blue-400">
+                    <div className="flex flex-col items-center text-emerald-400">
                         <Briefcase size={48} className="mb-4" />
-                        <h1 className="text-center text-4xl font-bold leading-tight text-white">
+                        <h2 className="text-center text-4xl font-bold leading-tight text-white">
                             Corporate Events
-                        </h1>
+                        </h2>
                     </div>
                 </div>
             </div>

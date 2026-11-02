@@ -1,10 +1,8 @@
-import Header from '@/components/header';
 import Image from 'next/image';
 
 export default function CSWeekInfo() {
     return (
         <section className="bg-[#FCF1DB]">
-            <Header hideHeader={true} />
             <div className="container relative px-4 pb-40 pt-16 text-center sm:px-6 sm:py-20 sm:pb-48 md:py-24 md:pb-56 lg:px-8">
                 <div
                     className="pointer-events-none absolute inset-y-0 left-1/2 z-0 w-screen -translate-x-1/2"
@@ -110,7 +108,7 @@ export default function CSWeekInfo() {
                         <div
                             className="lg:px-18 mx-auto flex min-h-[21rem] max-w-[40rem] items-center justify-center px-10 py-12 text-white sm:min-h-[25rem] sm:px-14 lg:min-h-[30rem] lg:max-w-[50rem] lg:py-14"
                             style={{
-                                backgroundColor: '#0F6E91',
+                                backgroundColor: '#0f9145',
                                 borderRadius: '38% 62% 46% 54% / 43% 35% 65% 57%',
                             }}
                         >

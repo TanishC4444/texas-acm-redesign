@@ -1,0 +1,227 @@
+'use client';
+import Link from 'next/link';
+import { useEffect, useRef, useState } from 'react';
+import { useReducedMotion } from 'framer-motion';
+import { ArrowUpRight, RotateCcw, Pause, Play } from 'lucide-react';
+import ChapterReveal, { INTRO_DURATION } from './logo-reveal';
+import ChapterGallery from './chapter-gallery';
+import ManagedPhoto from './site-photos';
+import { SoundToggle } from './site-sound';
+import InstagramFeed from './instagram-feed';
+import { PublishedCards } from './live-content';
+let played = false;
+export default function MachineHome() {
+    const reduced = useReducedMotion();
+    const [intro, setIntro] = useState(() => !played);
+    const [paused, setPaused] = useState(false);
+    const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    function finish() {
+        setIntro(false);
+        played = true;
+        if (timer.current) clearTimeout(timer.current);
+    }
+    function replay() {
+        setPaused(false);
+        setIntro(true);
+        if (timer.current) clearTimeout(timer.current);
+        timer.current = setTimeout(finish, INTRO_DURATION);
+    }
+    useEffect(() => {
+        if (reduced === null) return;
+        if (!reduced && !played) {
+            setIntro(true);
+            timer.current = setTimeout(() => {
+                setIntro(false);
+                played = true;
+            }, INTRO_DURATION);
+        } else setIntro(false);
+        return () => {
+            if (timer.current) clearTimeout(timer.current);
+        };
+    }, [reduced]);
+    return (
+        <div
+            className={`minimal-home ${paused || reduced ? 'machine-still' : ''} ${intro ? 'machine-intro-active' : 'machine-ready'}`}
+        >
+            {intro && <ChapterReveal onSkip={finish} />}
+            <section className="minimal-hero">
+                <div className="home-controls">
+                    <button data-track="replay-intro" onClick={replay} disabled={!!reduced}>
+                        <RotateCcw size={16} />
+                        <span>Replay intro</span>
+                    </button>
+                    <button
+                        data-track="toggle-motion"
+                        onClick={() => setPaused(!paused)}
+                        disabled={!!reduced}
+                        aria-pressed={paused}
+                        aria-label={paused ? 'Resume motion' : 'Pause motion'}
+                    >
+                        {paused || reduced ? <Play size={17} /> : <Pause size={17} />}
+                    </button>
+                    <SoundToggle onEnable={reduced ? undefined : replay} />
+                </div>
+                <h1>
+                    <span className="chapter-title-art">
+                        <img
+                            src="/texasacm-wordmark.svg"
+                            alt="Texas ACM"
+                            width="800"
+                            height="145"
+                        />
+                    </span>
+                </h1>
+                <p>The computing community at UT Austin. Open to all majors.</p>
+                <div className="minimal-hero-actions" id="join">
+                    <a
+                        className="button button-dark"
+                        href="https://discord.gg/tspJCpFFKx"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Join Texas ACM <ArrowUpRight size={18} />
+                    </a>
+                    <Link href="/events">
+                        Explore events <ArrowUpRight size={18} />
+                    </Link>
+                </div>
+                <ManagedPhoto
+                    slot="home"
+                    className="minimal-cover"
+                    src="/studio/acmformal25.webp"
+                    alt="Texas ACM students at the chapter formal"
+                    fetchPriority="high"
+                />
+            </section>
+            <section className="minimal-events">
+                <div className="minimal-section-heading">
+                    <h2>Upcoming events</h2>
+                    <Link href="/calendar">
+                        Full calendar <ArrowUpRight size={17} />
+                    </Link>
+                </div>
+                <PublishedCards kind="event" limit={3} hideEmpty />
+                <iframe
+                    title="Texas ACM shared events calendar"
+                    loading="lazy"
+                    src="https://calendar.google.com/calendar/embed?src=utacm.org_tblt9l9gskpcunjovsjfh8ei0g%40group.calendar.google.com&ctz=America%2FChicago&mode=AGENDA"
+                />
+            </section>
+            <section className="chapter-involvement" aria-labelledby="involvement-title">
+                <div className="minimal-section-heading">
+                    <h2 id="involvement-title">Find your place.</h2>
+                    <Link href="/events">
+                        Explore events <ArrowUpRight size={17} />
+                    </Link>
+                </div>
+                <div className="chapter-involvement-grid">
+                    {[
+                        {
+                            title: 'Learn together',
+                            text: 'Technical workshops, academic support, and Pancakes with Professors.',
+                            photo: '/studio/pwp.webp',
+                            alt: 'Texas ACM Pancakes with Professors gathering',
+                            href: '/events#academics',
+                        },
+                        {
+                            title: 'Meet the industry',
+                            text: 'Company tech talks, professional workshops, and the Corporate Banquet.',
+                            photo: '/studio/acmformal25.webp',
+                            alt: 'Texas ACM members at a formal chapter gathering',
+                            href: '/events#industry',
+                        },
+                        {
+                            title: 'Find your people',
+                            text: 'Retreats, game nights, and a community beyond your classes.',
+                            photo: '/studio/family-feud.webp',
+                            alt: 'Students taking part in Texas ACM Family Feud',
+                            href: '/events#community',
+                        },
+                    ].map((item) => (
+                        <Link
+                            className="chapter-involvement-card"
+                            href={item.href}
+                            key={item.title}
+                        >
+                            <div className="chapter-involvement-photo">
+                                <img
+                                    src={item.photo}
+                                    alt={item.alt}
+                                    loading="lazy"
+                                    width="800"
+                                    height="600"
+                                />
+                            </div>
+                            <div className="chapter-involvement-title">
+                                <h3>{item.title}</h3>
+                                <ArrowUpRight size={24} aria-hidden="true" />
+                            </div>
+                            <p>{item.text}</p>
+                        </Link>
+                    ))}
+                </div>
+            </section>
+            <section className="minimal-community">
+                <div className="minimal-section-heading">
+                    <div>
+                        <h2>About the chapter</h2>
+                        <p>
+                            Academic support, industry connections, and a community beyond the
+                            classroom.
+                        </p>
+                    </div>
+                    <Link href="/about">
+                        Meet Texas ACM <ArrowUpRight size={17} />
+                    </Link>
+                </div>
+                <ChapterGallery still={paused} />
+            </section>
+            <section className="minimal-resource">
+                <Link href="/resources">
+                    <div>
+                        <h2>Student resources</h2>
+                        <p>CS guides, resumes, forms, and FAQs.</p>
+                    </div>
+                    <ArrowUpRight size={28} />
+                </Link>
+            </section>
+            <section className="chapter-get-started" aria-label="Get involved with Texas ACM">
+                <div>
+                    <h2>New to ACM?</h2>
+                    <p>
+                        All majors are welcome. Join the Discord to meet members and find your next
+                        event.
+                    </p>
+                    <a
+                        href="https://discord.gg/tspJCpFFKx"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Join the community <ArrowUpRight size={17} />
+                    </a>
+                </div>
+                <div>
+                    <h2>Make room for it.</h2>
+                    <p>
+                        Check the chapter calendar for times and locations. Follow each event’s RSVP
+                        link for registration details.
+                    </p>
+                    <Link href="/calendar">
+                        Open the calendar <ArrowUpRight size={17} />
+                    </Link>
+                </div>
+                <div>
+                    <h2>Have a question?</h2>
+                    <p>
+                        Find answers about membership and UTCS in our resource hub, or contact the
+                        chapter directly.
+                    </p>
+                    <a href="mailto:pres@texasacm.org">
+                        Email the chapter <ArrowUpRight size={17} />
+                    </a>
+                </div>
+            </section>
+            <InstagramFeed compact />
+        </div>
+    );
+}

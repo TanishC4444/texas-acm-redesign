@@ -1,6 +1,5 @@
 'use client';
 
-import Header from '@/components/header';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
@@ -40,7 +39,6 @@ export default function Hero() {
 
     return (
         <section className="relative flex h-screen items-center justify-center overflow-hidden">
-            <Header />
             <div className="absolute inset-0 z-0">
                 {images.map((image, index) => (
                     <div

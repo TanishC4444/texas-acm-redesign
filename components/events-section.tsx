@@ -72,7 +72,7 @@ export default function EventsSection({
                                                 alt={image.alt}
                                                 width={200}
                                                 height={200}
-                                                className="h-full w-full object-cover"
+                                                className="h-full w-full object-contain"
                                             />
                                         </div>
                                     </DialogTrigger>
@@ -121,7 +121,7 @@ export default function EventsSection({
                                             alt={signatureImage.alt}
                                             width={200}
                                             height={200}
-                                            className="h-full w-full object-cover"
+                                            className="h-full w-full object-contain"
                                         />
                                     </div>
                                 </DialogTrigger>

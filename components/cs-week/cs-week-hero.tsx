@@ -1,10 +1,8 @@
-import Header from '@/components/header';
 import Image from 'next/image';
 
 export default function CSWeekHero() {
     return (
         <section className="bg-[#7A8F56]">
-            <Header hideHeader={true} />
             <div className="container px-4 py-12 sm:px-6 lg:px-8">
                 <div className="mx-auto grid max-w-4xl items-center gap-8 text-center lg:grid-cols-2 lg:text-left">
                     <div className="mx-auto w-full max-w-[22rem] rounded-full border-[14px] border-white bg-white p-3 shadow-[0_18px_45px_rgba(80,36,26,0.22)] sm:max-w-[25rem] lg:max-w-[28rem]">

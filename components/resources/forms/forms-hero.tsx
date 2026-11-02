@@ -1,19 +1,11 @@
-import Header from '@/components/header';
-import { TextCursorInput } from 'lucide-react';
-
+import ChapterPageHero from '@/components/revamp/page-hero';
 export default function FormsHero() {
     return (
-        <section className="hero-banner">
-            <Header />
-            <div className="container px-4 pt-12 sm:px-6 lg:px-8">
-                <div className="mx-auto max-w-3xl text-center">
-                    <TextCursorInput className="mx-auto mb-4 h-12 w-12 text-white" />
-                    <h1 className="mb-4 text-4xl font-bold text-white">Forms</h1>
-                    <p className="text-xl text-white/90">
-                        All essential forms for Texas ACM members.
-                    </p>
-                </div>
-            </div>
-        </section>
+        <ChapterPageHero
+            title={'Forms & signups'}
+            description={'Find chapter forms, applications, and signups in one place.'}
+            image={'acmhand25'}
+            alt={'Texas ACM organization table on campus'}
+        />
     );
 }

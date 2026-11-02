@@ -153,7 +153,7 @@ export default function RecruitingPackages() {
                                         <div className="text-lg text-gray-800">$4000/yr</div>
                                     </TableHead>
                                     <TableHead className="w-1/5 text-center">
-                                        <div className="animate-shimmer-fast bg-gradient-to-r from-blue-500 via-blue-200 to-blue-500 bg-[length:200%_auto] bg-clip-text text-xl font-bold text-transparent">
+                                        <div className="animate-shimmer-fast bg-gradient-to-r from-emerald-500 via-emerald-200 to-emerald-500 bg-[length:200%_auto] bg-clip-text text-xl font-bold text-transparent">
                                             PLATINUM
                                         </div>
                                         <div className="text-lg text-gray-800">$8000/yr</div>

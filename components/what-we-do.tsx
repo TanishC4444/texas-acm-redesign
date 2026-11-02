@@ -1,114 +1,41 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { BookOpen, Building2, Users } from 'lucide-react';
-import Image from 'next/image';
-
+import { Building2, BookOpen, Users } from 'lucide-react';
+const pillars = [
+    {
+        name: 'Industry',
+        Icon: Building2,
+        text: 'Company tech talks, professional workshops, our resume book, and the ACM Corporate Banquet.',
+        href: '/events#industry',
+    },
+    {
+        name: 'Academics',
+        Icon: BookOpen,
+        text: 'Technical workshops, guest speakers, hackathons, and Pancakes with Professors.',
+        href: '/events#academics',
+    },
+    {
+        name: 'Community',
+        Icon: Users,
+        text: 'Game nights, retreats, mentorship, and CS Week. A community beyond the classroom.',
+        href: '/events#community',
+    },
+];
 export default function WhatWeDo() {
     return (
-        <section>
-            <div className="container px-4 sm:px-6 lg:px-8">
-                <div className="mx-auto mb-12 max-w-3xl">
-                    <h2 className="mb-6 flex items-center gap-3 text-3xl font-bold">Our Mission</h2>
-                    <p className="mb-6 text-lg text-gray-700">
-                        Texas ACM is dedicated to promoting computing knowledge and career readiness
-                        among UT Austin students. We strive to create a supportive community where
-                        students can develop technical skills, connect with industry professionals,
-                        and prepare for successful careers in technology.
-                    </p>
-                    <p className="text-lg text-gray-700">
-                        As the largest computer science student organization at UT Austin, we
-                        organize a wide range of events and activities designed to enhance the
-                        academic and professional development of our members.
-                    </p>
-                </div>
-                <div className="mx-auto max-w-5xl">
-                    <p className="mb-8 text-center text-2xl font-bold">
-                        At ACM, we support our members by our three pillars
-                    </p>
-
-                    <div className="grid gap-8 md:grid-cols-3">
-                        {/* Industry Pillar */}
-                        <div className="relative pb-16">
-                            <Card className="h-full shadow-md">
-                                <CardHeader>
-                                    <CardTitle className="flex items-center gap-3">
-                                        Industry
-                                        <Building2 className="h-6 w-6 text-blue-600" />
-                                    </CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <ul className="list-disc space-y-2 pl-5">
-                                        <li>Events with our partners</li>
-                                        <li>Professional workshops</li>
-                                        <li>ACM resume book</li>
-                                        <li className="font-bold">ACM Corporate Banquet</li>
-                                    </ul>
-                                </CardContent>
-                            </Card>
-                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/3 transform">
-                                <Image
-                                    src="/pillar.png"
-                                    alt="Industry Pillar"
-                                    width={120}
-                                    height={120}
-                                />
-                            </div>
-                        </div>
-                        {/* Academics Pillar */}
-                        <div className="relative pb-16">
-                            <Card className="h-full shadow-md">
-                                <CardHeader>
-                                    <CardTitle className="flex items-center gap-3">
-                                        Academics
-                                        <BookOpen className="h-6 w-6 text-blue-600" />
-                                    </CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <ul className="list-disc space-y-2 pl-5">
-                                        <li>Custom hackathons</li>
-                                        <li>Technical workshops</li>
-                                        <li>Guest speaker talks</li>
-                                        <li className="font-bold">Pancakes with Professors</li>
-                                    </ul>
-                                </CardContent>
-                            </Card>
-                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/3 transform">
-                                <Image
-                                    src="/pillar.png"
-                                    alt="Academics Pillar"
-                                    width={120}
-                                    height={120}
-                                />
-                            </div>
-                        </div>
-                        {/* Community Pillar */}
-                        <div className="relative pb-16">
-                            <Card className="h-full shadow-md">
-                                <CardHeader>
-                                    <CardTitle className="flex items-center gap-3">
-                                        Community
-                                        <Users className="h-6 w-6 text-blue-600" />
-                                    </CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <ul className="list-disc space-y-2 pl-5">
-                                        <li>Socials and game nights</li>
-                                        <li>Mentorship programs</li>
-                                        <li>Open source projects</li>
-                                        <li className="font-bold">CS Week</li>
-                                    </ul>
-                                </CardContent>
-                            </Card>
-                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/3 transform">
-                                <Image
-                                    src="/pillar.png"
-                                    alt="Community Pillar"
-                                    width={120}
-                                    height={120}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <section className="chapter-pillars studio-section">
+            <h2>Three pillars. One chapter.</h2>
+            <p>
+                Texas ACM supports the academic, professional, and social development of UT Austin
+                students.
+            </p>
+            <div className="chapter-pillar-grid">
+                {pillars.map(({ name, Icon, text, href }) => (
+                    <a href={href} key={name}>
+                        <Icon size={40} aria-hidden="true" />
+                        <h3>{name}</h3>
+                        <p>{text}</p>
+                        <span>Explore events ↗</span>
+                    </a>
+                ))}
             </div>
         </section>
     );

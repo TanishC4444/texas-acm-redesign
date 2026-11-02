@@ -18,9 +18,9 @@ export default function SocialEventsHero() {
                 <div className="flex max-w-md flex-col items-center gap-4 rounded-xl bg-black/80 px-8 py-8 text-center shadow-xl">
                     <div className="flex flex-col items-center text-red-400">
                         <Users size={48} className="mb-4" />
-                        <h1 className="text-4xl font-bold leading-tight text-white">
+                        <h2 className="text-4xl font-bold leading-tight text-white">
                             Social Events
-                        </h1>
+                        </h2>
                     </div>
                 </div>
             </div>

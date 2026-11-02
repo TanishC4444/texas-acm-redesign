@@ -1,19 +1,11 @@
-import Header from '@/components/header';
-import { FileUser } from 'lucide-react';
-
+import ChapterPageHero from '@/components/revamp/page-hero';
 export default function ResumeBookHero() {
     return (
-        <section className="hero-banner">
-            <Header />
-            <div className="container px-4 pt-12 sm:px-6 lg:px-8">
-                <div className="mx-auto max-w-3xl text-center">
-                    <FileUser className="mx-auto mb-4 h-12 w-12 text-white" />
-                    <h1 className="mb-4 text-4xl font-bold text-white">Resume Book</h1>
-                    <p className="text-xl text-white/90">
-                        Give our corporate sponsors access to your resume.
-                    </p>
-                </div>
-            </div>
-        </section>
+        <ChapterPageHero
+            title={'Resume book'}
+            description={'Share your resume with Texas ACM corporate sponsors.'}
+            image={'acmformal25'}
+            alt={'Texas ACM student community'}
+        />
     );
 }
