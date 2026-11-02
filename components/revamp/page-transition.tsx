@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 
 export default function PageTransition() {
@@ -8,19 +8,24 @@ export default function PageTransition() {
     const [sequence, setSequence] = useState(0);
     const [visible, setVisible] = useState(false);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (previous.current === pathname) return;
         previous.current = pathname;
         if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
         setSequence((value) => value + 1);
         setVisible(true);
-        const timer = setTimeout(() => setVisible(false), 1000);
+        const timer = setTimeout(() => setVisible(false), 1270);
         return () => clearTimeout(timer);
     }, [pathname]);
 
     if (!visible) return null;
     return (
-        <div key={sequence} className="chapter-page-transition" aria-hidden="true">
+        <div
+            key={sequence}
+            className="chapter-page-transition"
+            data-destination={pathname.split('/')[1] || 'home'}
+            aria-hidden="true"
+        >
             <div className="chapter-transition-camera">
                 <svg
                     viewBox="0 0 330 262"

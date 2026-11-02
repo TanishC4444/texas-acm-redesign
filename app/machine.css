@@ -2852,12 +2852,10 @@ html:has(.resources-document) {
     from {
         opacity: 0;
         transform: translateY(22px);
-        filter: blur(5px);
     }
     to {
         opacity: 1;
         transform: translateY(0);
-        filter: blur(0);
     }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -3520,22 +3518,22 @@ dialog.identity-intro:not([open]) {
     pointer-events: none;
     background: var(--paper);
     perspective: 1000px;
-    animation: chapter-page-uncover 0.98s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+    animation: chapter-page-uncover 1.25s cubic-bezier(0.22, 0.61, 0.36, 1) both;
 }
 .chapter-transition-camera {
     width: clamp(125px, 19vw, 230px);
     transform-style: preserve-3d;
-    animation: chapter-transition-camera 0.92s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: chapter-transition-camera 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 .chapter-transition-mark {
     width: 100%;
     overflow: visible;
 }
 .chapter-transition-circle {
-    animation: chapter-circle-settle 0.72s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: chapter-circle-settle 1s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 .chapter-transition-diamond {
-    animation: chapter-diamond-settle 0.72s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: chapter-diamond-settle 1s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 @keyframes chapter-page-uncover {
     0% {
@@ -3551,7 +3549,7 @@ dialog.identity-intro:not([open]) {
 }
 @keyframes chapter-transition-camera {
     0% {
-        transform: rotateY(-18deg) rotateX(8deg) scale(1.35);
+        transform: var(--camera-from, rotateY(-12deg) rotateX(6deg) scale(1.2));
     }
     62% {
         transform: rotateY(0) rotateX(0) scale(1);
@@ -3563,7 +3561,7 @@ dialog.identity-intro:not([open]) {
 @keyframes chapter-circle-settle {
     from {
         opacity: 0;
-        transform: translateX(-24px);
+        transform: var(--circle-from, translateX(-24px));
     }
     35% {
         opacity: 1;
@@ -3576,7 +3574,7 @@ dialog.identity-intro:not([open]) {
 @keyframes chapter-diamond-settle {
     from {
         opacity: 0;
-        transform: translateX(24px);
+        transform: var(--diamond-from, translateX(24px));
     }
     35% {
         opacity: 1;
@@ -3772,4 +3770,49 @@ dialog.identity-intro:not([open]) {
         transition: none !important;
         transform: none !important;
     }
+}
+
+/* Small composited layers, with a distinct entrance for each destination. */
+.chapter-page-transition {
+    contain: layout paint;
+    will-change: opacity;
+}
+.chapter-transition-camera,
+.chapter-transition-circle,
+.chapter-transition-diamond {
+    will-change: transform, opacity;
+}
+.chapter-page-transition[data-destination='about'] {
+    --circle-from: translateX(-32px);
+    --diamond-from: translateX(32px);
+}
+.chapter-page-transition[data-destination='events'] {
+    --circle-from: translateY(-28px);
+    --diamond-from: translateY(28px);
+    --camera-from: rotateZ(-7deg) scale(1.15);
+}
+.chapter-page-transition[data-destination='resources'] {
+    --circle-from: translateY(26px);
+    --diamond-from: translateY(46px);
+    --camera-from: rotateX(12deg) scale(1.12);
+}
+.chapter-page-transition[data-destination='partnership'] {
+    --circle-from: translateX(-50px);
+    --diamond-from: translateX(50px);
+    --camera-from: scale(0.92);
+}
+.chapter-page-transition[data-destination='calendar'] {
+    --circle-from: translateY(34px);
+    --diamond-from: translateY(-34px);
+    --camera-from: rotateZ(6deg) scale(1.12);
+}
+.chapter-page-transition[data-destination='officer'] {
+    --circle-from: translateX(-12px);
+    --diamond-from: translateX(12px);
+    --camera-from: scale(1.08);
+}
+.chapter-page-transition[data-destination='home'] {
+    --circle-from: translateX(-20px);
+    --diamond-from: translateX(20px);
+    --camera-from: rotateY(12deg) scale(1.2);
 }
