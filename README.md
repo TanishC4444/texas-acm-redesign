@@ -18,6 +18,10 @@ The live Google Calendar is embedded on the homepage; Discord, chapter email, an
 
 Validation: production build and TypeScript checks passed. Manual browser checks covered the intro’s modal focus, gallery navigation/Escape/focus return, active program navigation, and a 390 px mobile layout without horizontal overflow. Image alternatives and unique IDs were checked. This is not a complete accessibility certification; external forms and administrator onboarding still need end-to-end verification.
 
+The latest visual pass adds brighter orange controls and photo edges, etched circuit/halftone textures, soft blue/orange lighting, and a decorative chip character. Shared page heroes, legacy cards, and About’s pillar/team sections now use the same treatment. The chip is an illustration, not a replacement chapter logo. Officer sign-in has larger fields, password visibility, and explicit account/authenticator steps; authentication and approval requirements remain unchanged.
+
+[Updated About preview](docs/redesign/etched-about.jpg) · [Officer sign-in preview](docs/redesign/etched-officer.jpg)
+
 - [Design directions and Figma file](docs/DESIGN-DIRECTIONS.md)
 - [Officer setup, permissions, and remaining launch steps](docs/OFFICER-SETUP.md)
 - Local routes: `/designs`, `/designs/night`, `/officer`, and `/resources`.

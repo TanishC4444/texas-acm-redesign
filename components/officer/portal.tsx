@@ -27,6 +27,7 @@ import {
     updateDoc,
 } from 'firebase/firestore';
 import QRCode from 'qrcode';
+import ChipCharacter from '@/components/revamp/chip-character';
 import {
     ArrowUpRight,
     Check,
@@ -89,6 +90,7 @@ export default function OfficerPortal() {
     const [secondFactor, setSecondFactor] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [code, setCode] = useState('');
     const [resolver, setResolver] = useState<MultiFactorResolver | null>(null);
     const [factorId, setFactorId] = useState('');
@@ -388,9 +390,9 @@ export default function OfficerPortal() {
                 <div className="officer-story">
                     <span className="eyebrow">TEXAS ACM / OFFICER WORKSPACE</span>
                     <h1>
-                        Good ideas.
+                        Texas ACM.
                         <br />
-                        <em>Now live.</em>
+                        Officer workspace.
                     </h1>
                     <p>
                         One home for the people who make ACM happen. Plan an event, share a
@@ -399,7 +401,7 @@ export default function OfficerPortal() {
                     <div className="security-pill">
                         <ShieldCheck size={18} /> Officer access + authenticator 2FA
                     </div>
-                    <span className="entry-star">✳</span>
+                    <ChipCharacter />
                 </div>
                 <div className="login-window">
                     <div className="window-bar">
@@ -441,18 +443,18 @@ export default function OfficerPortal() {
                 <div className="officer-story">
                     <span className="eyebrow">TEXAS ACM / OFFICER WORKSPACE</span>
                     <h1>
-                        Good ideas.
+                        Texas ACM.
                         <br />
-                        <em>Now live.</em>
+                        Officer workspace.
                     </h1>
                     <p>
-                        For the people behind the plans. Your next event, announcement, or resource
-                        starts here.
+                        Publish chapter events, announcements, forms, and student resources. Sign in
+                        with the email your administrator approved.
                     </p>
                     <div className="security-pill">
                         <ShieldCheck size={18} /> Approved officers. Verified email. Two factors.
                     </div>
-                    <span className="entry-star">✳</span>
+                    <ChipCharacter />
                 </div>
                 <div className="login-window">
                     <div className="window-bar">
@@ -468,11 +470,11 @@ export default function OfficerPortal() {
                         {!user && !resolver && (
                             <>
                                 <span className="eyebrow">WELCOME BACK, OFFICER.</span>
-                                <h2>
-                                    Make things
-                                    <br />
-                                    happen.
-                                </h2>
+                                <h2>Officer sign in</h2>
+                                <ol className="signin-steps" aria-label="Sign-in steps">
+                                    <li aria-current="step">1. Account</li>
+                                    <li>2. Authenticator</li>
+                                </ol>
                                 <p>Sign in with your approved officer account.</p>
                                 <form onSubmit={login}>
                                     <label>
@@ -485,18 +487,28 @@ export default function OfficerPortal() {
                                             onChange={(e) => setEmail(e.target.value)}
                                         />
                                     </label>
-                                    <label>
-                                        Password
+                                    <label htmlFor="officer-password">Password</label>
+                                    <div className="password-control">
                                         <input
-                                            type="password"
+                                            id="officer-password"
+                                            type={showPassword ? 'text' : 'password'}
                                             autoComplete="current-password"
                                             required
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
                                         />
-                                    </label>
+                                        <button
+                                            type="button"
+                                            aria-controls="officer-password"
+                                            aria-pressed={showPassword}
+                                            onClick={() => setShowPassword(!showPassword)}
+                                        >
+                                            {showPassword ? 'Hide' : 'Show'}
+                                            <span className="sr-only"> password</span>
+                                        </button>
+                                    </div>
                                     <button className="button button-dark" disabled={busy}>
-                                        {busy ? 'Signing in…' : 'Continue'}
+                                        {busy ? 'Signing in…' : 'Sign in'}
                                         <ArrowUpRight size={17} />
                                     </button>
                                 </form>
@@ -511,13 +523,18 @@ export default function OfficerPortal() {
                         {resolver && (
                             <>
                                 <ShieldCheck size={30} />
-                                <h2>One more check.</h2>
+                                <h2>Authenticator code</h2>
+                                <ol className="signin-steps" aria-label="Sign-in steps">
+                                    <li>1. Account ✓</li>
+                                    <li aria-current="step">2. Authenticator</li>
+                                </ol>
                                 <p>Enter the six-digit code from your authenticator app.</p>
                                 <form onSubmit={confirmCode}>
                                     <label>
                                         Authenticator code
                                         <input
                                             className="otp-input"
+                                            autoFocus
                                             autoComplete="one-time-code"
                                             inputMode="numeric"
                                             pattern="[0-9]{6}"

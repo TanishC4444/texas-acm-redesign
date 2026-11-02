@@ -1926,3 +1926,403 @@ dialog.chapter-reveal::backdrop {
         font-size: 16px;
     }
 }
+
+/* Etched glass, print halftones, and anodized orange unify every active route. */
+:root {
+    --orange: #ff751b;
+    --machine-orange: #ff751b;
+    --paper: #f5f4ee;
+    --mint: #e1edf4;
+}
+:root[data-theme='dark'] {
+    --paper: #0d1521;
+    --ink: #f7f5ec;
+    --mint: #162a3c;
+    --mint-light: #193146;
+    --machine-orange: #ff8b35;
+    --orange: #ff8b35;
+}
+body {
+    background-image: url('/studio/etched-field.svg');
+    background-attachment: fixed;
+}
+.machine-home {
+    background: transparent;
+}
+main {
+    isolation: isolate;
+}
+.chapter-page-hero,
+.machine-hero,
+.officer-entry {
+    position: relative;
+    isolation: isolate;
+}
+.chapter-page-hero::before,
+.machine-hero::before,
+.officer-entry::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse at 85% 12%, #ff8b3540, transparent 44%),
+        radial-gradient(ellipse at 15% 70%, #42b8ff30, transparent 50%);
+}
+.machine-hero h1 {
+    position: relative;
+    z-index: 1;
+}
+.machine-hero h1 > span {
+    color: var(--machine-blue);
+    text-shadow: 3px 3px 0 #ff751b30;
+}
+.machine-hero-image {
+    border-bottom: 7px solid var(--machine-orange);
+}
+.studio-header {
+    background: color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter: blur(22px);
+}
+.studio-header .join-button,
+.machine-image-caption a {
+    background: var(--machine-orange);
+    color: #152033;
+}
+.machine-section-bar {
+    border-top-color: var(--machine-orange);
+}
+.machine-section-bar > span {
+    color: var(--ink);
+}
+.chapter-page-hero {
+    background: transparent;
+    border-bottom: 5px solid var(--machine-orange);
+}
+.page-hero-photo {
+    box-shadow:
+        12px 12px 0 var(--machine-orange),
+        20px 20px 0 #087ac52b;
+}
+.page-hero-photo img,
+.machine-hero-image img {
+    transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.page-hero-art:hover .page-hero-photo img,
+.machine-hero-image:hover > img {
+    transform: scale(1.035);
+}
+.chip-character {
+    width: 230px;
+    overflow: visible;
+    filter: drop-shadow(5px 12px 0 #087ac51a);
+}
+.machine-hero > .chip-character {
+    position: absolute;
+    right: 4%;
+    top: 95px;
+    width: clamp(125px, 17vw, 250px);
+    z-index: 2;
+    transform: rotate(9deg);
+}
+.machine-hero h1 {
+    max-width: 85%;
+}
+.chip-body {
+    transform-origin: 160px 260px;
+    transition: transform 0.65s cubic-bezier(0.2, 1.5, 0.4, 1);
+}
+.chip-character:hover .chip-body {
+    transform: rotate(-8deg) translateY(-8px);
+}
+.chip-character:hover .chip-eyes {
+    transform: translateY(-3px);
+}
+.page-hero-art > .chip-character {
+    position: absolute;
+    width: 145px;
+    bottom: -23px;
+    right: -15px;
+    z-index: 3;
+    transform: rotate(8deg);
+}
+.page-hero-art {
+    position: relative;
+}
+.chapter-pillars > h2,
+.chapter-team-heading h2 {
+    font-family: 'Barlow Condensed', Impact, sans-serif;
+    font-size: clamp(44px, 6vw, 80px);
+    text-transform: uppercase;
+    line-height: 0.98;
+}
+.chapter-pillars > p,
+.chapter-team-heading p {
+    margin-top: 20px;
+    max-width: 640px;
+    font-size: 18px;
+    line-height: 1.7;
+}
+.chapter-pillar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 40px;
+}
+.chapter-pillar-grid a {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 20px;
+    padding: 32px;
+    border: 1px solid var(--line);
+    background: color-mix(in srgb, var(--paper) 85%, transparent);
+    box-shadow: 0 5px 0 var(--machine-blue);
+    transition:
+        transform 0.4s,
+        box-shadow 0.4s;
+}
+.chapter-pillar-grid a:nth-child(2) {
+    box-shadow: 0 5px 0 var(--machine-orange);
+}
+.chapter-pillar-grid a:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 11px 0 var(--machine-orange);
+}
+.chapter-pillar-grid h3 {
+    font-size: 28px;
+    font-weight: 750;
+}
+.chapter-pillar-grid p {
+    line-height: 1.8;
+}
+.chapter-pillar-grid svg {
+    color: var(--machine-blue);
+}
+.chapter-pillar-grid span {
+    margin-top: auto;
+    font-weight: 650;
+}
+.legacy-content .hero-banner {
+    background: transparent;
+    color: var(--ink);
+}
+.legacy-content [class*='bg-gradient'] {
+    background-image: none !important;
+    background-color: var(--mint) !important;
+}
+.legacy-content [class*='bg-gradient'] .text-white {
+    color: var(--ink) !important;
+}
+.legacy-content [class*='bg-white'],
+.legacy-content [class*='bg-gray-50'],
+.legacy-content [class*='bg-gray-100'] {
+    background-color: color-mix(in srgb, var(--paper) 92%, var(--machine-blue)) !important;
+}
+.legacy-content [class*='shadow-md'] {
+    border: 1px solid var(--line);
+    border-bottom: 4px solid var(--machine-orange);
+}
+.legacy-content .text-blue-600,
+.legacy-content .text-blue-500 {
+    color: var(--machine-blue) !important;
+}
+.legacy-content .text-orange-500,
+.legacy-content .text-orange-600 {
+    color: var(--machine-orange) !important;
+}
+.officer-entry {
+    background: transparent !important;
+    gap: clamp(32px, 6vw, 90px);
+    padding: 55px 7%;
+    align-items: start;
+}
+.officer-story h1 {
+    font-size: clamp(58px, 6vw, 92px);
+    line-height: 0.93;
+    letter-spacing: -0.02em;
+    margin-top: 0;
+}
+.officer-story > p {
+    font-size: 17px;
+    max-width: 440px;
+}
+.officer-story .chip-character {
+    margin: 22px 0 0 35px;
+    width: 240px;
+}
+.security-pill {
+    font-size: 13px;
+    line-height: 1.6;
+}
+.login-window {
+    max-width: 520px;
+    background: color-mix(in srgb, var(--paper) 96%, transparent);
+    border-color: var(--machine-blue);
+    box-shadow:
+        8px 8px 0 var(--machine-orange),
+        16px 16px 0 #087ac526;
+}
+.login-window .window-bar {
+    background: var(--machine-blue);
+    color: white;
+}
+.login-body h2 {
+    font-size: 34px;
+    letter-spacing: -1px;
+}
+.login-body > p,
+.login-body small {
+    font-size: 14px;
+    line-height: 1.7;
+}
+.login-body label {
+    font-size: 14px;
+}
+.login-body input {
+    min-height: 52px;
+    font-size: 16px;
+    border: 1px solid var(--machine-muted);
+    background: var(--paper);
+}
+.login-body .button-dark {
+    min-height: 52px;
+    background: var(--machine-orange);
+    color: #152033;
+    font-weight: 750;
+    justify-content: center;
+}
+.password-control {
+    display: flex;
+    position: relative;
+    margin-top: -12px;
+}
+.password-control input {
+    padding-right: 76px;
+}
+.password-control button {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    min-height: 44px;
+    min-width: 64px;
+    font-size: 14px;
+    font-weight: 700;
+}
+.signin-steps {
+    display: flex;
+    gap: 12px;
+    padding: 0;
+    list-style: none;
+    margin: 22px 0;
+    font-size: 13px;
+}
+.signin-steps li {
+    padding: 10px 12px;
+    background: var(--mint);
+    border-bottom: 3px solid var(--line);
+}
+.signin-steps [aria-current] {
+    border-color: var(--machine-orange);
+    font-weight: 750;
+}
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: 3px solid var(--machine-blue);
+    outline-offset: 4px;
+}
+@media (max-width: 760px) {
+    .machine-hero > .chip-character {
+        top: 130px;
+        right: 2%;
+        width: 105px;
+    }
+    .machine-hero h1 {
+        max-width: 100%;
+    }
+    .chapter-pillar-grid {
+        grid-template-columns: 1fr;
+    }
+    .officer-entry {
+        display: flex;
+        flex-direction: column;
+        padding: 35px 6% 55px;
+        gap: 30px;
+    }
+    .officer-story {
+        padding-top: 0;
+    }
+    .officer-story h1 {
+        font-size: 56px;
+        max-width: 330px;
+    }
+    .officer-story .chip-character {
+        display: none;
+    }
+    .officer-story > p {
+        font-size: 15px;
+    }
+    .security-pill {
+        margin-top: 16px;
+    }
+    .login-window {
+        max-width: none;
+    }
+    .login-body {
+        padding: 26px;
+    }
+    .page-hero-art > .chip-character {
+        width: 105px;
+        right: 0;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+    }
+    .chip-body,
+    .page-hero-photo img,
+    .machine-hero-image img,
+    .chapter-pillar-grid a {
+        transition: none;
+    }
+    .chip-character:hover .chip-body,
+    .chapter-pillar-grid a:hover {
+        transform: none;
+    }
+}
+[data-theme='dark'] .officer-story {
+    background: transparent;
+}
+@media (max-width: 760px) {
+    .machine-hero > .chip-character {
+        top: 10px;
+        right: 3%;
+        width: 76px;
+    }
+}
+@keyframes chapter-arrive {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@media (prefers-reduced-motion: no-preference) {
+    .page-hero-copy,
+    .login-window {
+        animation: chapter-arrive 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    .page-hero-art {
+        animation: chapter-arrive 1s 0.12s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+}

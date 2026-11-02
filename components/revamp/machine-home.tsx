@@ -5,6 +5,7 @@ import { useReducedMotion, motion } from 'framer-motion';
 import { ArrowUpRight, RotateCcw, Pause, Play } from 'lucide-react';
 import ChapterReveal from './logo-reveal';
 import ChapterGallery from './chapter-gallery';
+import ChipCharacter from './chip-character';
 import InstagramFeed from './instagram-feed';
 import EmailSignupForm from '@/components/EmailSignupForm';
 import { PublishedCards } from './live-content';
@@ -98,6 +99,7 @@ export default function MachineHome() {
         >
             {intro && <ChapterReveal onSkip={finish} />}
             <section className="machine-hero">
+                <ChipCharacter />
                 <div className="machine-hero-top">
                     <div>
                         <button onClick={replay} disabled={!!reduced}>
