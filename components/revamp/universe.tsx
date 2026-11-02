@@ -7,6 +7,8 @@ import { ArrowDown, ArrowUpRight, Pause, Play, RotateCcw } from 'lucide-react';
 import EmailSignupForm from '@/components/EmailSignupForm';
 import { PublishedCards } from './live-content';
 import { resourceLinks } from '@/lib/content';
+import InstagramFeed from './instagram-feed';
+import ChapterReveal from './logo-reveal';
 
 const photos = [
     { src: 'acmformal25', label: 'Dressed up. All in.', alt: 'Texas ACM students at their formal' },
@@ -48,13 +50,14 @@ export default function UniverseHome() {
         [],
     );
     function replayIntro() {
+        setPaused(false);
         if (replayTimer.current) clearTimeout(replayTimer.current);
         setLoading(true);
         setBooted(false);
         replayTimer.current = setTimeout(() => {
             setLoading(false);
             setBooted(true);
-        }, 1500);
+        }, 3200);
     }
     const root = useRef<HTMLDivElement>(null);
     const wall = useRef<HTMLDivElement>(null);
@@ -64,17 +67,20 @@ export default function UniverseHome() {
     const rotate = useTransform(scrollYProgress, [0, 1], [0, 240]);
     const still = paused || !!reduced;
     useEffect(() => {
-        if (reduced || sessionStorage.getItem('acm-universe-visited')) {
+        if (reduced || sessionStorage.getItem('acm-chapter-v2')) {
+            setLoading(false);
             setBooted(true);
             return;
         }
         setLoading(true);
-        const timer = window.setTimeout(() => {
+        replayTimer.current = setTimeout(() => {
             setLoading(false);
             setBooted(true);
-            sessionStorage.setItem('acm-universe-visited', '1');
-        }, 1500);
-        return () => window.clearTimeout(timer);
+            sessionStorage.setItem('acm-chapter-v2', '1');
+        }, 3200);
+        return () => {
+            if (replayTimer.current) clearTimeout(replayTimer.current);
+        };
     }, [reduced]);
     const reveal = still
         ? { initial: false as const, animate: { opacity: 1, y: 0 }, transition: { duration: 0 } }
@@ -87,30 +93,18 @@ export default function UniverseHome() {
     return (
         <div ref={root} className={`universe ${still ? 'motion-paused' : ''}`}>
             {loading && (
-                <div className="universe-boot" role="status" aria-label="Entering the ACM universe">
-                    <span className="boot-coordinate">UT AUSTIN / ESTABLISHING CONNECTION</span>
-                    <Star className="boot-star" />
-                    <div className="boot-word">
-                        hello,<em>world.</em>
-                    </div>
-                    <div className="boot-track">
-                        <i />
-                    </div>
-                    <span>GOOD PEOPLE LOADING…</span>
-                    <button
-                        onClick={() => {
-                            setLoading(false);
-                            setBooted(true);
-                            sessionStorage.setItem('acm-universe-visited', '1');
-                        }}
-                    >
-                        Skip intro ↗
-                    </button>
-                </div>
+                <ChapterReveal
+                    onSkip={() => {
+                        setLoading(false);
+                        setBooted(true);
+                        if (replayTimer.current) clearTimeout(replayTimer.current);
+                        sessionStorage.setItem('acm-chapter-v2', '1');
+                    }}
+                />
             )}
             <div className="universe-controls">
                 <span>
-                    <i /> COMMUNITY ONLINE
+                    <i /> TEXAS ACM / ONLINE
                 </span>
                 <div className="motion-actions">
                     <button onClick={replayIntro} disabled={!!reduced}>
@@ -136,7 +130,7 @@ export default function UniverseHome() {
                     <div />
                 </div>
                 <span className="universe-location">
-                    A STUDENT-POWERED UNIVERSE
+                    UT AUSTIN / STUDENT CHAPTER
                     <br />
                     30.2862° N / 97.7367° W
                 </span>
@@ -154,14 +148,14 @@ export default function UniverseHome() {
                 </motion.div>
                 <div className="planet planet-two" aria-hidden="true" />
                 <h1 id="universe-title">
-                    <span className="hero-small">a little out of the ordinary.</span>
+                    <span className="hero-small">
+                        Association for Computing Machinery · UT Austin
+                    </span>
                     <span className="universe-title">
-                        TEXAS
-                        <Star />
-                        ACM
+                        <img src="/texasacm-logo-primary.svg" alt="Texas ACM" />
                     </span>
                     <span className="hero-serif">
-                        Find your <em>kind of weird.</em>
+                        CS is better <em>together.</em>
                     </span>
                 </h1>
                 <motion.div
@@ -180,16 +174,16 @@ export default function UniverseHome() {
                     <span>REAL PEOPLE. UNREAL ENERGY.</span>
                 </div>
                 <div className="hero-sticker" aria-hidden="true">
-                    100%
+                    UTCS
                     <br />
-                    <em>human.</em>
+                    <em>+ you.</em>
                     <Star />
                 </div>
                 <div className="universe-hero-bottom">
                     <p>
-                        Computer science connects us.
+                        Your UT Austin computing community.
                         <br />
-                        Curiosity takes us everywhere else.
+                        Workshops. Industry talks. People to build with.
                     </p>
                     <a className="universe-portal" href="#join">
                         <span>
@@ -209,8 +203,8 @@ export default function UniverseHome() {
                 <div>
                     {[0, 1, 2, 3].map((i) => (
                         <span key={i}>
-                            LESS SMALL TALK <b>✳</b> MORE BIG IDEAS <b>✳</b> A LITTLE CHAOS <b>✳</b>{' '}
-                            GOOD COMPANY <b>✳</b>{' '}
+                            ASSOCIATION FOR COMPUTING MACHINERY <b>✳</b> UT AUSTIN <b>✳</b>{' '}
+                            WORKSHOPS + TECH TALKS <b>✳</b> COMMUNITY + CAREERS <b>✳</b>{' '}
                         </span>
                     ))}
                 </div>
@@ -218,13 +212,13 @@ export default function UniverseHome() {
             <section className="universe-manifesto" id="the-universe">
                 <span className="universe-label">01 / ESCAPE THE ORDINARY</span>
                 <motion.h2 {...reveal}>
-                    A club?
+                    Computing.
                     <br />
-                    More like a<br />
-                    <em>collision of</em>
+                    With a<br />
+                    <em>human</em>
                     <br />
                     <span>
-                        possibilities.
+                        connection.
                         <Star />
                     </span>
                 </motion.h2>
@@ -261,9 +255,9 @@ export default function UniverseHome() {
                 <div className="worlds-heading">
                     <span className="universe-label">02 / PICK YOUR PORTAL</span>
                     <h2>
-                        One community.
+                        Your chapter.
                         <br />
-                        <em>Infinite side quests.</em>
+                        <em>Beyond the classroom.</em>
                     </h2>
                     <p>
                         Follow your curiosity.
@@ -298,7 +292,7 @@ export default function UniverseHome() {
                             image: 'acmformal25',
                             href: '/events#industry',
                             description:
-                                'Tech talks, company connections, and a wider world of possibilities.',
+                                'Tech talks, company connections, and a wider world of computing careers.',
                         },
                     ].map((w, i) => (
                         <motion.div
@@ -330,9 +324,9 @@ export default function UniverseHome() {
                 <div>
                     <span className="universe-label">03 / INCOMING TRANSMISSIONS</span>
                     <h2>
-                        Be there.
+                        On the calendar.
                         <br />
-                        <em>Be a little changed.</em>
+                        <em>See you there.</em>
                     </h2>
                     <Link className="universe-pill" href="/calendar">
                         Open the calendar <ArrowUpRight size={20} />
@@ -340,7 +334,7 @@ export default function UniverseHome() {
                 </div>
                 <div className="universe-event-feed">
                     <span className="feed-label">
-                        <i /> LIVE FROM THE OFFICER STUDIO
+                        <i /> NEXT UP / TEXAS ACM
                     </span>
                     <PublishedCards kind="event" limit={3} />
                 </div>
@@ -349,9 +343,9 @@ export default function UniverseHome() {
                 <div className="wall-heading">
                     <span className="universe-label">04 / PROOF WE GO OUTSIDE</span>
                     <h2>
-                        The camera roll
+                        Off the clock.
                         <br />
-                        <em>understands.</em>
+                        <em>Still ACM.</em>
                     </h2>
                     <p>
                         Little moments. Extremely good people.
@@ -364,6 +358,7 @@ export default function UniverseHome() {
                 </div>
                 <PhotoWall key={wallVersion} wall={wall} />
             </section>
+            <InstagramFeed />
             <section className="universe-tools">
                 <div className="tool-planet" aria-hidden="true">
                     <Star />
@@ -398,7 +393,7 @@ export default function UniverseHome() {
                 <h2>
                     You. Us.
                     <br />
-                    <em>Whatever’s next.</em>
+                    <em>Let’s build something.</em>
                 </h2>
                 <Star className="join-star" />
                 <div className="join-orbit" aria-hidden="true" />
@@ -429,9 +424,9 @@ export default function UniverseHome() {
                     <div className="universe-mail">
                         <span>LET GOOD THINGS FIND YOU.</span>
                         <h3>
-                            A signal.
+                            Chapter notes.
                             <br />
-                            <em>Worth opening.</em>
+                            <em>In your inbox.</em>
                         </h3>
                         <EmailSignupForm />
                         <small>Continue to Mailchimp to subscribe.</small>

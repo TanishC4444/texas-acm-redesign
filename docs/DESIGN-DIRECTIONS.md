@@ -47,3 +47,9 @@ The homepage now uses a new maximalist direction, rather than the earlier split-
 Motion: timed, skippable first-visit intro with replay; CSS float/rotation; scroll-linked parallax; viewport entrance reveals; marquee; hover reactions; direct-manipulation photo dragging/reset; route loading and page entrances. Ambient motion can be paused; reduced-motion preferences disable automatic motion. The intro is a brand sequence, not a measure of network loading. The photo wall is temporary browser interaction and does not modify source photos or officer content.
 
 The Figma file still documents the two earlier concepts. This new direction is implemented in code; it has not yet been mirrored into Figma. Earlier homepages remain at `/designs/studio` and `/designs/night`.
+
+## Chapter identity refinement
+
+The original Texas ACM logo assets are used unchanged in the header, hero, footer, and reveal (primary and white variants). The earlier improvised star wordmark is removed. The chapter-focused version replaces the generic serif/sans pairing with Barlow Condensed, IBM Plex Mono, Archivo, and the existing Pagkaki accent. New downloaded fonts are self-hosted with their OFL licenses. Copy explicitly identifies ACM, UT Austin, workshops, industry talks, and the student chapter. Circuit diagrams replace the floating planet treatment; the intro reveals the actual logo with scan lines, circuit traces, shutters, and color-channel slices, then clears after 3.2 seconds. It remains skippable, replayable, and disabled for reduced motion.
+
+A separate latest-posts section is implemented using the official Instagram API. It requires the account manager’s authorized server configuration before it can show current posts; see INSTAGRAM-SETUP.md. No account access was assumed and no demo posts are presented as current Instagram content.

@@ -6,13 +6,13 @@ A working copy of the [Texas ACM website](https://www.texasacm.org/) for plannin
 
 ## Redesign implementation — November 1, 2026
 
-The redesign branch now opens with **Alternate Universe**: a maximalist, photo-led homepage with a centered oversized wordmark, orbital graphics, acid green and violet sections, and interactive motion. The earlier Campus Studio and After Hours directions remain at `/designs/studio` and `/designs/night`. It also includes shared navigation, searchable CS A–Z, and a Firebase-backed officer workspace with mandatory authenticator 2FA. The inventory below remains the historical baseline of the original website.
+The redesign branch now opens with a maximalist **Texas ACM chapter** homepage that preserves the original Texas ACM SVG logo. The updated type system pairs Barlow Condensed headlines, IBM Plex Mono annotations, Archivo body text, and the existing Pagkaki handwriting. The intro reveals the original logo through circuit traces, scan lines, split shutters, and a brief color-channel effect. Earlier Campus Studio and After Hours directions remain at `/designs/studio` and `/designs/night`.
 
-![Alternate Universe desktop](docs/redesign/alternate-universe-desktop.jpg)
+![Texas ACM chapter desktop](docs/redesign/chapter-desktop.jpg)
 
-The new motion includes a skippable 1.5-second first-visit intro (with replay), floating photos, rotating graphics, scroll parallax, section reveals, an animated marquee, hover reactions, draggable photos with reset, route entrance transitions, and a route-loading screen. A pause control stops ambient motion; reduced-motion preferences disable automatic animation and the intro. Photos come from the existing ACM archive.
+The new motion includes a skippable 3.2-second first-visit logo reveal (with replay), floating photos, rotating graphics, scroll parallax, section reveals, an animated marquee, hover reactions, draggable photos with reset, route entrance transitions, and a route-loading screen. A pause control stops ambient motion; reduced-motion preferences disable automatic animation and the intro. Photos in the memory wall come from the existing ACM archive. The separate Instagram feed refreshes periodically once the account manager connects it; it is **not connected live yet**. See [Instagram setup and account-manager handoff](docs/INSTAGRAM-SETUP.md).
 
-[Mobile preview](docs/redesign/alternate-universe-mobile.jpg) · [Photo wall](docs/redesign/alternate-universe-photo-wall.jpg) · [Intro](docs/redesign/alternate-universe-intro.jpg)
+[Mobile preview](docs/redesign/chapter-mobile.jpg) · [Photo wall](docs/redesign/alternate-universe-photo-wall.jpg) · [Logo reveal](docs/redesign/chapter-logo-reveal.jpg)
 
 - [Design directions and Figma file](docs/DESIGN-DIRECTIONS.md)
 - [Officer setup, permissions, and remaining launch steps](docs/OFFICER-SETUP.md)

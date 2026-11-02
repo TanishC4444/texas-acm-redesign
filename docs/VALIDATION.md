@@ -28,3 +28,15 @@ Complete password setup, email verification, and authenticator enrollment for `t
 - Photo dragging verified by pointer interaction and resulting translation; reset restores the wall.
 - Desktop hero, mobile hero, photo wall, and intro screenshots saved under `docs/redesign/`.
 - This revision does not change Firebase authentication or officer permissions. Password/2FA onboarding and production hosting remain as documented above.
+
+## Chapter identity and Instagram revision
+
+- Original primary and white SVG logo files are unchanged and now used in header/hero/footer/intro.
+- Self-hosted Barlow Condensed, IBM Plex Mono, and Archivo fonts added with OFL licenses; Pagkaki retained as the handwritten accent.
+- Four Instagram normalization tests pass: date ordering, video thumbnails, invalid records, unsafe URLs/deceptive domains, response field stripping, caption limits, and six-item limit.
+- Unconfigured `/api/instagram` returns only `{"status":"unavailable","posts":[]}` and the homepage shows a direct Instagram fallback.
+- Live Instagram authorization, feed rendering with actual chapter posts, and publication-to-feed timing remain unverified because another officer controls the chapter account.
+
+- Chapter revision production build passed with lint skipped; TypeScript passed after the final intro-timer/keyboard changes. All 13 content/Instagram tests pass.
+- Chapter logo reveal replay and Escape-to-skip verified in browser. Mobile document width equals the 390-pixel viewport width. Original logo files have no diff.
+- Chapter screenshots: `docs/redesign/chapter-desktop.jpg`, `chapter-mobile.jpg`, and `chapter-logo-reveal.jpg`.

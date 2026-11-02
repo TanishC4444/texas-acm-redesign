@@ -42,12 +42,11 @@ export function SiteHeader() {
             </a>
             <header className={`studio-header ${path === '/' ? 'universe-header' : ''}`}>
                 <Link className="wordmark" href="/" aria-label="Texas ACM home">
-                    <span className="acm-symbol" aria-hidden="true">
-                        ✳
-                    </span>
-                    <span>
-                        texas acm<span className="wordmark-dot">.</span>
-                    </span>
+                    <img
+                        className="chapter-logo"
+                        src="/texasacm-logo-primary.svg"
+                        alt="Texas ACM"
+                    />
                 </Link>
                 <nav className="desktop-nav" aria-label="Main navigation">
                     {links.map((l) =>
@@ -158,7 +157,7 @@ export function SiteFooter() {
             </div>
             <div className="footer-bottom">
                 <Link href="/" className="wordmark">
-                    <span aria-hidden="true">✳</span> texas acm.
+                    <img className="chapter-logo" src="/texasacm-logo-white.svg" alt="Texas ACM" />
                 </Link>
                 <p>Made for the UT Austin CS community. © {new Date().getFullYear()} Texas ACM.</p>
                 <div className="social-icons">

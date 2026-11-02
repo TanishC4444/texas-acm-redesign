@@ -1,7 +1,7 @@
 /* Alternate Universe — photo-led, maximalist, and deliberately off-grid. */
 .universe {
-    --acid: #ddff67;
-    --violet: #b5a2f0;
+    --acid: #ffa05a;
+    --violet: #b5c7f4;
     --space: #242226;
     --u-paper: #f3efe5;
     background: var(--u-paper);
@@ -13,7 +13,7 @@
     border-bottom: 1px solid #24222630;
 }
 .universe-header .acm-symbol {
-    color: #7852d5;
+    color: #2454df;
 }
 .universe-controls {
     display: flex;
@@ -129,7 +129,7 @@
     width: clamp(45px, 8vw, 125px);
     flex-shrink: 0;
     margin: 0 0.06em 0 0.1em;
-    color: #7852d5;
+    color: #2454df;
     animation: u-spin 25s linear infinite;
 }
 .hero-serif {
@@ -141,7 +141,7 @@
     margin-top: 20px;
 }
 .hero-serif em {
-    color: #7852d5;
+    color: #2454df;
 }
 .orbit-photo {
     position: absolute;
@@ -205,12 +205,12 @@
     background: radial-gradient(circle at 30% 25%, #f6ecff, #b2a0e6 40%, #6f49b1 70%, #33223f);
     box-shadow:
         inset -10px -6px 25px #1c132750,
-        0 15px 40px #7852d530;
+        0 15px 40px #2454df30;
 }
 .planet-one span {
     position: absolute;
     inset: 35% -35%;
-    border: 9px solid #ddff67;
+    border: 9px solid #ffa05a;
     border-radius: 50%;
     transform: rotate(-30deg);
 }
@@ -219,7 +219,7 @@
     height: 54px;
     left: 47%;
     top: 64%;
-    background: radial-gradient(circle at 30% 25%, #f1ffb9, #c7e754 45%, #6d7e30);
+    background: radial-gradient(circle at 30% 25%, #f1ffb9, #f3b887 45%, #6d7e30);
     animation: u-float 6s ease-in-out infinite;
 }
 .hero-sticker {
@@ -306,7 +306,7 @@
 }
 .universe-marquee b {
     margin: 0 27px;
-    color: #7852d5;
+    color: #2454df;
 }
 .universe-label {
     font: 10px/1.5 monospace;
@@ -334,7 +334,7 @@
 .universe-manifesto h2 > span {
     display: inline-block;
     position: relative;
-    color: #7852d5;
+    color: #2454df;
 }
 .universe-manifesto h2 svg {
     position: absolute;
@@ -400,7 +400,7 @@
     padding-top: 27px;
     transform: rotate(-15deg);
     font: 11px/1.5 monospace;
-    color: #7852d5;
+    color: #2454df;
 }
 .universe-worlds {
     background: var(--space);
@@ -448,7 +448,7 @@
 }
 .world-card {
     display: block;
-    background: #c9b6ef;
+    background: #b5c7f4;
     color: var(--space);
     border-radius: 180px 180px 8px 8px;
     overflow: hidden;
@@ -588,7 +588,7 @@
     padding: 0 7%;
 }
 .wall-heading h2 em {
-    color: #7852d5;
+    color: #2454df;
 }
 .wall-heading p {
     font-size: 14px;
@@ -686,7 +686,7 @@
         italic 28px/0.9 'Instrument Serif',
         serif;
     transform: rotate(-15deg);
-    color: #7852d5;
+    color: #2454df;
 }
 .archive-credit {
     position: absolute;
@@ -722,7 +722,7 @@
     width: 90%;
     position: absolute;
     inset: 5%;
-    color: #c5e951;
+    color: #f3b887;
     animation: u-spin 60s linear infinite;
 }
 .tool-planet > span {
@@ -772,7 +772,7 @@
 .universe-join {
     position: relative;
     padding: 100px 7%;
-    background: #7852d5;
+    background: #2454df;
     color: var(--u-paper);
     isolation: isolate;
 }
@@ -1412,7 +1412,7 @@
     flex-direction: column;
     gap: 25px;
     background: #242226;
-    color: #ddff67;
+    color: #ffa05a;
 }
 .route-loading > span {
     font-size: 100px;
@@ -1427,7 +1427,7 @@
     }
 }
 .design-universe {
-    background: #b5a2f0;
+    background: #b5c7f4;
 }
 .design-universe h2 {
     letter-spacing: -0.06em;
@@ -1463,8 +1463,608 @@
 }
 .universe-header .join-button {
     background: #242226;
-    color: #ddff67;
+    color: #ffa05a;
 }
 .universe-header .mobile-nav {
     background: #f3efe5;
+}
+/* Chapter identity: original logo, campus-poster type, computing diagrams. */
+.chapter-logo {
+    width: 185px;
+    height: auto;
+    max-height: 42px;
+    object-fit: contain;
+}
+.universe {
+    font-family: 'Archivo', Arial, sans-serif;
+}
+.universe h2,
+.universe h3,
+.universe .hero-serif,
+.chapter-feed h2 {
+    font-family: 'Barlow Condensed', Impact, sans-serif;
+    font-weight: 900;
+    letter-spacing: -0.025em;
+}
+.universe h2 em,
+.universe h3 em,
+.universe .hero-serif em,
+.chapter-feed h2 em {
+    font-family: inherit;
+    font-style: normal;
+    font-weight: 900;
+}
+.universe .hero-small,
+.universe-label,
+.universe-controls,
+.universe-location,
+.universe-edition,
+.world-link,
+.feed-label,
+.tool-num,
+.chapter-feed a,
+.universe .orbit-photo span {
+    font-family: 'IBM Plex Mono', monospace;
+}
+.universe-title {
+    padding: 0;
+    margin: 32px auto 24px;
+    width: 82%;
+}
+.universe-title img {
+    width: 100%;
+    height: auto;
+}
+.hero-small {
+    font:
+        11px 'IBM Plex Mono',
+        monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.hero-serif {
+    font-size: clamp(42px, 5.8vw, 88px);
+    text-transform: uppercase;
+    margin-top: 22px;
+}
+.hero-sticker em,
+.wall-doodle,
+.memory > span {
+    font-family: pagkaki, monospace;
+    font-style: normal;
+}
+.orbital-grid > div {
+    border-radius: 0;
+    width: 65%;
+    height: 65%;
+    left: 18%;
+    top: 15%;
+    transform: rotate(45deg);
+    border-color: #9b8f7e;
+}
+.orbital-grid > div:nth-child(2) {
+    transform: rotate(45deg) scale(0.7);
+}
+.orbital-grid > div:nth-child(3) {
+    transform: rotate(45deg) scale(0.4);
+}
+.planet-one {
+    background:
+        repeating-linear-gradient(0deg, transparent 0 24px, #2454df40 25px 26px),
+        repeating-linear-gradient(90deg, transparent 0 24px, #2454df40 25px 26px);
+    border: 1px solid #2454df;
+    box-shadow: none;
+    border-radius: 0;
+    transform: rotate(45deg);
+    width: 120px;
+    height: 120px;
+}
+.planet-one span {
+    border: 1px solid #2454df;
+    border-radius: 0;
+    inset: 20%;
+    transform: none;
+}
+.planet-two {
+    border-radius: 0;
+    background: #f47721;
+    transform: rotate(45deg);
+    width: 30px;
+    height: 30px;
+}
+.chapter-feed {
+    background: #e5e9ef;
+    padding: 100px 7%;
+    color: #242226;
+    border-block: 1px solid #242226;
+}
+.chapter-feed-heading {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: end;
+    gap: 25px;
+    margin-bottom: 45px;
+}
+.chapter-feed-heading > .universe-label {
+    grid-column: 1/-1;
+}
+.chapter-feed h2 {
+    font-size: clamp(55px, 7vw, 105px);
+    line-height: 0.85;
+    text-transform: uppercase;
+}
+.chapter-feed h2 em {
+    color: #2454df;
+}
+.chapter-feed-heading > a {
+    justify-self: end;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-bottom: 1px solid;
+    padding-bottom: 8px;
+}
+.chapter-posts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+.chapter-post > div {
+    position: relative;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    background: #242226;
+}
+.chapter-post img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.4s;
+}
+.chapter-post:hover img {
+    transform: scale(1.04);
+}
+.chapter-post > div > svg {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    color: white;
+    filter: drop-shadow(0 1px 4px black);
+}
+.chapter-post > span {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0;
+    font:
+        10px 'IBM Plex Mono',
+        monospace;
+    border-bottom: 1px solid #24222640;
+}
+.chapter-post p {
+    font:
+        13px/1.6 'Archivo',
+        sans-serif;
+    margin-top: 15px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.chapter-feed-fallback {
+    border: 1px solid #24222650;
+    padding: 40px;
+    background: #f3efe5;
+}
+.chapter-feed-fallback > span {
+    font:
+        35px 'IBM Plex Mono',
+        monospace;
+    color: #2454df;
+}
+.chapter-feed-fallback h3 {
+    font-size: 38px;
+    text-transform: uppercase;
+    margin: 20px 0 10px;
+}
+.chapter-feed-fallback p {
+    font-size: 14px;
+    line-height: 1.6;
+}
+.chapter-feed-fallback a {
+    display: inline-block;
+    margin-top: 25px;
+    font-size: 12px;
+    border-bottom: 1px solid;
+}
+.feed-skeleton {
+    padding: 50px;
+    background: #f3efe5;
+    font:
+        12px 'IBM Plex Mono',
+        monospace;
+}
+.chapter-reveal {
+    position: fixed;
+    inset: 0;
+    z-index: 250;
+    background: #141619;
+    color: #f3efe5;
+    overflow: hidden;
+    font:
+        10px/1.6 'IBM Plex Mono',
+        monospace;
+    isolation: isolate;
+    animation: chapter-exit 0.45s 2.75s both;
+}
+.reveal-grid {
+    position: absolute;
+    inset: 0;
+    opacity: 0.25;
+    background-image:
+        linear-gradient(#84899040 1px, transparent 1px),
+        linear-gradient(90deg, #84899040 1px, transparent 1px);
+    background-size: 40px 40px;
+    transform: perspective(700px) rotateX(50deg) scale(1.8);
+    animation: chapter-grid 3.2s ease both;
+}
+.reveal-circuit {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    stroke: #f47721;
+    stroke-width: 1;
+}
+.reveal-circuit path {
+    stroke-dasharray: 1800;
+    stroke-dashoffset: 1800;
+    animation: chapter-trace 1.5s ease-out forwards;
+}
+.circuit-nodes {
+    fill: #f47721;
+    opacity: 0;
+    animation: chapter-arrive 0.5s 0.7s forwards;
+}
+.reveal-corner {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+}
+.reveal-top-right {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    text-align: right;
+    color: #f47721;
+}
+.reveal-diamond {
+    position: absolute;
+    width: 290px;
+    height: 290px;
+    left: calc(50% - 145px);
+    top: calc(50% - 145px);
+    border: 1px solid #f4772180;
+    animation: chapter-diamond 2.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.reveal-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: min(75%, 920px);
+    transform: translate(-50%, -50%);
+    animation: chapter-logo 2.7s ease both;
+}
+.reveal-logo > img {
+    width: 100%;
+    height: auto;
+}
+.reveal-logo .logo-channel {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+}
+.channel-orange {
+    filter: sepia(1) saturate(10);
+    animation: chapter-channel 0.7s 0.9s both;
+}
+.channel-blue {
+    filter: sepia(1) saturate(7) hue-rotate(170deg);
+    animation: chapter-channel 0.7s 1s reverse both;
+}
+.reveal-scan {
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    background: #f47721;
+    top: 0;
+    box-shadow: 0 0 45px 20px #f4772120;
+    animation: chapter-scan 1.6s 0.2s both;
+    pointer-events: none;
+}
+.reveal-terminal {
+    position: absolute;
+    left: 30px;
+    bottom: 90px;
+    color: #c2c8d0;
+    display: flex;
+    flex-direction: column;
+}
+.reveal-terminal span {
+    opacity: 0;
+    animation: chapter-arrive 0.2s 0.3s forwards;
+}
+.reveal-terminal span:nth-child(2) {
+    animation-delay: 0.7s;
+}
+.reveal-terminal span:nth-child(3) {
+    animation-delay: 1.1s;
+    color: #f47721;
+}
+.reveal-bottom {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    right: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+.reveal-bottom button {
+    border-bottom: 1px solid #f47721;
+    padding: 5px;
+}
+.reveal-shutter {
+    position: absolute;
+    background: #f47721;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    z-index: -1;
+}
+.shutter-left {
+    left: 0;
+    animation: chapter-shutter-left 1.4s cubic-bezier(0.75, 0, 0.2, 1) both;
+}
+.shutter-right {
+    right: 0;
+    animation: chapter-shutter-right 1.4s cubic-bezier(0.75, 0, 0.2, 1) both;
+}
+@keyframes chapter-trace {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+@keyframes chapter-arrive {
+    to {
+        opacity: 1;
+    }
+}
+@keyframes chapter-grid {
+    from {
+        opacity: 0;
+        translate: 0 80px;
+    }
+    to {
+        opacity: 0.25;
+        translate: 0 0;
+    }
+}
+@keyframes chapter-diamond {
+    0% {
+        transform: rotate(0) scale(0.05);
+        opacity: 0;
+    }
+    35% {
+        opacity: 1;
+    }
+    75%,
+    100% {
+        transform: rotate(225deg) scale(2.2);
+        opacity: 0.2;
+    }
+}
+@keyframes chapter-logo {
+    0%,
+    15% {
+        opacity: 0;
+        clip-path: inset(50% 0);
+        filter: blur(10px);
+    }
+    38% {
+        opacity: 1;
+        clip-path: inset(0);
+        filter: blur(0);
+    }
+    85%,
+    100% {
+        opacity: 1;
+        clip-path: inset(0);
+    }
+}
+@keyframes chapter-channel {
+    0%,
+    100% {
+        opacity: 0;
+        translate: 0;
+    }
+    35% {
+        opacity: 0.4;
+        translate: 8px -3px;
+        clip-path: inset(25% 0 50%);
+    }
+    65% {
+        opacity: 0.3;
+        translate: -8px 3px;
+        clip-path: inset(60% 0 10%);
+    }
+}
+@keyframes chapter-scan {
+    from {
+        top: -5%;
+    }
+    to {
+        top: 110%;
+    }
+}
+@keyframes chapter-shutter-left {
+    0%,
+    20% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-101%);
+    }
+}
+@keyframes chapter-shutter-right {
+    0%,
+    20% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(101%);
+    }
+}
+@keyframes chapter-exit {
+    to {
+        opacity: 0;
+        transform: scale(1.12);
+        visibility: hidden;
+    }
+}
+@media (max-width: 600px) {
+    .chapter-logo {
+        width: 160px;
+    }
+    .hero-small {
+        font-size: 8px;
+        max-width: 90%;
+        margin: auto;
+        line-height: 1.6;
+    }
+    .universe-title {
+        width: 92%;
+        margin: 24px auto;
+    }
+    .hero-serif {
+        font-size: 45px;
+        line-height: 0.9;
+    }
+    .planet-one {
+        width: 75px;
+        height: 75px;
+    }
+    .chapter-feed {
+        padding: 75px 7%;
+    }
+    .chapter-feed-heading {
+        grid-template-columns: 1fr;
+    }
+    .chapter-feed-heading > a {
+        justify-self: start;
+    }
+    .chapter-feed h2 {
+        font-size: 66px;
+    }
+    .chapter-posts {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px 15px;
+    }
+    .chapter-post p {
+        font-size: 11px;
+    }
+    .chapter-feed-fallback {
+        padding: 25px;
+    }
+    .chapter-feed-fallback h3 {
+        font-size: 32px;
+    }
+    .reveal-corner,
+    .reveal-top-right {
+        font-size: 7px;
+        top: 20px;
+    }
+    .reveal-corner {
+        left: 20px;
+        max-width: 62%;
+    }
+    .reveal-top-right {
+        right: 20px;
+    }
+    .reveal-logo {
+        width: 90%;
+    }
+    .reveal-diamond {
+        width: 150px;
+        height: 150px;
+        left: calc(50% - 75px);
+        top: calc(50% - 75px);
+    }
+    .reveal-terminal {
+        left: 20px;
+        font-size: 8px;
+    }
+    .reveal-bottom {
+        left: 20px;
+        right: 20px;
+        font-size: 8px;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .chapter-reveal {
+        display: none;
+    }
+    .chapter-post img {
+        transition: none;
+    }
+}
+.universe-hero h1 {
+    top: 20%;
+}
+.hero-serif {
+    font-size: clamp(32px, 4vw, 64px);
+    width: 56%;
+    margin: 20px auto 0;
+}
+.orbit-photo-one {
+    top: 56%;
+}
+.orbit-photo-three {
+    top: 59%;
+}
+.hero-sticker {
+    top: 68%;
+    left: 50%;
+}
+@media (max-width: 600px) {
+    .universe-hero h1 {
+        top: 28%;
+    }
+    .hero-serif {
+        width: 92%;
+        font-size: 40px;
+        margin-top: 18px;
+    }
+    .orbit-photo-one {
+        top: 53%;
+    }
+    .orbit-photo-three {
+        top: 57%;
+    }
+    .hero-sticker {
+        top: 71%;
+        left: 49%;
+    }
+}
+.route-loading > img {
+    width: min(75%, 500px);
+    height: auto;
+}
+.universe-header {
+    font-family: 'Archivo', Arial, sans-serif;
+}
+@media (max-width: 600px) {
+    .hero-sticker {
+        top: 67%;
+    }
 }
