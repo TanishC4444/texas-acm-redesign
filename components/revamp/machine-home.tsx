@@ -62,7 +62,14 @@ export default function MachineHome() {
                     <SoundToggle onEnable={reduced ? undefined : replay} />
                 </div>
                 <h1>
-                    <span>Texas</span> <span>ACM.</span>
+                    <span className="chapter-title-art">
+                        <img
+                            src="/texasacm-wordmark.svg"
+                            alt="Texas ACM"
+                            width="800"
+                            height="145"
+                        />
+                    </span>
                 </h1>
                 <p>The computing community at UT Austin. Open to all majors.</p>
                 <div className="minimal-hero-actions" id="join">
@@ -99,6 +106,60 @@ export default function MachineHome() {
                     loading="lazy"
                     src="https://calendar.google.com/calendar/embed?src=utacm.org_tblt9l9gskpcunjovsjfh8ei0g%40group.calendar.google.com&ctz=America%2FChicago&mode=AGENDA"
                 />
+            </section>
+            <section className="chapter-involvement" aria-labelledby="involvement-title">
+                <div className="minimal-section-heading">
+                    <h2 id="involvement-title">Find your place.</h2>
+                    <Link href="/events">
+                        Explore events <ArrowUpRight size={17} />
+                    </Link>
+                </div>
+                <div className="chapter-involvement-grid">
+                    {[
+                        {
+                            title: 'Learn together',
+                            text: 'Technical workshops, academic support, and Pancakes with Professors.',
+                            photo: '/studio/pwp.webp',
+                            alt: 'Texas ACM Pancakes with Professors gathering',
+                            href: '/events#academics',
+                        },
+                        {
+                            title: 'Meet the industry',
+                            text: 'Company tech talks, professional workshops, and the Corporate Banquet.',
+                            photo: '/studio/acmformal25.webp',
+                            alt: 'Texas ACM members at a formal chapter gathering',
+                            href: '/events#industry',
+                        },
+                        {
+                            title: 'Find your people',
+                            text: 'Retreats, game nights, and a community beyond your classes.',
+                            photo: '/studio/family-feud.webp',
+                            alt: 'Students taking part in Texas ACM Family Feud',
+                            href: '/events#community',
+                        },
+                    ].map((item) => (
+                        <Link
+                            className="chapter-involvement-card"
+                            href={item.href}
+                            key={item.title}
+                        >
+                            <div className="chapter-involvement-photo">
+                                <img
+                                    src={item.photo}
+                                    alt={item.alt}
+                                    loading="lazy"
+                                    width="800"
+                                    height="600"
+                                />
+                            </div>
+                            <div className="chapter-involvement-title">
+                                <h3>{item.title}</h3>
+                                <ArrowUpRight size={24} aria-hidden="true" />
+                            </div>
+                            <p>{item.text}</p>
+                        </Link>
+                    ))}
+                </div>
             </section>
             <section className="minimal-community">
                 <div className="minimal-section-heading">
