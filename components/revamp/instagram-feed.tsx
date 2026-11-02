@@ -41,7 +41,22 @@ export default function InstagramFeed({ compact = false }: { compact?: boolean }
             document.removeEventListener('visibilitychange', refresh);
         };
     }, []);
-    if (compact && (status !== 'connected' || !posts.length)) return null;
+    if (compact && (status !== 'connected' || !posts.length))
+        return (
+            <section className="chapter-social-feature">
+                <div>
+                    <h2>@texas_acm</h2>
+                    <p>Events, photos, and chapter updates.</p>
+                </div>
+                <a
+                    href="https://www.instagram.com/texas_acm/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    View Instagram <ArrowUpRight size={24} />
+                </a>
+            </section>
+        );
     return (
         <section className={`chapter-feed ${compact ? 'compact-feed' : ''}`}>
             <div className="chapter-feed-heading">

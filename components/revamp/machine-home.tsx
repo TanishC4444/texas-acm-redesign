@@ -61,7 +61,9 @@ export default function MachineHome() {
                     </button>
                     <SoundToggle onEnable={reduced ? undefined : replay} />
                 </div>
-                <h1>Texas ACM.</h1>
+                <h1>
+                    <span>Texas</span> <span>ACM.</span>
+                </h1>
                 <p>The computing community at UT Austin. Open to all majors.</p>
                 <div className="minimal-hero-actions" id="join">
                     <a

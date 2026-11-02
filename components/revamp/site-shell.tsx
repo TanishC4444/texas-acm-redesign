@@ -20,12 +20,12 @@ export function SiteHeader() {
                 <Link className="wordmark" href="/" aria-label="Texas ACM home">
                     <img
                         className="chapter-logo logo-light"
-                        src="/texasacm-logo-primary.svg"
+                        src="/texasacm-logo-bright.svg"
                         alt="Texas ACM"
                     />
                     <img
                         className="chapter-logo logo-dark"
-                        src="/texasacm-logo-white.svg"
+                        src="/texasacm-logo-bright-dark.svg"
                         alt="Texas ACM"
                     />
                 </Link>
