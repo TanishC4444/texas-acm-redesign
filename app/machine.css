@@ -3510,7 +3510,7 @@ dialog.identity-intro:not([open]) {
     }
 }
 
-/* A brief brand interlude on route changes; never delays or captures navigation. */
+/* The intro's matte mark and camera language, compressed for navigation. */
 .chapter-page-transition {
     position: fixed;
     inset: 0;
@@ -3519,34 +3519,71 @@ dialog.identity-intro:not([open]) {
     place-items: center;
     pointer-events: none;
     background: var(--paper);
-    animation: chapter-page-uncover 0.74s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+    perspective: 1000px;
+    animation: chapter-page-uncover 0.98s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+.chapter-transition-camera {
+    width: clamp(125px, 19vw, 230px);
+    transform-style: preserve-3d;
+    animation: chapter-transition-camera 0.92s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 .chapter-transition-mark {
-    width: clamp(85px, 12vw, 145px);
+    width: 100%;
     overflow: visible;
-    animation: chapter-mark-turn 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.chapter-transition-circle {
+    animation: chapter-circle-settle 0.72s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.chapter-transition-diamond {
+    animation: chapter-diamond-settle 0.72s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 @keyframes chapter-page-uncover {
-    0%,
-    25% {
+    0% {
+        opacity: 0.94;
+    }
+    12%,
+    55% {
         opacity: 1;
     }
     100% {
         opacity: 0;
     }
 }
-@keyframes chapter-mark-turn {
+@keyframes chapter-transition-camera {
     0% {
-        opacity: 0;
-        transform: scale(0.94) rotate(-4deg);
+        transform: rotateY(-18deg) rotateX(8deg) scale(1.35);
     }
-    30% {
-        opacity: 1;
-        transform: scale(1) rotate(0);
+    62% {
+        transform: rotateY(0) rotateX(0) scale(1);
     }
     100% {
+        transform: translateY(-8px) scale(0.98);
+    }
+}
+@keyframes chapter-circle-settle {
+    from {
         opacity: 0;
-        transform: translateY(-8px) scale(1.02) rotate(2deg);
+        transform: translateX(-24px);
+    }
+    35% {
+        opacity: 1;
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+@keyframes chapter-diamond-settle {
+    from {
+        opacity: 0;
+        transform: translateX(24px);
+    }
+    35% {
+        opacity: 1;
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
     }
 }
 .studio-header .desktop-nav a {
@@ -3655,5 +3692,84 @@ dialog.identity-intro:not([open]) {
     .chapter-get-started {
         grid-template-columns: 1fr;
         gap: 32px;
+    }
+}
+
+/* Restrained, consistent feedback for mouse, touch, and keyboard. */
+:where(
+    .button,
+    .space-cta,
+    .join-button,
+    .officer-link,
+    .officer-sidebar button,
+    .content-toolbar button,
+    .photo-library button,
+    .officer-card,
+    .story-card,
+    .minimal-resource > a
+) {
+    transition:
+        transform 0.32s cubic-bezier(0.2, 0.7, 0.3, 1),
+        box-shadow 0.32s ease,
+        border-color 0.25s ease,
+        background-color 0.25s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+    :where(.button, .space-cta, .join-button, .officer-link):not(:disabled):hover {
+        transform: translateY(-2px);
+        box-shadow: 0 7px 18px #10263b12;
+    }
+    :where(.officer-card, .story-card):hover {
+        transform: translateY(-4px);
+        box-shadow: 0 14px 30px #10263b14;
+    }
+    .minimal-resource > a:hover {
+        transform: translateX(5px);
+        border-color: var(--machine-blue);
+    }
+    .photo-library button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0 0 2px var(--machine-blue);
+    }
+    .officer-sidebar button:hover,
+    .content-toolbar button:hover {
+        background-color: var(--mint);
+    }
+}
+:where(
+        .button,
+        .space-cta,
+        .join-button,
+        .officer-link,
+        .officer-sidebar button,
+        .photo-library button
+    ):not(:disabled):active {
+    transform: scale(0.98);
+}
+:where(a, button, summary, input, select, textarea):focus-visible {
+    outline: 3px solid var(--machine-blue);
+    outline-offset: 4px;
+}
+:where(.story-card, .officer-card):focus-within {
+    box-shadow: 0 0 0 2px var(--machine-blue);
+}
+@media (prefers-reduced-motion: reduce) {
+    .chapter-page-transition {
+        display: none;
+    }
+    :where(
+        .button,
+        .space-cta,
+        .join-button,
+        .officer-link,
+        .officer-sidebar button,
+        .content-toolbar button,
+        .photo-library button,
+        .officer-card,
+        .story-card,
+        .minimal-resource > a
+    ) {
+        transition: none !important;
+        transform: none !important;
     }
 }

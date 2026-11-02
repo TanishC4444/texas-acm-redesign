@@ -14,30 +14,36 @@ export default function PageTransition() {
         if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
         setSequence((value) => value + 1);
         setVisible(true);
-        const timer = setTimeout(() => setVisible(false), 760);
+        const timer = setTimeout(() => setVisible(false), 1000);
         return () => clearTimeout(timer);
     }, [pathname]);
 
     if (!visible) return null;
     return (
         <div key={sequence} className="chapter-page-transition" aria-hidden="true">
-            <svg
-                viewBox="0 0 330 262"
-                className="chapter-transition-mark"
-                fill="none"
-                strokeWidth="29"
-            >
-                <rect
-                    x="86.655"
-                    y="131"
-                    width="156.262"
-                    height="156.262"
-                    rx="30.5"
-                    transform="rotate(-45 86.655 131)"
-                    stroke="#ff791d"
-                />
-                <circle cx="109.5" cy="130.351" r="95" stroke="#008fd5" />
-            </svg>
+            <div className="chapter-transition-camera">
+                <svg
+                    viewBox="0 0 330 262"
+                    className="chapter-transition-mark"
+                    fill="none"
+                    strokeWidth="29"
+                >
+                    <g className="chapter-transition-diamond">
+                        <rect
+                            x="86.655"
+                            y="131"
+                            width="156.262"
+                            height="156.262"
+                            rx="30.5"
+                            transform="rotate(-45 86.655 131)"
+                            stroke="#ff791d"
+                        />
+                    </g>
+                    <g className="chapter-transition-circle">
+                        <circle cx="109.5" cy="130.351" r="95" stroke="#008fd5" />
+                    </g>
+                </svg>
+            </div>
         </div>
     );
 }
