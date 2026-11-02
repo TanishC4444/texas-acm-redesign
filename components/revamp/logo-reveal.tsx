@@ -50,6 +50,16 @@ export default function ChapterReveal({ onSkip }: { onSkip: () => void }) {
                             />
                             <circle cx="109.5" cy="130.351" r="95" stroke="#008fd5" />
                         </g>
+                        <mask
+                            id="identity-wordmark"
+                            maskUnits="userSpaceOnUse"
+                            x="340"
+                            y="0"
+                            width="804"
+                            height="262"
+                        >
+                            <image href="/texasacm-logo-white.svg" width="1144" height="262" />
+                        </mask>
                         <clipPath id="identity-symbol-crop">
                             <rect width="330" height="262" />
                         </clipPath>
@@ -67,7 +77,13 @@ export default function ChapterReveal({ onSkip }: { onSkip: () => void }) {
                         <use href="#identity-color-mark" />
                     </g>
                     <g clipPath="url(#identity-name-crop)">
-                        <image href="/texasacm-logo-white.svg" width="1144" height="262" />
+                        <rect
+                            className="identity-wordmark"
+                            x="340"
+                            width="804"
+                            height="262"
+                            mask="url(#identity-wordmark)"
+                        />
                     </g>
                 </svg>
             </div>

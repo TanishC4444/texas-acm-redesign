@@ -3141,11 +3141,11 @@ dialog.identity-intro {
     overflow: visible;
     animation: identity-appear 0.35s ease both;
 }
-.identity-lockup image {
-    filter: brightness(0);
+.identity-wordmark {
+    fill: #111;
 }
-[data-theme='dark'] .identity-lockup image {
-    filter: none;
+:root[data-theme='dark'] .identity-wordmark {
+    fill: #fff;
 }
 .identity-symbol {
     animation: identity-position 1.45s cubic-bezier(0.65, 0, 0.2, 1) both;
