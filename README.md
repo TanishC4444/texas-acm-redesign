@@ -6,13 +6,13 @@ A working copy of the [Texas ACM website](https://www.texasacm.org/) for plannin
 
 ## Redesign implementation — November 1, 2026
 
-The redesign branch now opens with a maximalist **Texas ACM chapter** homepage that preserves the original Texas ACM SVG logo. The updated type system pairs Barlow Condensed headlines, IBM Plex Mono annotations, Archivo body text, and the existing Pagkaki handwriting. The intro reveals the original logo through circuit traces, scan lines, split shutters, and a brief color-channel effect. Earlier Campus Studio and After Hours directions remain at `/designs/studio` and `/designs/night`.
+The redesign now opens with **Chapter Space**, an interactive Texas ACM scene explorer. Choose Chapter, People, Events, Toolkit, or Connect instead of traversing a long homepage. The original logo remains unchanged; ACM-inspired blue/cyan and UT orange tie together glass surfaces, perspective photo cards, looping 3D CSS rings/cube, and an original-logo intro that flows into the scene. A glass page dock, persistent light/dark themes with a color-wave transition, and photo-led headers carry the visual system into the other pages.
 
-![Texas ACM chapter desktop](docs/redesign/chapter-desktop.jpg)
+![Chapter Space dark desktop](docs/redesign/space-dark.jpg)
 
-The new motion includes a skippable 3.2-second first-visit logo reveal (with replay), floating photos, rotating graphics, scroll parallax, section reveals, an animated marquee, hover reactions, draggable photos with reset, route entrance transitions, and a route-loading screen. A pause control stops ambient motion; reduced-motion preferences disable automatic animation and the intro. Photos in the memory wall come from the existing ACM archive. The separate Instagram feed refreshes periodically once the account manager connects it; it is **not connected live yet**. See [Instagram setup and account-manager handoff](docs/INSTAGRAM-SETUP.md).
+The homepage includes selectable Original/Vivid/Blueprint photo treatments, keyboard-accessible scene navigation, perspective hover/mouse movement, and a motion pause. The calendar opens in an embedded panel; Connect brings together the real Discord invite, newsletter signup, chapter email, calendar, and Instagram feed panel. Instagram is still **not connected live** until its managing officer completes [the account connection](docs/INSTAGRAM-SETUP.md). Reduced-motion preferences bypass the intro and disable automatic scene animation. Long informational pages and overflowing mobile panels retain ordinary scrolling so their content remains reachable.
 
-[Mobile preview](docs/redesign/chapter-mobile.jpg) · [Photo wall](docs/redesign/alternate-universe-photo-wall.jpg) · [Logo reveal](docs/redesign/chapter-logo-reveal.jpg)
+[Mobile preview](docs/redesign/space-mobile.jpg) · [Light theme](docs/redesign/space-light.jpg) · [Logo reveal](docs/redesign/chapter-logo-reveal.jpg)
 
 - [Design directions and Figma file](docs/DESIGN-DIRECTIONS.md)
 - [Officer setup, permissions, and remaining launch steps](docs/OFFICER-SETUP.md)

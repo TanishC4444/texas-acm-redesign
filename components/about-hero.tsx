@@ -1,17 +1,13 @@
-import { Info } from 'lucide-react';
-
+import ChapterPageHero from '@/components/revamp/page-hero';
 export default function AboutHero() {
     return (
-        <section className="hero-banner">
-            <div className="container px-4 pt-12 sm:px-6 lg:px-8">
-                <div className="mx-auto max-w-3xl text-center">
-                    <Info className="mx-auto mb-4 h-12 w-12 text-white" />
-                    <h1 className="mb-4 text-4xl font-bold text-white">About Texas ACM</h1>
-                    <p className="text-xl text-white/90">
-                        Learn how Texas ACM serves the UT Austin CS community.
-                    </p>
-                </div>
-            </div>
-        </section>
+        <ChapterPageHero
+            title={'About Texas ACM'}
+            description={
+                'The people, projects, and possibilities behind your UT Austin computing community.'
+            }
+            image={'acmretreat25'}
+            alt={'ACM friends together at retreat'}
+        />
     );
 }

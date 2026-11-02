@@ -1,17 +1,13 @@
-import { BookMarked } from 'lucide-react';
-
+import ChapterPageHero from '@/components/revamp/page-hero';
 export default function CSGuideHero() {
     return (
-        <section className="hero-banner">
-            <div className="container px-4 pt-12 sm:px-6 lg:px-8">
-                <div className="mx-auto max-w-3xl text-center">
-                    <BookMarked className="mx-auto mb-4 h-12 w-12 text-white" />
-                    <h1 className="mb-4 text-4xl font-bold text-white">CS Guide</h1>
-                    <p className="text-xl text-white/90">
-                        Everything you need to navigate through your CS journey at UT Austin.
-                    </p>
-                </div>
-            </div>
-        </section>
+        <ChapterPageHero
+            title={'Your CS field guide.'}
+            description={
+                'Classes, campus, and careers. Find your footing in UT Austin computer science.'
+            }
+            image={'pwp'}
+            alt={'Students gathering for Pancakes with Professors'}
+        />
     );
 }

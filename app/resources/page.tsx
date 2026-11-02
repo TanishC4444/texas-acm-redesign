@@ -1,22 +1,17 @@
 import Link from 'next/link';
+import ChapterPageHero from '@/components/revamp/page-hero';
 import { resourceLinks } from '@/lib/content';
 import { PublishedCards } from '@/components/revamp/live-content';
 export const metadata = { title: 'The toolkit | Texas ACM' };
 export default function Resources() {
     return (
         <div className="resource-hub">
-            <div className="page-intro">
-                <span className="eyebrow">THE TEXAS ACM TOOLKIT</span>
-                <h1>
-                    A little help.
-                    <br />
-                    <em>A long way.</em>
-                </h1>
-                <p>
-                    Find your footing, learn something new, and take your next step. Your guide to
-                    life in UTCS starts here.
-                </p>
-            </div>
+            <ChapterPageHero
+                title="Your student toolkit."
+                description="Find your footing, learn something new, and take your next step in UTCS."
+                image="pwp"
+                alt="UT Austin students and professors gathered together"
+            />
             <div className="resource-grid">
                 {resourceLinks.map((r, i) => (
                     <Link className="resource-tile" href={r.href} key={r.href}>

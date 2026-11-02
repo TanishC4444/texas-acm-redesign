@@ -17,20 +17,20 @@ export default function Designs() {
             </p>
             <div className="design-options">
                 <Link href="/" className="design-option design-universe">
-                    <span className="eyebrow">CURRENT / ALTERNATE UNIVERSE</span>
+                    <span className="eyebrow">CURRENT / CHAPTER SPACE</span>
                     <h2>
-                        A little
+                        Explore the
                         <br />
-                        out of the
+                        chapter
                         <br />
-                        <em>ordinary.</em>
+                        <em>in a new way.</em>
                     </h2>
                     <p>
                         Acid green. Orbital violet. A centered giant wordmark, floating photo
                         collage, scroll choreography, and an interactive memory wall.
                     </p>
                     <span className="button button-dark">
-                        Enter the universe <ArrowUpRight size={18} />
+                        Enter Chapter Space <ArrowUpRight size={18} />
                     </span>
                 </Link>
                 <Link href="/designs/studio" className="design-option design-campus">
@@ -79,7 +79,7 @@ export default function Designs() {
                 </Link>
             </div>
             <p className="design-note">
-                Alternate Universe is the current homepage. Campus Studio and After Hours remain
+                Chapter Space is the current homepage. Campus Studio and After Hours remain
                 available for comparison.
             </p>
         </div>

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import ChapterPageHero from '@/components/revamp/page-hero';
 import { ArrowUpRight } from 'lucide-react';
 import { PublishedCards } from '@/components/revamp/live-content';
 import CorporateEvents from '@/components/corporate-events';
@@ -8,20 +9,14 @@ export const metadata = { title: 'What’s on' };
 export default function EventsPage() {
     return (
         <>
-            <div className="page-banner">
-                <span className="eyebrow">SHOW UP. SOMETHING GOOD WILL FOLLOW.</span>
-                <h1>
-                    Good things
-                    <br />
-                    are happening.
-                </h1>
-                <p>
-                    Find your next tech talk, your next rabbit hole, or your next favorite people.
-                </p>
-                <Link className="text-link" href="/calendar">
-                    Explore the full calendar <ArrowUpRight size={18} />
-                </Link>
-            </div>
+            <ChapterPageHero
+                title="Out of class. Into something."
+                description="Tech talks, workshops, retreats, and community nights. Make your next plan with Texas ACM."
+                image="familyfeud25"
+                alt="Texas ACM community event"
+                href="/calendar"
+                action="Open the calendar"
+            />
             <div className="studio-section">
                 <div className="section-heading">
                     <div>

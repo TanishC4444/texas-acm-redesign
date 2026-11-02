@@ -1,4 +1,4 @@
-import UniverseHome from '@/components/revamp/universe';
+import ChapterExperience from '@/components/revamp/experience';
 export default function HomePage() {
-    return <UniverseHome />;
+    return <ChapterExperience />;
 }

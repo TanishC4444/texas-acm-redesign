@@ -43,8 +43,13 @@ export function SiteHeader() {
             <header className={`studio-header ${path === '/' ? 'universe-header' : ''}`}>
                 <Link className="wordmark" href="/" aria-label="Texas ACM home">
                     <img
-                        className="chapter-logo"
+                        className="chapter-logo logo-light"
                         src="/texasacm-logo-primary.svg"
+                        alt="Texas ACM"
+                    />
+                    <img
+                        className="chapter-logo logo-dark"
+                        src="/texasacm-logo-white.svg"
                         alt="Texas ACM"
                     />
                 </Link>
@@ -85,9 +90,9 @@ export function SiteHeader() {
                     <Link className="officer-link" href="/officer">
                         Officer login <ArrowUpRight size={14} />
                     </Link>
-                    <Link className="join-button" href="/#join">
+                    <a className="join-button" href="/#join">
                         Join the club <ArrowUpRight size={16} />
-                    </Link>
+                    </a>
                     <button
                         className="mobile-toggle"
                         onClick={() => setOpen(!open)}
@@ -116,6 +121,8 @@ export function SiteHeader() {
     );
 }
 export function SiteFooter() {
+    const path = usePathname();
+    if (path === '/') return null;
     return (
         <footer className="studio-footer">
             <div className="footer-top">

@@ -40,3 +40,19 @@ Complete password setup, email verification, and authenticator enrollment for `t
 - Chapter revision production build passed with lint skipped; TypeScript passed after the final intro-timer/keyboard changes. All 13 content/Instagram tests pass.
 - Chapter logo reveal replay and Escape-to-skip verified in browser. Mobile document width equals the 390-pixel viewport width. Original logo files have no diff.
 - Chapter screenshots: `docs/redesign/chapter-desktop.jpg`, `chapter-mobile.jpg`, and `chapter-logo-reveal.jpg`.
+
+## Chapter Space revision
+
+- Scene switching verified on mobile for People, Events, Toolkit, Connect, and Chapter; selected ARIA tab state updates.
+- Desktop at 1280 × 900 and mobile at 390 × 844: homepage document dimensions match the viewport, without horizontal overflow or a trailing vertical homepage scroll.
+- Vivid and Blueprint filter selections verified against computed image filters. Original logo images are excluded from filters.
+- Light/dark switching and the transition reviewed in browser. Theme persists across navigation; About and Officer pages reviewed in dark mode.
+- Shared photo/glass page heroes added across the primary informational routes; global inline italic emphasis removed.
+- Embedded calendar verified live: the public Texas ACM Events agenda rendered real chapter events. Escape closes the panel. No event was added or changed.
+- Dialogs include close controls, Escape support, focus containment, and focus return. Scene tabs include arrow/Home/End keyboard controls. Intro bypass and ambient-animation disabling are implemented for reduced-motion preferences.
+- CSS perspective drives the 3D effect; no WebGL dependency or stock/generated depiction of chapter members was added.
+- Firebase permissions, admin provisioning, and Instagram authorization requirements remain unchanged.
+
+- Production build and TypeScript checks pass (lint skipped). All 17 public/design/officer page routes returned HTTP 200 in the production smoke check; unauthenticated officer provisioning still returns HTTP 401.
+- The development status badge is disabled through the supported Next.js configuration so it cannot cover the mobile dock. Runtime error reporting remains available.
+- Screenshots: `docs/redesign/space-dark.jpg`, `space-light.jpg`, `space-mobile.jpg`, `space-about-dark.jpg`, and `space-calendar.jpg`.
