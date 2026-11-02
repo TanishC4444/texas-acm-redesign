@@ -12,8 +12,8 @@ Reviewed November 1, 2026.
 
 ## Not yet verified live
 
-The separate Firebase project `texas-acm-1bb6b` and its web app were created on the newly selected account. Email/password and Identity Platform are enabled; the default Firestore database is in `nam5`, initialized with production-mode deny-all rules. The project remains on Spark. Browser configuration is stored locally in ignored `.env.local`. Actual email delivery, administrator provisioning, production TOTP enrollment/challenge, and live content publishing remain unverified. The original Texas ACM deployment was not modified.
+The separate Firebase project `texas-acm-1bb6b` and its web app were created on the newly selected account. Email/password, Identity Platform, TOTP, and email enumeration protection are enabled. The default Firestore database is in `nam5`; repository rules were deployed and read back to verify an exact source match. The first administrator was created and their active admin approval record read back successfully. The project remains on Spark. Browser configuration is stored locally in ignored `.env.local`, and the connected officer login page was verified in-browser. Actual password-reset delivery, email verification, production TOTP enrollment/challenge, and live content publishing remain unverified pending user onboarding. Production hosting and the server identity for invitations remain unconfigured. The original Texas ACM deployment was not modified.
 
 ## Launch requirements
 
-Configure the TOTP provider, deploy the application rules, bootstrap the approved admin (`tanishchauhan@utexas.edu`), and test the complete sign-in/edit/publish path with that real account. Review both design directions and the content with the ACM team before replacing the current site.
+Complete password setup, email verification, and authenticator enrollment for `tanishchauhan@utexas.edu`, then test the complete sign-in/edit/publish path with that real account. Configure production hosting and its server identity for invitations. Review both design directions and the content with the ACM team before replacing the current site.
