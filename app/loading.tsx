@@ -1,8 +1,10 @@
 export default function Loading() {
     return (
-        <div className="route-loading" role="status">
-            <img src="/texasacm-logo-white.svg" alt="Texas ACM" />
-            <p>Opening the chapter…</p>
+        <div className="page-loading" role="status">
+            <span className="sr-only">Loading page…</span>
+            <div />
+            <div />
+            <div />
         </div>
     );
 }

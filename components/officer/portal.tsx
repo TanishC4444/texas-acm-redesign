@@ -27,7 +27,6 @@ import {
     updateDoc,
 } from 'firebase/firestore';
 import QRCode from 'qrcode';
-import ChipCharacter from '@/components/revamp/chip-character';
 import {
     ArrowUpRight,
     Check,
@@ -401,7 +400,6 @@ export default function OfficerPortal() {
                     <div className="security-pill">
                         <ShieldCheck size={18} /> Officer access + authenticator 2FA
                     </div>
-                    <ChipCharacter />
                 </div>
                 <div className="login-window">
                     <div className="window-bar">
@@ -454,7 +452,6 @@ export default function OfficerPortal() {
                     <div className="security-pill">
                         <ShieldCheck size={18} /> Approved officers. Verified email. Two factors.
                     </div>
-                    <ChipCharacter />
                 </div>
                 <div className="login-window">
                     <div className="window-bar">

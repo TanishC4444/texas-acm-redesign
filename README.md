@@ -6,9 +6,9 @@ A working copy of the [Texas ACM website](https://www.texasacm.org/) for plannin
 
 ## Redesign implementation
 
-The active design centers **Texas ACM at UT Austin**, with upright typography, real chapter photography, ACM blue and Texas orange accents, and a vertical computing-machinery layout. The original logo is unchanged. Its four-second opening assembles over a layered animated circuit board with etched traces, chips, pins, and traveling pulses. The opening captions and redundant homepage shortcut strip are removed.
+The active design centers **Texas ACM at UT Austin**, with upright typography, real chapter photography, ACM blue and Texas orange accents, and a quieter vertical layout. The original logo is unchanged. Its four-second opening assembles over a restrained frame with aligned parallel traces and subtle traveling pulses. The opening captions and redundant homepage shortcut strip are removed.
 
-![Texas ACM homepage](docs/redesign/texas-acm-desktop.jpg)
+![Current About page and visible officer login](docs/redesign/natural-about.jpg)
 
 Chapter photos unfold as visitors scroll and open into a full-screen gallery with previous/next controls, arrow keys, Escape, and focus restoration. A pinned Academics / Industry / Community selector tracks the section being read. Program names and descriptions reference actual chapter activities rather than computing wordplay. Light/dark mode, replay, motion pause, and reduced-motion support remain available.
 
@@ -18,9 +18,11 @@ The live Google Calendar is embedded on the homepage; Discord, chapter email, an
 
 Validation: production build and TypeScript checks passed. Manual browser checks covered the intro’s modal focus, gallery navigation/Escape/focus return, active program navigation, and a 390 px mobile layout without horizontal overflow. Image alternatives and unique IDs were checked. This is not a complete accessibility certification; external forms and administrator onboarding still need end-to-end verification.
 
-The latest visual pass adds brighter orange controls and photo edges, etched circuit/halftone textures, soft blue/orange lighting, and a decorative chip character. Shared page heroes, legacy cards, and About’s pillar/team sections now use the same treatment. The chip is an illustration, not a replacement chapter logo. Officer sign-in has larger fields, password visibility, and explicit account/authenticator steps; authentication and approval requirements remain unchanged.
+The current visual direction removes the chip character, circuit/halftone page backgrounds, decorative frames, and small editorial captions. Warm ivory and forest-toned dark surfaces keep attention on chapter photography, with blue and orange used as accents. Shared hero and gallery photos retain their natural proportions; event flyers use contain sizing rather than being cropped into squares. The officer workspace is directly available from the header on desktop and mobile. Sign-in retains larger fields, password visibility, and explicit account/authenticator steps.
 
-[Updated About preview](docs/redesign/etched-about.jpg) · [Officer sign-in preview](docs/redesign/etched-officer.jpg)
+The About directory now uses pre-generated, lazy-loaded WebP portraits and one accessible native profile dialog instead of a separate dialog per officer. The generated portrait set is approximately 632 KB (the original source directory is about 55 MB); originals remain in the repository. The production build reports 111 KB first-load JavaScript for About, down from 140 KB in the previous build. These are asset/build measurements, not a controlled network timing benchmark. Profile opening, Escape, focus restoration, image loading, and a 390 px mobile layout were checked manually.
+
+[Current About preview](docs/redesign/natural-about.jpg) · [Current officer sign-in](docs/redesign/natural-officer.jpg)
 
 - [Design directions and Figma file](docs/DESIGN-DIRECTIONS.md)
 - [Officer setup, permissions, and remaining launch steps](docs/OFFICER-SETUP.md)

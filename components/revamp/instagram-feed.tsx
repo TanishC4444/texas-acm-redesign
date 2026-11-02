@@ -44,7 +44,6 @@ export default function InstagramFeed() {
     return (
         <section className="chapter-feed">
             <div className="chapter-feed-heading">
-                <span className="universe-label">CHAPTER LOG / @TEXAS_ACM</span>
                 <h2>
                     Fresh from
                     <br />

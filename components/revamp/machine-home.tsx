@@ -5,7 +5,6 @@ import { useReducedMotion, motion } from 'framer-motion';
 import { ArrowUpRight, RotateCcw, Pause, Play } from 'lucide-react';
 import ChapterReveal from './logo-reveal';
 import ChapterGallery from './chapter-gallery';
-import ChipCharacter from './chip-character';
 import InstagramFeed from './instagram-feed';
 import EmailSignupForm from '@/components/EmailSignupForm';
 import { PublishedCards } from './live-content';
@@ -99,7 +98,6 @@ export default function MachineHome() {
         >
             {intro && <ChapterReveal onSkip={finish} />}
             <section className="machine-hero">
-                <ChipCharacter />
                 <div className="machine-hero-top">
                     <div>
                         <button onClick={replay} disabled={!!reduced}>
@@ -145,7 +143,6 @@ export default function MachineHome() {
             </section>
             <section id="chapter" className="machine-about">
                 <div className="machine-section-bar">
-                    <span>The chapter</span>
                     <Link href="/about">
                         Meet Texas ACM <ArrowUpRight size={18} />
                     </Link>
@@ -217,7 +214,6 @@ export default function MachineHome() {
             </section>
             <section className="machine-schedule">
                 <div className="machine-section-bar">
-                    <span>On the calendar</span>
                     <Link href="/calendar">
                         Full calendar <ArrowUpRight size={18} />
                     </Link>
@@ -240,7 +236,6 @@ export default function MachineHome() {
             </section>
             <section className="machine-resource">
                 <div className="machine-section-bar">
-                    <span>The student toolkit</span>
                     <Link href="/resources">
                         All resources <ArrowUpRight size={18} />
                     </Link>
@@ -279,7 +274,6 @@ export default function MachineHome() {
             </div>
             <section className="machine-join" id="join">
                 <div className="machine-section-bar">
-                    <span>Get involved</span>
                     <a href="mailto:pres@texasacm.org">
                         Contact the chapter <ArrowUpRight size={18} />
                     </a>

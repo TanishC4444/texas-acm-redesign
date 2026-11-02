@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import ChipCharacter from './chip-character';
 import { ArrowUpRight } from 'lucide-react';
 export default function ChapterPageHero({
     title,
@@ -29,7 +28,6 @@ export default function ChapterPageHero({
                 )}
             </div>
             <div className="page-hero-art">
-                <ChipCharacter />
                 <div className="page-hero-photo">
                     <img src={`/studio/${image}.webp`} alt={alt} fetchPriority="high" />
                 </div>
