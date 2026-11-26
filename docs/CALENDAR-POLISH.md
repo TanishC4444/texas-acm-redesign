@@ -28,3 +28,9 @@ Open http://localhost:3003. Use the development command to see the current sourc
 - Interactive browser verification is pending: this session blocks listening on local ports. No live preview or deployment is claimed.
 
 The current agenda and month views show upcoming events from the feed's existing 180-day window; the month controls are not an archive of past chapter events.
+
+## Landing page refinement
+
+The official Texas ACM wordmark is now the homepage heading. Hero photos no longer repeat the oversized logo. Section spacing is tighter, with brief path-drawing and shape-settling animations between the chapter, programs, and calendar sections. These run once on entry and respect motion preferences.
+
+The landing page has a compact footer containing the chapter join action, page links, social links, and published contacts. The former separate contact block is folded into it. An Instagram feed with no posts is omitted rather than leaving an empty section.

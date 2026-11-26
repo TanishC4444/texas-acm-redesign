@@ -14,6 +14,8 @@ const revealTargets = [
     '.acm-art-section-heading',
     '.acm-resources-heading',
     '.acm-resource-links > a',
+    '.acm-chapter-separator',
+    '.acm-landing-footer',
     '.acm-packages-title',
     '.acm-package-options > article',
     '.acm-partner-directory > h2',

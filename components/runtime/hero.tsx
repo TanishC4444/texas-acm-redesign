@@ -105,12 +105,16 @@ export default function RuntimeHero() {
                 <div className="acm-poster-heading">
                     <div className="acm-poster-copy">
                         <span className="acm-poster-eyebrow">
-                            TEXAS ACM <span aria-hidden="true">↗</span> THE UNIVERSITY OF TEXAS AT
-                            AUSTIN
+                            THE UNIVERSITY OF TEXAS AT AUSTIN <span aria-hidden="true">↗</span> OPEN
+                            TO EVERY MAJOR
                         </span>
                         <h1 id="acm-home-title">
-                            <span>Curious minds.</span>
-                            <em>Good company.</em>
+                            <img
+                                src="/texasacm-wordmark.svg"
+                                width="800"
+                                height="145"
+                                alt="Texas ACM"
+                            />
                         </h1>
                     </div>
                     <div className="acm-poster-note">
@@ -120,9 +124,9 @@ export default function RuntimeHero() {
                             All welcome.
                         </span>
                         <p>
-                            Your people in computer science.
+                            Computer science, good people,
                             <br />
-                            And everything around it.
+                            and ideas worth making real.
                         </p>
                         <a href="#find-your-place">
                             Find your place <span aria-hidden="true">↓</span>
@@ -152,6 +156,7 @@ export default function RuntimeHero() {
                                         key={photo.src}
                                         photo={photo}
                                         active={i === active}
+                                        branded={false}
                                     />
                                 ))}
                             </div>

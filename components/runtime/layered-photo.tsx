@@ -13,7 +13,15 @@ export type HeroPhoto = {
     foreground: string;
 };
 
-export default function LayeredPhoto({ photo, active }: { photo: HeroPhoto; active: boolean }) {
+export default function LayeredPhoto({
+    photo,
+    active,
+    branded = true,
+}: {
+    photo: HeroPhoto;
+    active: boolean;
+    branded?: boolean;
+}) {
     const id = useId();
     const current = useSitePhoto(photo.slot, photo.src, photo.alt);
     const className = active ? 'is-active' : '';
@@ -33,7 +41,7 @@ export default function LayeredPhoto({ photo, active }: { photo: HeroPhoto; acti
                     height={photo.height}
                     className="is-active"
                 />
-                <span className="acm-fallback-logo" aria-hidden="true" />
+                {branded && <span className="acm-fallback-logo" aria-hidden="true" />}
             </div>
         );
     }
@@ -53,21 +61,25 @@ export default function LayeredPhoto({ photo, active }: { photo: HeroPhoto; acti
                 </clipPath>
             </defs>
             <image href={photo.src} width="1600" height={photo.height} />
-            <image
-                className="acm-photo-brand"
-                href="/texasacm-logo-brand.svg"
-                x="120"
-                y={photo.logoTop}
-                width="1360"
-                height="271"
-            />
-            <image
-                className="acm-photo-foreground"
-                href={photo.src}
-                width="1600"
-                height={photo.height}
-                clipPath={`url(#${id})`}
-            />
+            {branded && (
+                <>
+                    <image
+                        className="acm-photo-brand"
+                        href="/texasacm-logo-brand.svg"
+                        x="120"
+                        y={photo.logoTop}
+                        width="1360"
+                        height="271"
+                    />
+                    <image
+                        className="acm-photo-foreground"
+                        href={photo.src}
+                        width="1600"
+                        height={photo.height}
+                        clipPath={`url(#${id})`}
+                    />
+                </>
+            )}
         </svg>
     );
 }

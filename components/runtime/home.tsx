@@ -18,6 +18,8 @@ import ChapterContent from './chapter-content';
 import InstagramFeed from '@/components/revamp/instagram-feed';
 import { useSiteDirectory } from './site-directory';
 import { safeSiteLink } from '@/lib/site-directory';
+import LandingFooter from './landing-footer';
+import ChapterSeparator from './chapter-separator';
 
 const resourceIcons = {
     guide: BookOpen,
@@ -93,6 +95,7 @@ export default function RuntimeHome() {
                     </figcaption>
                 </figure>
             </section>
+            <ChapterSeparator variant="orbit" />
             <section
                 className="acm-involvement"
                 id="find-your-place"
@@ -149,6 +152,7 @@ export default function RuntimeHome() {
                 </div>
             </section>
             <ChapterContent kind="announcement" />
+            <ChapterSeparator variant="path" />
             <CalendarHub />
             <section className="acm-resource-band" id="resources">
                 <header className="acm-resources-heading">
@@ -219,24 +223,9 @@ export default function RuntimeHome() {
                         })}
                 </nav>
                 <ChapterContent kind="resource" />
-                {publicContacts.length > 0 && (
-                    <section
-                        className="acm-contact-links"
-                        id="contact"
-                        aria-label="Contact Texas ACM"
-                    >
-                        <h3>Contact Texas ACM</h3>
-                        <div>
-                            {publicContacts.map((item) => (
-                                <a key={item.id} href={item.url} className="rt-button">
-                                    {item.title}
-                                </a>
-                            ))}
-                        </div>
-                    </section>
-                )}
             </section>
             <InstagramFeed embedded />
+            <LandingFooter contacts={publicContacts} />
         </div>
     );
 }

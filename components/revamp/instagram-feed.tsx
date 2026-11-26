@@ -52,6 +52,7 @@ export default function InstagramFeed({
             const src = instagramEmbedUrl(post.permalink);
             return src ? [{ ...post, src }] : [];
         });
+        if (!embeds.length) return null;
         return (
             <section className="acm-instagram-feed" aria-labelledby="acm-instagram-feed-title">
                 <div>
