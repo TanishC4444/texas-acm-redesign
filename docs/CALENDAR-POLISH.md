@@ -1,5 +1,7 @@
 # Calendar and photo refinements
 
+The subsequent visual pass adds a campus poster direction: oversized condensed and italic type, citrus orange, lime and lavender panels, a hand-drawn hero mark, postcard photo frames, and colored program/resource cards. The interactive agenda, month view, search, and slideshow controls are preserved. Styles include light/dark, reading-mode, high-contrast, reduced-motion, and mobile adjustments. Local browser rendering remains unverified because the available browser process cannot launch in this session.
+
 This branch starts from the complete November 9 working source, including the interactive calendar and previously uncommitted chapter features. The first commit preserves that snapshot. The November 26 makeover and its older November 2 rollback are not the starting point.
 
 The agenda remains the default view. Click an event for details, or switch to Month and select a date. Search matches event titles, descriptions, and locations. The month grid supports arrow keys and Home/End; Today returns to the Austin date. Calendar subscriptions continue to use the chapter's Google Calendar. Empty states use the real feed rather than placeholder events.

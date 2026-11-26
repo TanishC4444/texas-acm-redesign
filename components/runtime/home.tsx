@@ -33,16 +33,34 @@ export default function RuntimeHome() {
     return (
         <div className="rt-page acm-home">
             <RuntimeHero />
+            <div className="acm-art-ribbon" aria-hidden="true">
+                <span>COME FOR THE CODE.</span>
+                <svg viewBox="0 0 40 40" fill="none">
+                    <path
+                        d="M20 2v36M2 20h36M7 7l26 26M7 33L33 7"
+                        stroke="currentColor"
+                        strokeWidth="5"
+                    />
+                </svg>
+                <em>Stay for the people.</em>
+                <span className="acm-ribbon-end">AT UT, TOGETHER.</span>
+            </div>
             <Companies />
             <section className="acm-chapter" id="chapter">
-                <ManagedPhoto
-                    slot="gallery-0"
-                    src="/studio/acmretreat25.webp"
-                    alt="Texas ACM students at the chapter retreat"
-                    width="1000"
-                    height="700"
-                    loading="lazy"
-                />
+                <figure className="acm-chapter-postcard">
+                    <ManagedPhoto
+                        slot="gallery-0"
+                        src="/studio/acmretreat25.webp"
+                        alt="Texas ACM students at the chapter retreat"
+                        width="1000"
+                        height="700"
+                        loading="lazy"
+                    />
+                    <figcaption>
+                        Out of the group chat. Into the good stuff.{' '}
+                        <span aria-hidden="true">↗</span>
+                    </figcaption>
+                </figure>
                 <div>
                     <h2>
                         Better <em>together.</em>
@@ -80,7 +98,15 @@ export default function RuntimeHome() {
                 id="find-your-place"
                 aria-labelledby="involvement-heading"
             >
-                <h2 id="involvement-heading">Find your place.</h2>
+                <div className="acm-art-section-heading">
+                    <span className="acm-poster-eyebrow">THREE WAYS IN. NO WRONG DOOR.</span>
+                    <h2 id="involvement-heading">
+                        Find your <em>thing.</em>
+                    </h2>
+                    <span className="acm-art-asterisk" aria-hidden="true">
+                        ✳
+                    </span>
+                </div>
                 <div className="acm-involvement-photos">
                     {[
                         [
@@ -126,7 +152,9 @@ export default function RuntimeHome() {
             <CalendarHub />
             <section className="acm-resource-band" id="resources">
                 <header className="acm-resources-heading">
-                    <h2>Student resources</h2>
+                    <h2>
+                        A little <em>head start.</em>
+                    </h2>
                     <nav className="acm-social-icons" aria-label="Texas ACM social media">
                         <a
                             href="https://www.instagram.com/texas_acm/"

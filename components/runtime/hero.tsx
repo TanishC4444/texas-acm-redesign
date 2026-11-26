@@ -102,9 +102,47 @@ export default function RuntimeHero() {
                 }}
                 aria-labelledby="acm-home-title"
             >
-                <h1 id="acm-home-title" className="sr-only">
-                    Texas ACM
-                </h1>
+                <div className="acm-poster-heading">
+                    <div className="acm-poster-copy">
+                        <span className="acm-poster-eyebrow">
+                            TEXAS ACM <span aria-hidden="true">↗</span> THE UNIVERSITY OF TEXAS AT
+                            AUSTIN
+                        </span>
+                        <h1 id="acm-home-title">
+                            <span>Curious minds.</span>
+                            <em>Good company.</em>
+                        </h1>
+                    </div>
+                    <div className="acm-poster-note">
+                        <span className="acm-welcome-stamp">
+                            All majors.
+                            <br />
+                            All welcome.
+                        </span>
+                        <p>
+                            Your people in computer science.
+                            <br />
+                            And everything around it.
+                        </p>
+                        <a href="#find-your-place">
+                            Find your place <span aria-hidden="true">↓</span>
+                        </a>
+                    </div>
+                    <svg
+                        className="acm-poster-scribble"
+                        viewBox="0 0 220 100"
+                        fill="none"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="M8 70C52 12 159 4 187 34C221 71 99 112 69 76C42 43 143 27 207 49M194 35L210 49L192 62"
+                            stroke="currentColor"
+                            strokeWidth="3"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        />
+                    </svg>
+                </div>
                 <div className="vibrant-stage">
                     <div className="acm-hero-main">
                         <div className="vibrant-art">
