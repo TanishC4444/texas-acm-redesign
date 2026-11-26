@@ -11,8 +11,8 @@
         "check": "prettier --check .",
         "format": "prettier --write .",
         "typecheck": "tsc --noEmit",
-        "test": "vitest run tests/content.test.ts tests/instagram.test.ts",
-        "test:rules": "npx --yes firebase-tools emulators:exec --only firestore --project demo-texas-acm \"vitest run tests/firestore.rules.test.ts\""
+        "test": "vitest run tests/content.test.ts tests/instagram.test.ts tests/runtime.test.ts tests/officer-api.test.ts",
+        "test:rules": "npx --yes firebase-tools emulators:exec --only firestore,storage --project demo-texas-acm \"vitest run tests/firestore.rules.test.ts tests/storage.rules.test.ts\""
     },
     "dependencies": {
         "@emotion/is-prop-valid": "latest",
@@ -58,7 +58,9 @@
         "firebase": "^13.1.0",
         "firebase-admin": "^14.5.0",
         "framer-motion": "latest",
+        "ical.js": "^2.2.1",
         "input-otp": "1.4.1",
+        "lenis": "^1.3.27",
         "lucide-react": "^0.539.0",
         "next": "^15.5.28",
         "next-themes": "^0.4.4",

@@ -1,4 +1,4 @@
 import { redirect } from 'next/navigation';
-export default function Page() {
-    redirect('/resources#resume');
+export default function ResumeBook() {
+    redirect('/#resume-book');
 }
