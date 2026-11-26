@@ -47,3 +47,6 @@ next-env.d.ts
 .firebase-config/
 
 .next-preview/
+
+# Keep development output separate from production builds
+/.next-dev/

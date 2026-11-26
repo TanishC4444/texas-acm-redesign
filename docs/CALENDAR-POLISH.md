@@ -17,7 +17,7 @@ cd /Users/tanishchauhan/Documents/Codex/2026-11-26/new-chat-5/texas-acm
 npm run dev -- --port 3003
 ```
 
-Open http://localhost:3003. Use the development command to see the current source rather than an older production build. Dependencies and local environment configuration are linked to the original checkout on this Mac.
+Open http://localhost:3003. Use the development command to see the current source rather than an older production build. Dependencies and local environment configuration are linked to the original checkout on this Mac. Development uses `.next-dev` and production builds use `.next`, so build checks do not overwrite a running development server’s output. After changing this setting, stop the existing development process with Control-C and restart it.
 
 ## Verification
 
