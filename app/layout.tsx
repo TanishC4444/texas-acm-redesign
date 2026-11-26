@@ -10,6 +10,7 @@ import '@/app/authority.css';
 import '@/app/refinement.css';
 import '@/app/signal.css';
 import '@/app/chapter-motion.css';
+import '@/app/calendar-polish.css';
 import RouteMotion from '@/components/runtime/route-motion';
 import 'lenis/dist/lenis.css';
 import localFont from 'next/font/local';

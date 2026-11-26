@@ -11,7 +11,7 @@
         "check": "prettier --check .",
         "format": "prettier --write .",
         "typecheck": "tsc --noEmit",
-        "test": "vitest run tests/content.test.ts tests/instagram.test.ts tests/runtime.test.ts tests/officer-api.test.ts",
+        "test": "vitest run tests/content.test.ts tests/instagram.test.ts tests/runtime.test.ts tests/officer-api.test.ts tests/calendar-view.test.ts",
         "test:rules": "npx --yes firebase-tools emulators:exec --only firestore,storage --project demo-texas-acm \"vitest run tests/firestore.rules.test.ts tests/storage.rules.test.ts\""
     },
     "dependencies": {

@@ -39,9 +39,7 @@ export function eventBucket(start: string, now = new Date()) {
             day: '2-digit',
         }).format(d);
     if (dateKey(new Date(start)) === dateKey(now)) return 'Today';
-    const local = new Date(now.toLocaleString('en-US', { timeZone: 'America/Chicago' }));
-    const days = (7 - local.getDay()) % 7;
-    const end = new Date(local);
-    end.setDate(end.getDate() + days);
-    return dateKey(new Date(start)) <= dateKey(end) ? 'This week' : 'Later';
+    const local = new Date(dateKey(now) + 'T12:00:00Z');
+    local.setUTCDate(local.getUTCDate() + ((7 - local.getUTCDay()) % 7));
+    return dateKey(new Date(start)) <= local.toISOString().slice(0, 10) ? 'This week' : 'Later';
 }

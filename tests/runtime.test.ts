@@ -114,3 +114,40 @@ it('distinguishes a calendar outage from a valid empty feed', async () => {
     expect(r.status).toBe(503);
     expect((await r.json()).status).toBe('error');
 });
+
+it.each([
+    [
+        'DTSTART;VALUE=DATE:20261108',
+        'DTEND;VALUE=DATE:20261109',
+        '2026-11-08T06:00:00.000Z',
+        '2026-11-09T06:00:00.000Z',
+    ],
+    [
+        'DTSTART:20261109T180000',
+        'DTEND:20261109T190000',
+        '2026-11-10T00:00:00.000Z',
+        '2026-11-10T01:00:00.000Z',
+    ],
+])('keeps Austin dates for %s across DST', async (start, end, expectedStart, expectedEnd) => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-11-07T18:00:00Z'));
+    vi.stubEnv('GOOGLE_CAL_API_KEY', '');
+    const ics = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//ACM//Calendar//EN',
+        'BEGIN:VEVENT',
+        'UID:local-event',
+        start,
+        end,
+        'SUMMARY:Chapter event',
+        'END:VEVENT',
+        'END:VCALENDAR',
+    ].join('\r\n');
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(ics, { status: 200 }));
+    const response = await GET();
+    expect(response.status).toBe(200);
+    expect((await response.json()).events).toEqual([
+        expect.objectContaining({ start: expectedStart, end: expectedEnd }),
+    ]);
+});

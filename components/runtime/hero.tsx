@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { Pause, Play } from 'lucide-react';
 import { useRuntime } from './provider';
 import { Join, RouteLink } from './primitives';
 import LayeredPhoto, { type HeroPhoto } from './layered-photo';
@@ -39,6 +40,20 @@ export default function RuntimeHero() {
     const { settings } = useRuntime();
     const [active, setActive] = useState(0);
     const [intro, setIntro] = useState(false);
+    const [paused, setPaused] = useState(false);
+    const [focused, setFocused] = useState(false);
+    const [fullMotion, setFullMotion] = useState(false);
+    useEffect(() => {
+        const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const update = () =>
+            setFullMotion(
+                settings.motion === 'full' || (settings.motion === 'auto' && !media.matches),
+            );
+        update();
+        media.addEventListener('change', update);
+        return () => media.removeEventListener('change', update);
+    }, [settings.motion]);
+    const playing = !paused && fullMotion && settings.layout !== 'read';
     useEffect(() => {
         if (introduced) return;
         introduced = true;
@@ -61,6 +76,9 @@ export default function RuntimeHero() {
     }, [intro, settings.motion]);
     useEffect(() => {
         if (
+            paused ||
+            focused ||
+            intro ||
             settings.layout === 'read' ||
             document.documentElement.dataset.motionResolved !== 'full'
         )
@@ -70,13 +88,18 @@ export default function RuntimeHero() {
                 setActive((value) => (value + 1) % photos.length);
         }, 6500);
         return () => clearInterval(timer);
-    }, [settings.motion, settings.layout]);
+    }, [settings.motion, settings.layout, paused, focused, intro]);
     return (
         <>
             {intro && <ChapterReveal onSkip={() => setIntro(false)} />}
             <section
                 className="vibrant-opening acm-immersive-hero"
                 data-intro={intro}
+                data-paused={!playing || focused}
+                onFocusCapture={() => setFocused(true)}
+                onBlurCapture={(event) => {
+                    if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false);
+                }}
                 aria-labelledby="acm-home-title"
             >
                 <h1 id="acm-home-title" className="sr-only">
@@ -94,6 +117,47 @@ export default function RuntimeHero() {
                                     />
                                 ))}
                             </div>
+                        </div>
+                        <div
+                            className="acm-photo-controls"
+                            role="group"
+                            aria-label="Chapter slideshow"
+                        >
+                            <span className="acm-photo-counter" aria-hidden="true">
+                                0{active + 1}
+                                <span> / 0{photos.length}</span>
+                            </span>
+                            <div className="acm-photo-select">
+                                {photos.map((photo, index) => (
+                                    <button
+                                        key={photo.src}
+                                        type="button"
+                                        aria-label={`Show photo ${index + 1}: ${photo.alt}`}
+                                        aria-pressed={active === index}
+                                        onClick={() => {
+                                            setActive(index);
+                                            setPaused(true);
+                                        }}
+                                    >
+                                        <span />
+                                    </button>
+                                ))}
+                            </div>
+                            <button
+                                type="button"
+                                className="acm-photo-pause"
+                                aria-label={
+                                    playing ? 'Pause photo slideshow' : 'Play photo slideshow'
+                                }
+                                disabled={!fullMotion || settings.layout === 'read'}
+                                onClick={() => setPaused(!paused)}
+                            >
+                                {playing ? (
+                                    <Pause size={15} aria-hidden="true" />
+                                ) : (
+                                    <Play size={15} aria-hidden="true" />
+                                )}
+                            </button>
                         </div>
                         <div className="rt-actions acm-hero-actions">
                             <Join />

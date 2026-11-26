@@ -3,6 +3,17 @@ import ICAL from 'ical.js';
 import { fromZonedTime } from 'date-fns-tz';
 import { CALENDAR_ID, publicUrl, textOnly, type RuntimeEvent } from '@/lib/runtime-calendar';
 export const dynamic = 'force-dynamic';
+function calendarDate(value: ICAL.Time): Date {
+    if (value.isDate || value.zone.tzid === 'floating') {
+        return fromZonedTime(
+            value.toString().slice(0, 10) +
+                'T' +
+                (value.isDate ? '00:00:00' : value.toString().slice(11, 19)),
+            'America/Chicago',
+        );
+    }
+    return value.toJSDate();
+}
 export async function GET() {
     try {
         const now = new Date();
@@ -99,20 +110,20 @@ export async function GET() {
                     const it = e.iterator();
                     for (let n = 0; n < 10000; n++) {
                         const t = it.next();
-                        if (!t || t.toJSDate() > until) break;
+                        if (!t || calendarDate(t) > until) break;
                         const occurrence = e.getOccurrenceDetails(t);
                         if (
                             occurrence.item.component.getFirstPropertyValue('status') !==
                             'CANCELLED'
                         )
                             add(
-                                occurrence.startDate.toJSDate(),
-                                occurrence.endDate.toJSDate(),
+                                calendarDate(occurrence.startDate),
+                                calendarDate(occurrence.endDate),
                                 occurrence.item,
                                 t.toString(),
                             );
                     }
-                } else add(e.startDate.toJSDate(), e.endDate.toJSDate(), e, '');
+                } else add(calendarDate(e.startDate), calendarDate(e.endDate), e, '');
             }
         }
         events = events

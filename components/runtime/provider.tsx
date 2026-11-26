@@ -15,6 +15,7 @@ interface RuntimeContext {
     setQuery: (q: string) => void;
     now: number;
     notice: string;
+    refreshCalendar: () => void;
     announce: (text: string) => void;
 }
 const Runtime = createContext<RuntimeContext | null>(null);
@@ -32,6 +33,11 @@ export default function RuntimeProvider({ children }: { children: ReactNode }) {
     const [query, setQuery] = useState('');
     const [now, setNow] = useState(0);
     const [notice, setNotice] = useState('');
+    const [refreshKey, setRefreshKey] = useState(0);
+    function refreshCalendar() {
+        setStatus('loading');
+        setRefreshKey((value) => value + 1);
+    }
     useEffect(() => {
         try {
             setSettings(
@@ -42,7 +48,7 @@ export default function RuntimeProvider({ children }: { children: ReactNode }) {
         }
         setReady(true);
         setNow(Date.now());
-        const t = setInterval(() => setNow(Date.now()), 1000);
+        const t = setInterval(() => setNow(Date.now()), 30000);
         return () => clearInterval(t);
     }, []);
     useEffect(() => {
@@ -87,7 +93,7 @@ export default function RuntimeProvider({ children }: { children: ReactNode }) {
             clearInterval(t);
             document.removeEventListener('visibilitychange', refresh);
         };
-    }, []);
+    }, [refreshKey]);
     useEffect(() => {
         if (!ready) return;
         if (
@@ -164,6 +170,7 @@ export default function RuntimeProvider({ children }: { children: ReactNode }) {
                 setQuery,
                 now,
                 notice,
+                refreshCalendar,
                 announce: setNotice,
             }}
         >
