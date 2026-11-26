@@ -1,4 +1,4 @@
-import MachineHome from '@/components/revamp/machine-home';
-export default function HomePage() {
-    return <MachineHome />;
+import RuntimeHome from '@/components/runtime/home';
+export default function Home() {
+    return <RuntimeHome />;
 }

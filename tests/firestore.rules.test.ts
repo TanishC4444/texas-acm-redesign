@@ -5,7 +5,8 @@ import {
     assertSucceeds,
     RulesTestEnvironment,
 } from '@firebase/rules-unit-testing';
-import { beforeAll, afterAll, beforeEach, describe, it } from 'vitest';
+import { beforeAll, afterAll, beforeEach, describe, expect, it } from 'vitest';
+import { ContentConflict, saveOfficerContent } from '../lib/firebase/officer-content';
 import {
     collection,
     doc,
@@ -18,6 +19,7 @@ import {
     serverTimestamp,
     Timestamp,
     deleteDoc,
+    type Firestore,
 } from 'firebase/firestore';
 let env: RulesTestEnvironment;
 const projectId = 'demo-texas-acm';
@@ -254,5 +256,162 @@ describe('site photos and anonymous activity', () => {
         );
         await assertFails(getDocs(collection(actor('editor', ''), 'siteActivity')));
         await assertSucceeds(getDocs(collection(actor('editor'), 'siteActivity')));
+    });
+});
+
+describe('dashboard workflow', () => {
+    it('publishes and archives a draft through the same service the dashboard uses', async () => {
+        // The rules harness returns a compat wrapper accepted by the modular SDK.
+        const db = actor('editor') as unknown as Firestore;
+        const publicDb = env.unauthenticatedContext().firestore();
+        const initial = { ...content(), updatedAt: undefined };
+        const id = await saveOfficerContent(db, 'editor', {
+            ...initial,
+            kind: 'event',
+            status: 'draft',
+        });
+        await assertFails(getDoc(doc(publicDb, 'content', id)));
+        const first = await getDoc(doc(db, 'content', id));
+        await saveOfficerContent(db, 'editor', {
+            ...initial,
+            id,
+            kind: 'event',
+            status: 'published',
+            updatedAt: first.get('updatedAt'),
+        });
+        const published = await assertSucceeds(getDoc(doc(publicDb, 'content', id)));
+        expect(published.get('status')).toBe('published');
+        expect(published.get('createdBy')).toBe('editor');
+        await saveOfficerContent(db, 'editor', {
+            ...initial,
+            id,
+            kind: 'event',
+            status: 'archived',
+            updatedAt: published.get('updatedAt'),
+        });
+        await assertFails(getDoc(doc(publicDb, 'content', id)));
+    });
+    it('allows only one of two concurrent edits against the same revision', async () => {
+        // The rules harness returns a compat wrapper accepted by the modular SDK.
+        const db = actor('editor') as unknown as Firestore;
+        const original = await getDoc(doc(db, 'content', 'draft'));
+        const edit = {
+            ...content(),
+            id: original.id,
+            kind: 'event',
+            status: 'draft',
+            updatedAt: original.get('updatedAt'),
+        } as const;
+        const results = await Promise.allSettled([
+            saveOfficerContent(db, 'editor', { ...edit, title: 'First edit' }),
+            saveOfficerContent(db, 'editor', { ...edit, title: 'Second edit' }),
+        ]);
+        expect(results.filter((result) => result.status === 'fulfilled')).toHaveLength(1);
+        expect(results.find((result) => result.status === 'rejected')?.reason).toBeInstanceOf(
+            ContentConflict,
+        );
+        expect(['First edit', 'Second edit']).toContain(
+            (await getDoc(doc(db, 'content', 'draft'))).get('title'),
+        );
+    });
+    it('allows incomplete drafts but rejects unpublishable events and forms', async () => {
+        const db = actor('editor');
+        await assertSucceeds(
+            setDoc(doc(db, 'content', 'missing-date-draft'), { ...content(), date: '' }),
+        );
+        await assertFails(
+            setDoc(doc(db, 'content', 'missing-date'), {
+                ...content('editor', 'published'),
+                date: '',
+            }),
+        );
+        await assertFails(
+            setDoc(doc(db, 'content', 'missing-link'), {
+                ...content('editor', 'published'),
+                kind: 'form',
+                url: '',
+            }),
+        );
+    });
+    it('blocks direct officer creation and email reassignment by a browser admin', async () => {
+        const db = actor('admin');
+        await assertFails(
+            setDoc(doc(db, 'officers', 'new'), {
+                name: 'New',
+                email: 'new@example.com',
+                active: true,
+                role: 'editor',
+            }),
+        );
+        await assertFails(updateDoc(doc(db, 'officers', 'editor'), { email: 'other@example.com' }));
+        await assertSucceeds(updateDoc(doc(db, 'officers', 'editor'), { role: 'admin' }));
+    });
+});
+
+describe('public website directory', () => {
+    function entry(kind = 'contact', url = 'mailto:corporate@example.com') {
+        return {
+            kind,
+            url,
+            title: 'Contact us',
+            description: '',
+            category: '',
+            image: '',
+            links: '',
+            hidden: false,
+            updatedAt: serverTimestamp(),
+        };
+    }
+    it('lets an active MFA officer publish contacts, resources, and officer profiles', async () => {
+        const db = actor('editor');
+        await assertSucceeds(setDoc(doc(db, 'siteDirectory', 'contact'), entry()));
+        await assertSucceeds(
+            setDoc(doc(db, 'siteDirectory', 'resource'), entry('link', '/cs-guide')),
+        );
+        await assertSucceeds(
+            setDoc(doc(db, 'siteDirectory', 'officer'), {
+                ...entry('officer', ''),
+                category: 'President',
+                image: '/studio/officers/jayden.webp',
+                links: 'https://linkedin.com/in/example\nhttps://github.com/example',
+            }),
+        );
+        const guest = env.unauthenticatedContext().firestore();
+        await assertSucceeds(getDocs(collection(guest, 'siteDirectory')));
+    });
+    it('denies unapproved or non-MFA writes and unsafe destinations', async () => {
+        for (const db of [actor('inactive'), actor('outsider'), actor('editor', '')])
+            await assertFails(setDoc(doc(db, 'siteDirectory', 'contact'), entry()));
+        const db = actor('editor');
+        for (const url of [
+            'javascript:alert(1)',
+            '//bad.example',
+            'mailto:bad@example.com?bcc=x@example.com',
+        ])
+            await assertFails(setDoc(doc(db, 'siteDirectory', 'contact'), entry('contact', url)));
+        await assertFails(setDoc(doc(db, 'siteDirectory', 'resource'), entry('link')));
+        await assertFails(
+            setDoc(doc(db, 'siteDirectory', 'officer'), {
+                ...entry('officer', ''),
+                links: 'javascript:alert(1)',
+            }),
+        );
+    });
+    it('hides entries without leaving private fields and keeps entry kinds stable', async () => {
+        const db = actor('editor');
+        const contact = doc(db, 'siteDirectory', 'contact');
+        await assertSucceeds(setDoc(contact, entry()));
+        await assertFails(setDoc(contact, { ...entry(), hidden: true }));
+        await assertFails(
+            setDoc(contact, { kind: 'officer', hidden: true, updatedAt: serverTimestamp() }),
+        );
+        await assertSucceeds(
+            setDoc(contact, { kind: 'contact', hidden: true, updatedAt: serverTimestamp() }),
+        );
+        const publicDoc = await getDoc(
+            doc(env.unauthenticatedContext().firestore(), 'siteDirectory', 'contact'),
+        );
+        expect(publicDoc.get('hidden')).toBe(true);
+        expect(publicDoc.get('url')).toBeUndefined();
     });
 });

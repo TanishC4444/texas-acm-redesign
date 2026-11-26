@@ -2246,68 +2246,6 @@ body {
     line-height: 1.5;
     color: var(--machine-muted);
 }
-.officer-profile {
-    width: min(850px, calc(100% - 32px));
-    max-height: calc(100dvh - 40px);
-    padding: 35px;
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    background: var(--paper);
-    color: var(--ink);
-    overflow: auto;
-}
-.officer-profile[open] {
-    display: grid;
-    grid-template-columns: 0.8fr 1fr;
-    align-items: start;
-    gap: 32px;
-}
-.officer-profile::backdrop {
-    background: #0f201bbd;
-}
-.officer-profile > img {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-}
-.officer-profile h2 {
-    font-size: 30px;
-    line-height: 1.2;
-    font-weight: 750;
-    margin: 18px 0 10px;
-}
-.officer-profile p {
-    line-height: 1.8;
-}
-.officer-profile-role {
-    margin-bottom: 20px;
-    color: var(--machine-muted);
-}
-.officer-profile-close {
-    position: absolute;
-    right: 8px;
-    top: 8px;
-    display: grid;
-    place-items: center;
-    width: 44px;
-    height: 44px;
-    background: var(--paper);
-    border-radius: 50%;
-}
-.officer-profile-socials {
-    display: flex;
-    gap: 12px;
-    margin-top: 25px;
-}
-.officer-profile-socials a {
-    display: grid;
-    place-items: center;
-    width: 44px;
-    height: 44px;
-    border: 1px solid var(--line);
-    border-radius: 50%;
-}
 .officer-entry,
 [data-theme='dark'] .officer-story {
     background: transparent;
@@ -2392,17 +2330,6 @@ body {
     }
     .officer-card p {
         font-size: 13px;
-    }
-    .officer-profile[open] {
-        grid-template-columns: 1fr;
-        padding: 28px;
-        gap: 12px;
-    }
-    .officer-profile > img {
-        max-height: 40dvh;
-        width: auto;
-        max-width: 100%;
-        margin: auto;
     }
     .officer-entry {
         display: flex;

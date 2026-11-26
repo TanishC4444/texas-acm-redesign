@@ -1,11 +1,4 @@
-import CalendarHero from '@/components/calendar-hero';
-import GoogleCalendar from '@/components/google-calendar';
-
-export default function CalendarPage() {
-    return (
-        <div className="legacy-content min-h-screen">
-            <CalendarHero />
-            <GoogleCalendar />
-        </div>
-    );
+import { redirect } from 'next/navigation';
+export default function Calendar() {
+    redirect('/#calendar');
 }

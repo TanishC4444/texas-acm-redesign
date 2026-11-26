@@ -1,64 +1,78 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { firebaseAdmin } from '@/lib/firebase/admin';
+import { z } from 'zod';
+
 export const runtime = 'nodejs';
+
+const invitation = z.object({
+    email: z.string().trim().toLowerCase().max(254).email(),
+    name: z.string().trim().min(1).max(100),
+});
+
+const denied = (error: string, status: number) => NextResponse.json({ error }, { status });
+const isAdmin = (role: { active?: unknown; role?: unknown } | undefined) =>
+    role?.active === true && role.role === 'admin';
+
+class AdminAccessChanged extends Error {}
+
 export async function POST(req: NextRequest) {
-    const authHeader = req.headers.get('authorization');
-    if (!authHeader?.startsWith('Bearer '))
-        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    // Bearer authentication is required. No cookie-based credentials are accepted.
+    const bearer = /^Bearer (\S+)$/.exec(req.headers.get('authorization') ?? '');
+    if (!bearer) return denied('Unauthorized', 401);
+
     let admin: ReturnType<typeof firebaseAdmin>;
     try {
         admin = firebaseAdmin();
     } catch {
-        return NextResponse.json({ error: 'Invitations unavailable' }, { status: 503 });
+        return denied('Invitations unavailable', 503);
     }
+
+    let token;
     try {
-        const token = await admin.auth.verifyIdToken(authHeader.slice(7), true);
-        if (!token.email_verified || token.firebase.sign_in_second_factor !== 'totp')
-            return NextResponse.json({ error: 'Second factor required' }, { status: 403 });
-        // Limit invitations to a recent authentication, not just a refreshed token.
-        if (Date.now() / 1000 - token.auth_time > 15 * 60)
-            return NextResponse.json({ error: 'Recent sign-in required' }, { status: 403 });
-        const role = await admin.db.doc(`officers/${token.uid}`).get();
-        if (!role.exists || role.data()?.active !== true || role.data()?.role !== 'admin')
-            return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-        const body = await req.json();
-        const email = typeof body.email === 'string' ? body.email.trim().toLowerCase() : '';
-        const name = typeof body.name === 'string' ? body.name.trim() : '';
-        if (
-            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
-            email.length > 254 ||
-            !name ||
-            name.length > 100
-        )
-            return NextResponse.json({ error: 'Invalid input' }, { status: 400 });
-        // Never attach officer privileges to an arbitrary existing account implicitly.
-        // For existing accounts, a project owner must verify the UID and provision manually.
+        token = await admin.auth.verifyIdToken(bearer[1], true);
+    } catch {
+        return denied('Unauthorized', 401);
+    }
+    if (!token.email_verified || token.firebase?.sign_in_second_factor !== 'totp')
+        return denied('Second factor required', 403);
+
+    const age = Date.now() / 1000 - token.auth_time;
+    if (!Number.isFinite(age) || age < -60 || age > 15 * 60)
+        return denied('Recent sign-in required', 403);
+
+    try {
+        const roleRef = admin.db.doc(`officers/${token.uid}`);
+        if (!isAdmin((await roleRef.get()).data())) return denied('Forbidden', 403);
+
+        const parsed = invitation.safeParse(await req.json().catch(() => null));
+        if (!parsed.success) return denied('Invalid input', 400);
+        const { email, name } = parsed.data;
+
         const account = await admin.auth.createUser({
             email,
             displayName: name,
             emailVerified: false,
         });
         try {
-            await admin.db
-                .doc(`officers/${account.uid}`)
-                .create({ name, email, role: 'editor', active: true });
-        } catch {
+            const newRole = admin.db.doc(`officers/${account.uid}`);
+            await admin.db.runTransaction(async (transaction) => {
+                if (!isAdmin((await transaction.get(roleRef)).data()))
+                    throw new AdminAccessChanged();
+                transaction.create(newRole, { name, email, role: 'editor', active: true });
+            });
+        } catch (error) {
+            // A rejected transaction may have committed before the response was lost.
+            const saved = (await admin.db.doc(`officers/${account.uid}`).get()).data();
+            if (saved?.email === email && saved?.role === 'editor' && saved?.active === true) {
+                return NextResponse.json({ ok: true }, { status: 201 });
+            }
             await admin.auth.deleteUser(account.uid);
-            throw new Error('Provisioning failed');
+            throw error;
         }
         return NextResponse.json({ ok: true }, { status: 201 });
-    } catch (e) {
-        const code = (e as { code?: string }).code;
-        if (code === 'auth/email-already-exists')
-            return NextResponse.json(
-                {
-                    error: 'Account already exists. Verify and provision through the project owner.',
-                },
-                { status: 409 },
-            );
-        if (code?.startsWith('auth/id-token') || code === 'auth/argument-error')
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        return NextResponse.json({ error: 'Could not provision officer' }, { status: 400 });
+    } catch (error) {
+        if (error instanceof AdminAccessChanged) return denied('Forbidden', 403);
+        if ((error as { code?: string }).code === 'auth/email-already-exists')
+            return denied('Account already exists. Ask the project owner to verify access.', 409);
+        return denied('Could not provision officer', 503);
     }
 }

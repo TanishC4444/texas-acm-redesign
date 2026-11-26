@@ -6,8 +6,9 @@ const config = {
     projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
+export const storageBucket = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET;
 export const firebaseConfigured = Object.values(config).every(Boolean);
 export function firebaseApp() {
     if (!firebaseConfigured) throw new Error('Firebase is not configured for this deployment.');
-    return getApps()[0] || initializeApp(config);
+    return getApps()[0] || initializeApp({ ...config, storageBucket });
 }
