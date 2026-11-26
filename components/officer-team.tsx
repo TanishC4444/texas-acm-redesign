@@ -1,88 +1,49 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { Github, Globe, Instagram, Linkedin, X } from 'lucide-react';
-import { safeDirectoryImage, safeSiteLink } from '@/lib/site-directory';
-import { useSiteDirectory } from '@/components/runtime/site-directory';
+import { officers, type Officer } from '@/lib/officers';
 const icons = { github: Github, website: Globe, instagram: Instagram, linkedin: Linkedin };
-function socials(value: string) {
-    return value
-        .split('\n')
-        .map((url) => url.trim())
-        .filter((url) => url.startsWith('https://') && safeSiteLink(url))
-        .map((url) => {
-            const host = new URL(url).hostname.replace(/^www\./, '');
-            const iconType: keyof typeof icons =
-                host === 'github.com'
-                    ? 'github'
-                    : host === 'instagram.com'
-                      ? 'instagram'
-                      : host === 'linkedin.com'
-                        ? 'linkedin'
-                        : 'website';
-            return {
-                url,
-                iconType,
-                name: {
-                    github: 'GitHub',
-                    instagram: 'Instagram',
-                    linkedin: 'LinkedIn',
-                    website: 'website',
-                }[iconType],
-            };
-        });
-}
+const portrait = (officer: Officer) =>
+    `/studio/officers/${officer.image
+        .split('/')
+        .pop()!
+        .replace(/\.[^.]+$/, '')}.webp`;
 export default function OfficerTeam() {
-    const { entries } = useSiteDirectory('officer');
-    const [selection, setSelection] = useState<string | null>(null);
-    const selected = entries.find((entry) => entry.id === selection);
-    const profileOpen = Boolean(selected);
-    const selectedSocials = selected ? socials(selected.links) : [];
+    const [selected, setSelected] = useState<Officer | null>(null);
     const dialog = useRef<HTMLDialogElement>(null);
     const trigger = useRef<HTMLButtonElement | null>(null);
     useEffect(() => {
-        if (!profileOpen) return;
-        const profile = dialog.current;
-        profile?.showModal();
+        if (!selected) return;
+        dialog.current?.showModal();
         return () => {
-            profile?.close();
+            dialog.current?.close();
             trigger.current?.focus();
         };
-    }, [profileOpen]);
+    }, [selected]);
     return (
         <section className="officer-directory studio-section" aria-label="Texas ACM officers">
             <div className="officer-grid">
-                {entries.map((officer) => (
+                {officers.map((officer) => (
                     <button
                         className="officer-card"
                         data-track="open-officer-profile"
-                        key={officer.id}
+                        key={officer.name}
                         onClick={(e) => {
                             trigger.current = e.currentTarget;
-                            setSelection(officer.id);
+                            setSelected(officer);
                         }}
-                        aria-label={`About ${officer.title}, ${officer.category}`}
+                        aria-label={`About ${officer.name}, ${officer.position}`}
                     >
-                        <span className="acm-officer-portrait">
-                            {safeDirectoryImage(officer.image) ? (
-                                <img
-                                    src={officer.image}
-                                    alt={officer.title}
-                                    width="480"
-                                    height="600"
-                                    loading="lazy"
-                                    decoding="async"
-                                />
-                            ) : (
-                                <span className="acm-no-portrait" aria-hidden="true">
-                                    {officer.title.slice(0, 1)}
-                                </span>
-                            )}
-                            <span className="acm-officer-profile-cue" aria-hidden="true">
-                                View profile
-                            </span>
-                        </span>
-                        <h3>{officer.title}</h3>
-                        <p>{officer.category}</p>
+                        <img
+                            src={portrait(officer)}
+                            alt={officer.name}
+                            width="480"
+                            height="600"
+                            loading="lazy"
+                            decoding="async"
+                        />
+                        <h3>{officer.name}</h3>
+                        <p>{officer.position}</p>
                     </button>
                 ))}
             </div>
@@ -91,39 +52,26 @@ export default function OfficerTeam() {
                     ref={dialog}
                     className="officer-profile"
                     aria-labelledby="officer-profile-name"
-                    aria-describedby="officer-profile-bio"
                     onCancel={(e) => {
                         e.preventDefault();
-                        setSelection(null);
+                        setSelected(null);
                     }}
                 >
                     <button
                         className="officer-profile-close"
                         autoFocus
-                        onClick={() => setSelection(null)}
+                        onClick={() => setSelected(null)}
                         aria-label="Close officer profile"
                     >
-                        <X size={18} aria-hidden="true" />
+                        <X />
                     </button>
-                    <div className="officer-profile-heading">
-                        {safeDirectoryImage(selected.image) ? (
-                            <img src={selected.image} alt="" width="104" height="104" />
-                        ) : (
-                            <span className="acm-no-portrait" aria-hidden="true">
-                                {selected.title.slice(0, 1)}
-                            </span>
-                        )}
-                        <div>
-                            <h2 id="officer-profile-name">{selected.title}</h2>
-                            <p className="officer-profile-role">{selected.category}</p>
-                        </div>
-                    </div>
-                    <p className="officer-profile-bio" id="officer-profile-bio">
-                        {selected.description}
-                    </p>
-                    {selectedSocials.length > 0 && (
+                    <img src={portrait(selected)} alt={selected.name} width="480" height="600" />
+                    <div>
+                        <h2 id="officer-profile-name">{selected.name}</h2>
+                        <p className="officer-profile-role">{selected.position}</p>
+                        <p>{selected.bio}</p>
                         <div className="officer-profile-socials">
-                            {selectedSocials.map((social) => {
+                            {selected.socials.map((social) => {
                                 const Icon = icons[social.iconType] || Globe;
                                 return (
                                     <a
@@ -131,14 +79,14 @@ export default function OfficerTeam() {
                                         href={social.url}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        aria-label={`${selected.title} on ${social.name}`}
+                                        aria-label={`${selected.name} on ${social.name}`}
                                     >
-                                        <Icon size={17} />
+                                        <Icon size={22} />
                                     </a>
                                 );
                             })}
                         </div>
-                    )}
+                    </div>
                 </dialog>
             )}
         </section>

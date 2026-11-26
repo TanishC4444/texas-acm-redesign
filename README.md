@@ -1,5 +1,3 @@
-> **November 26 makeover:** The current implementation and remaining launch checks are described in [MAKEOVER-REVIEW.md](docs/MAKEOVER-REVIEW.md). The homepage now uses a labeled top navigation, a photo-led editorial layout, and a shared footer. Historical screenshots and design notes below describe earlier iterations.
-
 > Palette update: the active redesign now uses orange and green throughout, including matte logo variants, page transitions, backgrounds, focus states, and dark mode. Historical screenshots and promo videos below may show the earlier blue palette.
 
 # Texas ACM — redesign workspace

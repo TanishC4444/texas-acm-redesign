@@ -1,14 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { ArrowUpRight, Play, Layers } from 'lucide-react';
-import { instagramEmbedUrl, type InstagramPost } from '@/lib/instagram-data';
-export default function InstagramFeed({
-    compact = false,
-    embedded = false,
-}: {
-    compact?: boolean;
-    embedded?: boolean;
-}) {
+import type { InstagramPost } from '@/lib/instagram-data';
+export default function InstagramFeed({ compact = false }: { compact?: boolean }) {
     const [posts, setPosts] = useState<InstagramPost[]>([]);
     const [status, setStatus] = useState('loading');
     useEffect(() => {
@@ -30,8 +24,8 @@ export default function InstagramFeed({
                     setPosts([]);
                     setStatus('unavailable');
                 }
-            } catch (error) {
-                if (active && !(error instanceof DOMException && error.name === 'AbortError')) {
+            } catch {
+                if (active) {
                     setPosts([]);
                     setStatus('unavailable');
                 }
@@ -47,51 +41,6 @@ export default function InstagramFeed({
             document.removeEventListener('visibilitychange', refresh);
         };
     }, []);
-    if (embedded) {
-        const embeds = posts.slice(0, 3).flatMap((post) => {
-            const src = instagramEmbedUrl(post.permalink);
-            return src ? [{ ...post, src }] : [];
-        });
-        return (
-            <section className="acm-instagram-feed" aria-labelledby="acm-instagram-feed-title">
-                <div>
-                    <h2 id="acm-instagram-feed-title">From Instagram</h2>
-                    <a
-                        className="rt-text-link"
-                        href="https://www.instagram.com/texas_acm/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        @texas_acm <ArrowUpRight size={17} aria-hidden="true" />
-                    </a>
-                </div>
-                {embeds.length > 0 && (
-                    <div className="acm-instagram-embeds">
-                        {embeds.map((post, i) => (
-                            <figure key={post.id}>
-                                <iframe
-                                    src={post.src}
-                                    title={`Texas ACM Instagram post ${i + 1}`}
-                                    loading="lazy"
-                                    referrerPolicy="strict-origin-when-cross-origin"
-                                />
-                                <figcaption>
-                                    <a
-                                        className="rt-text-link"
-                                        href={post.permalink}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        Open post on Instagram
-                                    </a>
-                                </figcaption>
-                            </figure>
-                        ))}
-                    </div>
-                )}
-            </section>
-        );
-    }
     if (compact && (status !== 'connected' || !posts.length))
         return (
             <section className="chapter-social-feature">
@@ -121,7 +70,7 @@ export default function InstagramFeed({
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    Find Us on Instagram <ArrowUpRight size={18} />
+                    Find us on Instagram <ArrowUpRight size={18} />
                 </a>
             </div>
             {status === 'loading' ? (

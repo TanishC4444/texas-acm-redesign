@@ -47,6 +47,3 @@ next-env.d.ts
 .firebase-config/
 
 .next-preview/
-
-# Generated visual review snapshots
-/review/*.html

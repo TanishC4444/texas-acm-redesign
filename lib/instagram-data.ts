@@ -21,9 +21,7 @@ function allowedUrl(value: unknown, media = false): string {
                   /^\/(p|reel|tv)\//.test(u.pathname)
         )
             return u.href;
-    } catch {
-        /* Invalid URLs are rejected below. */
-    }
+    } catch {}
     return '';
 }
 export function normalizeInstagramPosts(data: unknown): InstagramPost[] {
@@ -56,11 +54,4 @@ export function normalizeInstagramPosts(data: unknown): InstagramPost[] {
         })
         .sort((a, b) => Date.parse(b.timestamp) - Date.parse(a.timestamp))
         .slice(0, 6);
-}
-
-export function instagramEmbedUrl(permalink: string): string | undefined {
-    const safe = allowedUrl(permalink);
-    if (!safe) return undefined;
-    const match = /^\/(p|reel|tv)\/([A-Za-z0-9_-]+)\/?$/.exec(new URL(safe).pathname);
-    return match ? `https://www.instagram.com/${match[1]}/${match[2]}/embed/` : undefined;
 }

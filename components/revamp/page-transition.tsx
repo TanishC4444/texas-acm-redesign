@@ -1,38 +1,54 @@
 'use client';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
+
 export default function PageTransition() {
-    const path = usePathname();
-    const previous = useRef(path);
-    const [visible, setVisible] = useState(false);
+    const pathname = usePathname();
+    const previous = useRef(pathname);
     const [sequence, setSequence] = useState(0);
+    const [visible, setVisible] = useState(false);
+
     useLayoutEffect(() => {
-        if (previous.current === path) return;
-        previous.current = path;
+        if (previous.current === pathname) return;
+        previous.current = pathname;
         if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-        setSequence((s) => s + 1);
+        setSequence((value) => value + 1);
         setVisible(true);
-        const timer = setTimeout(() => setVisible(false), 600);
+        const timer = setTimeout(() => setVisible(false), 1270);
         return () => clearTimeout(timer);
-    }, [path]);
+    }, [pathname]);
+
     if (!visible) return null;
     return (
-        <div key={sequence} className="chapter-route-wipe" aria-hidden="true">
-            <div className="wipe-band wipe-blue" />
-            <div className="wipe-band wipe-orange" />
-            <div className="wipe-band wipe-accent" />
-            <svg className="wipe-symbol" viewBox="0 0 330 262" fill="none" strokeWidth="18">
-                <rect
-                    x="86.655"
-                    y="131"
-                    width="156.262"
-                    height="156.262"
-                    rx="30.5"
-                    transform="rotate(-45 86.655 131)"
-                    stroke="#ff791d"
-                />
-                <circle cx="109.5" cy="130.351" r="95" stroke="#4a8dcc" />
-            </svg>
+        <div
+            key={sequence}
+            className="chapter-page-transition"
+            data-destination={pathname.split('/')[1] || 'home'}
+            aria-hidden="true"
+        >
+            <div className="chapter-transition-camera">
+                <svg
+                    viewBox="0 0 330 262"
+                    className="chapter-transition-mark"
+                    fill="none"
+                    strokeWidth="29"
+                >
+                    <g className="chapter-transition-diamond">
+                        <rect
+                            x="86.655"
+                            y="131"
+                            width="156.262"
+                            height="156.262"
+                            rx="30.5"
+                            transform="rotate(-45 86.655 131)"
+                            stroke="#ff791d"
+                        />
+                    </g>
+                    <g className="chapter-transition-circle">
+                        <circle cx="109.5" cy="130.351" r="95" stroke="#16945b" />
+                    </g>
+                </svg>
+            </div>
         </div>
     );
 }

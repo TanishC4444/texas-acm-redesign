@@ -27,8 +27,6 @@ service cloud.firestore {
         && data.location is string && data.location.size() <= 200
         && safeLink(data.url) && safeLink(data.image)
         && data.status in ['draft','published','archived']
-        && (data.status != 'published' ||
-          ((data.kind != 'event' || data.date != '') && (data.kind != 'form' || data.url != '')))
         && data.updatedBy == request.auth.uid && data.updatedAt == request.time;
     }
     match /content/{id} {
@@ -45,44 +43,13 @@ service cloud.firestore {
       // A user can read their own approval while enrolling; it never grants content access without MFA.
       allow get: if (signedIn() && request.auth.uid == uid) || admin();
       allow list: if admin();
-      allow update: if admin() && request.auth.uid != uid
+      allow create, update: if admin() && request.auth.uid != uid
         && request.resource.data.keys().hasOnly(['name','email','role','active'])
         && request.resource.data.keys().hasAll(['name','email','role','active'])
         && request.resource.data.name is string && request.resource.data.name.size() > 0 && request.resource.data.name.size() <= 100
         && request.resource.data.email is string && request.resource.data.email.size() <= 254
-        && request.resource.data.email == resource.data.email
         && request.resource.data.role in ['admin','editor'] && request.resource.data.active is bool;
       allow delete: if false;
-    }
-    match /siteDirectory/{entry} {
-      allow read: if true;
-      allow create, update: if officer()
-        && request.resource.data.kind in ['glossary','faq','link','contact','partner','officer','form']
-        && (!exists(/databases/$(database)/documents/siteDirectory/$(entry))
-          || request.resource.data.kind == resource.data.kind)
-        && request.resource.data.updatedAt == request.time
-        && (hiddenEntry(request.resource.data) || publicEntry(request.resource.data));
-      allow delete: if false;
-    }
-    function hiddenEntry(data) {
-      return data.hidden == true && data.keys().hasOnly(['kind','hidden','updatedAt']);
-    }
-    function publicEntry(data) {
-      return data.hidden == false
-        && data.keys().hasOnly(['kind','hidden','title','description','category','url','image','links','updatedAt'])
-        && data.title is string && data.title.size() > 0 && data.title.size() <= 160
-        && data.description is string && data.description.size() <= 5000
-        && data.category is string && data.category.size() <= 120
-        && data.url is string && data.url.size() <= 2048
-        && (safeLink(data.url) || data.url.matches('/([A-Za-z0-9._~/?#=&%-]*)')
-            && !data.url.matches('//.*')
-            || data.kind == 'contact' && data.url.matches('mailto:[^\\s@?]+@[^\\s@?]+[.][^\\s@?]+'))
-        && (!(data.kind in ['link','contact','partner','form']) || data.url != '')
-        && data.image is string && data.image.size() <= 2048
-        && (safeLink(data.image) || data.image.matches('/(studio|partners|network-comp)/[A-Za-z0-9_./-]+[.](webp|png|jpg|jpeg|svg)'))
-        && data.links is string && data.links.size() <= 4000
-        && (data.links == '' || data.links.matches('https://[^\\s]+(\\nhttps://[^\\s]+)*'))
-        && (data.kind != 'partner' || data.category in ['Platinum','Gold','Silver','Bronze','Banner only']);
     }
     match /sitePhotos/{slot} {
       allow read: if true;
@@ -101,7 +68,7 @@ service cloud.firestore {
       allow create: if request.resource.data.keys().hasOnly(['type','path','target','recordedAt'])
         && request.resource.data.keys().hasAll(['type','path','target','recordedAt'])
         && request.resource.data.type in ['view','click']
-        && request.resource.data.path in ['/','/about','/events','/calendar','/partnership','/resources','/atoz','/faq','/forms','/cs-guide','/cs-week','/election/26']
+        && request.resource.data.path in ['/','/about','/events','/calendar','/partnership','/resources','/cs-week','/election/26']
         && request.resource.data.target is string && request.resource.data.target.size() <= 180
         && (request.resource.data.type == 'click' || request.resource.data.target == '')
         && request.resource.data.recordedAt == request.time;

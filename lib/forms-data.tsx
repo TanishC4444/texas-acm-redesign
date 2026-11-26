@@ -10,7 +10,13 @@ import {
     WORKSHOP_INTEREST_FORM_URL,
 } from '@/lib/constants';
 
-import { LogIn, School } from 'lucide-react';
+import {
+    Award,
+    LogIn,
+    School,
+    Users,
+    Volleyball,
+} from 'lucide-react';
 
 import React from 'react';
 
@@ -32,7 +38,8 @@ export const allForms: FormItem[] = [
     {
         icon: <LogIn size={28} className="text-red-500" />,
         title: 'Event Sign In',
-        description: 'A catch-all form for signing in to Texas ACM events.',
+        description:
+            'A catch-all form for signing in to Texas ACM events.',
         link: {
             name: 'Sign In',
             href: SIGNIN_URL,

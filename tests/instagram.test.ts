@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { instagramEmbedUrl, normalizeInstagramPosts } from '../lib/instagram-data';
+import { normalizeInstagramPosts } from '../lib/instagram-data';
 const photo = {
     id: '1',
     media_type: 'IMAGE',
@@ -52,15 +52,5 @@ describe('public Instagram feed normalization', () => {
         expect(normalizeInstagramPosts([null, 4, {}, { ...photo, media_type: 'VIDEO' }])).toEqual(
             [],
         );
-    });
-});
-
-describe('Instagram embeds', () => {
-    it('builds official embed URLs from posts and reels only', () => {
-        expect(instagramEmbedUrl('https://instagram.com/reel/abc_123/?igsh=example')).toBe(
-            'https://www.instagram.com/reel/abc_123/embed/',
-        );
-        expect(instagramEmbedUrl('https://instagram.com.attacker.test/p/chapter')).toBeUndefined();
-        expect(instagramEmbedUrl('https://instagram.com/p/chapter/embed/')).toBeUndefined();
     });
 });

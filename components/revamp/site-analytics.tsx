@@ -2,25 +2,15 @@
 import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { firebaseApp, firebaseConfigured } from '@/lib/firebase/app';
-const trackedPages = new Set([
-    '/',
-    '/about',
-    '/events',
-    '/calendar',
-    '/partnership',
-    '/resources',
-    '/atoz',
-    '/faq',
-    '/forms',
-    '/cs-guide',
-    '/cs-week',
-    '/election/26',
-]);
 export default function SiteAnalytics() {
     const path = usePathname();
     const last = useRef('');
     useEffect(() => {
-        if (!firebaseConfigured || navigator.doNotTrack === '1' || !trackedPages.has(path)) {
+        if (
+            !firebaseConfigured ||
+            navigator.doNotTrack === '1' ||
+            /^\/(officer|signin|designs)(\/|$)/.test(path)
+        ) {
             last.current = '';
             return;
         }

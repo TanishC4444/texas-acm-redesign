@@ -52,10 +52,6 @@ export function validateContent(value: Partial<ContentRecord>): string | null {
         return 'A link or location is too long.';
     if ((value.date?.length || 0) > 40 || (value.date && !Number.isFinite(Date.parse(value.date))))
         return 'Choose a valid date and time.';
-    if (value.status === 'published' && value.kind === 'event' && !value.date)
-        return 'Add a date and time so the event can appear on the calendar.';
-    if (value.status === 'published' && value.kind === 'form' && !value.url)
-        return 'Add a link so students can open the form.';
     return null;
 }
 export const resourceLinks = [

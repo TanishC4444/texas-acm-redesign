@@ -27,9 +27,7 @@ export function SiteSoundProvider({ children }: { children: ReactNode }) {
         voices.current.forEach((voice) => {
             try {
                 voice.stop();
-            } catch {
-                /* The oscillator may already be stopped. */
-            }
+            } catch {}
         });
         voices.current.clear();
     }, []);

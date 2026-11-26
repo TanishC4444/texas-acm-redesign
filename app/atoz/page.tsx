@@ -1,5 +1,4 @@
-import Glossary from '@/components/runtime/glossary';
-export const metadata = { title: 'CS A–Z' };
+import { redirect } from 'next/navigation';
 export default function Page() {
-    return <Glossary />;
+    redirect('/resources#atoz');
 }

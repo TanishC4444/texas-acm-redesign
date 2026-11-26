@@ -1,6 +1,5 @@
 'use client';
 import { FormEvent, useEffect, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
 import { FirebaseError } from 'firebase/app';
 import {
     User,
@@ -16,40 +15,46 @@ import {
     signInWithEmailAndPassword,
     signOut,
 } from 'firebase/auth';
-import { collection, doc, onSnapshot, where, query, type Timestamp } from 'firebase/firestore';
-import QRCode from 'qrcode';
 import {
-    ContentConflict,
-    saveOfficerContent,
-    type ContentEdit,
-} from '@/lib/firebase/officer-content';
+    addDoc,
+    collection,
+    doc,
+    onSnapshot,
+    orderBy,
+    query,
+    serverTimestamp,
+    setDoc,
+    updateDoc,
+} from 'firebase/firestore';
+import QRCode from 'qrcode';
 import { PhotosPanel, AnalyticsPanel } from './site-panels';
-import DirectoryPanel from './directory-panel';
-import type { DirectoryKind } from '@/lib/site-directory';
 import {
     ArrowUpRight,
     Check,
     FileText,
+    LayoutDashboard,
     LogOut,
     Plus,
     ShieldCheck,
     Users,
-    Handshake,
-    Mail,
     X,
     Save,
     Eye,
+    Archive,
     LockKeyhole,
     Search,
-    BookOpen,
-    ClipboardList,
-    Images,
-    ChartNoAxesColumn,
 } from 'lucide-react';
 import { firebaseClient, firebaseConfigured, prepareAuth } from '@/lib/firebase/client';
-import { categories, ContentRecord, OfficerRecord, validateContent } from '@/lib/content';
-const blank = (kind: EditableContent = 'form'): ContentEdit => ({
-    kind,
+import {
+    categories,
+    ContentKind,
+    ContentRecord,
+    contentKinds,
+    OfficerRecord,
+    validateContent,
+} from '@/lib/content';
+const blank = (): Omit<ContentRecord, 'id' | 'createdBy' | 'updatedBy'> => ({
+    kind: 'event',
     title: '',
     description: '',
     category: 'Community',
@@ -59,27 +64,6 @@ const blank = (kind: EditableContent = 'form'): ContentEdit => ({
     image: '',
     status: 'draft',
 });
-const contentLabels = {
-    resource: {
-        name: 'Resource',
-        destination: 'Student resources on the homepage',
-        Icon: BookOpen,
-    },
-    form: { name: 'Form', destination: 'the Forms page', Icon: ClipboardList },
-};
-type EditableContent = keyof typeof contentLabels;
-const workspace = [
-    { id: 'glossary', title: 'CS A–Z', Icon: BookOpen },
-    { id: 'link', title: 'Resources', Icon: FileText },
-    { id: 'contact', title: 'Contacts', Icon: Mail },
-    { id: 'faq', title: 'FAQ', Icon: FileText },
-    { id: 'partner', title: 'Partnerships', Icon: Handshake },
-    { id: 'photos', title: 'Site photos', Icon: Images },
-    { id: 'analytics', title: 'Analytics', Icon: ChartNoAxesColumn },
-    { id: 'form', title: 'Forms', Icon: ClipboardList },
-    { id: 'officer', title: 'About officers', Icon: Users },
-] as const;
-type Workspace = DirectoryKind | 'photos' | 'analytics';
 function message(error: unknown): string {
     const code = error instanceof FirebaseError ? error.code : '';
     if (['auth/invalid-credential', 'auth/wrong-password', 'auth/user-not-found'].includes(code))
@@ -115,55 +99,42 @@ export default function OfficerPortal() {
     const [busy, setBusy] = useState(false);
     const [error, setError] = useState('');
     const [notice, setNotice] = useState('');
-    const [records, setRecords] = useState<(ContentRecord & { updatedAt?: Timestamp | null })[]>(
-        [],
-    );
-    const [recordsError, setRecordsError] = useState(false);
-    const [recordsRetry, setRecordsRetry] = useState(0);
-    const running = useRef(false);
+    const [records, setRecords] = useState<ContentRecord[]>([]);
     const [recordsLoading, setRecordsLoading] = useState(true);
-    const [view, setView] = useState<Workspace>('glossary');
+    const [view, setView] = useState<'content' | 'team' | 'photos' | 'analytics'>('content');
+    const [filter, setFilter] = useState('all');
     const [search, setSearch] = useState('');
-    const [visibility, setVisibility] = useState('all');
     const editorRef = useRef<HTMLDivElement>(null);
-    const [editing, setEditing] = useState<ContentEdit | null>(null);
+    const [editing, setEditing] = useState<
+        (ReturnType<typeof blank> & { id?: string; createdBy?: string }) | null
+    >(null);
+    const [team, setTeam] = useState<(OfficerRecord & { id: string })[]>([]);
     useEffect(() => {
         if (!firebaseConfigured) return;
         const { auth } = firebaseClient();
-        let sequence = 0;
-        const unsubscribe = onIdTokenChanged(auth, async (next) => {
-            const attempt = ++sequence;
-            const nextUid = next?.uid ?? null;
-            if (currentUid.current !== nextUid) {
-                currentUid.current = nextUid;
-                setSecondFactor(false);
+        return onIdTokenChanged(auth, async (next) => {
+            if (currentUid.current !== (next?.uid || null)) {
                 setOfficer(null);
-                setRoleLoading(!!next);
-                setRecords([]);
-                setEditing(null);
-                setView('glossary');
-                setSecret(null);
-                setQr('');
+                currentUid.current = next?.uid || null;
             }
             setUser(next);
             setLoading(false);
-            if (!next) return;
-
+            setSecondFactor(false);
+            if (!next) {
+                setOfficer(null);
+                setSecret(null);
+                setQr('');
+                setRecords([]);
+                setEditing(null);
+                return;
+            }
             try {
                 const token = await next.getIdTokenResult();
-                if (attempt === sequence && auth.currentUser?.uid === nextUid) {
-                    setSecondFactor(token.claims.firebase?.sign_in_second_factor === 'totp');
-                }
+                setSecondFactor(token.claims.firebase?.sign_in_second_factor === 'totp');
             } catch {
-                if (attempt !== sequence || auth.currentUser?.uid !== nextUid) return;
-                setSecondFactor(false);
                 setError('Your session expired. Please sign in again.');
             }
         });
-        return () => {
-            sequence++;
-            unsubscribe();
-        };
     }, []);
     useEffect(() => {
         if (!user) return;
@@ -172,12 +143,10 @@ export default function OfficerPortal() {
         return onSnapshot(
             doc(db, 'officers', user.uid),
             (snap) => {
-                if (currentUid.current !== user.uid) return;
                 setOfficer(snap.exists() ? (snap.data() as OfficerRecord) : null);
                 setRoleLoading(false);
             },
             () => {
-                if (currentUid.current !== user.uid) return;
                 setOfficer(null);
                 setRoleLoading(false);
             },
@@ -187,52 +156,45 @@ export default function OfficerPortal() {
     useEffect(() => {
         if (!authorized) {
             setRecords([]);
-            setEditing(null);
             return;
         }
-        setRecordsError(false);
         setRecordsLoading(true);
         const { db } = firebaseClient();
         return onSnapshot(
-            query(collection(db, 'content'), where('kind', 'in', ['form', 'resource'])),
+            query(collection(db, 'content'), orderBy('updatedAt', 'desc')),
             (snap) => {
-                setRecords(
-                    snap.docs
-                        .map(
-                            (d) =>
-                                ({ ...d.data(), id: d.id }) as ContentRecord & {
-                                    updatedAt?: Timestamp | null;
-                                },
-                        )
-                        .sort(
-                            (a, b) =>
-                                (b.updatedAt?.toMillis() ?? 0) - (a.updatedAt?.toMillis() ?? 0),
-                        ),
-                );
+                setRecords(snap.docs.map((d) => ({ ...d.data(), id: d.id }) as ContentRecord));
                 setRecordsLoading(false);
             },
-            () => {
-                setRecordsError(true);
+            (e) => {
+                setError(message(e));
                 setRecordsLoading(false);
             },
         );
-    }, [authorized, recordsRetry, user?.uid]);
+    }, [authorized]);
+    useEffect(() => {
+        if (!authorized || officer?.role !== 'admin') return;
+        const { db } = firebaseClient();
+        return onSnapshot(
+            collection(db, 'officers'),
+            (snap) =>
+                setTeam(
+                    snap.docs.map(
+                        (d) => ({ ...d.data(), id: d.id }) as OfficerRecord & { id: string },
+                    ),
+                ),
+            (e) => setError(message(e)),
+        );
+    }, [authorized, officer?.role]);
     async function run(action: () => Promise<void>) {
-        if (running.current) return;
-        running.current = true;
         setBusy(true);
         setError('');
         setNotice('');
         try {
             await action();
         } catch (e) {
-            setError(
-                e instanceof ContentConflict
-                    ? 'Another officer saved changes. Copy any edits you want to keep, then reopen the item from the library.'
-                    : message(e),
-            );
+            setError(message(e));
         } finally {
-            running.current = false;
             setBusy(false);
         }
     }
@@ -319,28 +281,6 @@ export default function OfficerPortal() {
             );
         });
     }
-    function openDraft(kind: EditableContent) {
-        setError('');
-        setNotice('');
-        setEditing(blank(kind));
-    }
-    function clearFilters() {
-        setSearch('');
-        setVisibility('all');
-    }
-    async function refreshVerification() {
-        if (!user) return;
-        await run(async () => {
-            await user.reload();
-            if (!user.emailVerified) {
-                setNotice(
-                    'Verification is still pending. Open the link in your UT email, then check again.',
-                );
-                return;
-            }
-            await user.getIdToken(true);
-        });
-    }
     async function save(e: FormEvent) {
         e.preventDefault();
         if (!editing || !user) return;
@@ -350,14 +290,30 @@ export default function OfficerPortal() {
             return;
         }
         await run(async () => {
-            await saveOfficerContent(firebaseClient().db, user.uid, editing);
+            const { db } = firebaseClient();
+            const { id, createdBy, ...fields } = editing;
+            const data = {
+                ...fields,
+                title: fields.title.trim(),
+                description: fields.description.trim(),
+                date: fields.date ? new Date(fields.date).toISOString() : '',
+                updatedBy: user.uid,
+                updatedAt: serverTimestamp(),
+            };
+            if (id) {
+                await updateDoc(doc(db, 'content', id), data);
+            } else {
+                await addDoc(collection(db, 'content'), {
+                    ...data,
+                    createdBy: user.uid,
+                    createdAt: serverTimestamp(),
+                });
+            }
             setEditing(null);
             setNotice(
-                editing.status === 'published'
-                    ? 'Published.'
-                    : editing.status === 'archived'
-                      ? 'Archived.'
-                      : 'Draft saved.',
+                fields.status === 'published'
+                    ? 'Published. The public website now shows this item.'
+                    : 'Saved. Your content is up to date.',
             );
         });
     }
@@ -369,10 +325,10 @@ export default function OfficerPortal() {
         const focusable = () =>
             Array.from(
                 panel?.querySelectorAll<HTMLElement>(
-                    'button:not([disabled]), input:not([disabled]), textarea, select, summary, a[href]',
+                    'button:not([disabled]), input:not([disabled]), textarea, select, a[href]',
                 ) || [],
             );
-        panel?.querySelector<HTMLInputElement>('input[name=title]')?.focus();
+        focusable()[0]?.focus();
         const keys = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
                 setEditing(null);
@@ -609,18 +565,11 @@ export default function OfficerPortal() {
                             <>
                                 <h2>Check your inbox.</h2>
                                 <p>
-                                    Open the verification link in your email, then check your status
-                                    here.
+                                    Verify your email before setting up 2FA. Follow the link in your
+                                    verification email, then sign in again.
                                 </p>
                                 <button
                                     className="button button-dark"
-                                    disabled={busy}
-                                    onClick={refreshVerification}
-                                >
-                                    I’ve verified my email
-                                </button>
-                                <button
-                                    className="text-link"
                                     disabled={busy}
                                     onClick={() =>
                                         run(async () => {
@@ -712,36 +661,47 @@ export default function OfficerPortal() {
                 </div>
             </div>
         );
-    const recordKind = view === 'form' ? 'form' : 'resource';
-    const showRecords =
-        view === 'form' ||
-        (view === 'link' && records.some((record) => record.kind === 'resource'));
-    const sectionRecords = records.filter((record) => record.kind === recordKind);
-    const displayed = sectionRecords.filter(
-        (record) =>
-            (visibility === 'all' || record.status === visibility) &&
-            `${record.title} ${record.category} ${record.description}`
+    const displayed = records.filter(
+        (r) =>
+            (filter === 'all' || r.kind === filter) &&
+            `${r.title} ${r.category} ${r.description}`
                 .toLowerCase()
-                .includes(search.trim().toLowerCase()),
+                .includes(search.toLowerCase()),
     );
     return (
         <div className="officer-app">
-            <nav className="officer-sidebar" aria-label="Officer workspace">
+            <aside className="officer-sidebar">
+                <span className="eyebrow">THE WORKSPACE</span>
                 <h2>Texas ACM</h2>
-                {workspace.map(({ id, title, Icon }) => (
+                <button
+                    aria-current={view === 'content' ? 'page' : undefined}
+                    onClick={() => {
+                        setView('content');
+                        setError('');
+                    }}
+                >
+                    <LayoutDashboard size={17} /> Content
+                </button>
+                <button
+                    aria-current={view === 'photos' ? 'page' : undefined}
+                    onClick={() => setView('photos')}
+                >
+                    Photos
+                </button>
+                <button
+                    aria-current={view === 'analytics' ? 'page' : undefined}
+                    onClick={() => setView('analytics')}
+                >
+                    Analytics
+                </button>
+                {officer?.role === 'admin' && (
                     <button
-                        key={id}
-                        aria-current={view === id ? 'page' : undefined}
-                        onClick={() => {
-                            setView(id);
-                            clearFilters();
-                            setError('');
-                            setNotice('');
-                        }}
+                        aria-current={view === 'team' ? 'page' : undefined}
+                        onClick={() => setView('team')}
                     >
-                        <Icon size={17} aria-hidden="true" /> {title}
+                        <Users size={17} /> Officer team
                     </button>
-                ))}
+                )}
                 <a href="/" target="_blank" rel="noopener noreferrer">
                     <Eye size={17} /> View website <ArrowUpRight size={14} />
                 </a>
@@ -753,139 +713,142 @@ export default function OfficerPortal() {
                     <small>{officer?.role}</small>
                     {signout}
                 </div>
-            </nav>
+            </aside>
             <div className="officer-main">
                 <header className="dashboard-heading">
-                    <h1>{workspace.find((section) => section.id === view)?.title}</h1>
+                    <div>
+                        <span className="eyebrow">
+                            TEXAS ACM /{' '}
+                            {
+                                {
+                                    content: 'CONTENT',
+                                    photos: 'PHOTOS',
+                                    analytics: 'ANALYTICS',
+                                    team: 'OFFICER TEAM',
+                                }[view]
+                            }
+                        </span>
+                        <h1>
+                            {
+                                {
+                                    content: 'Website content',
+                                    team: 'Officer access',
+                                    photos: 'Website photos',
+                                    analytics: 'Site activity',
+                                }[view]
+                            }
+                        </h1>
+                        <p>
+                            {
+                                {
+                                    content: 'Manage events, announcements, resources, and forms.',
+                                    team: 'Only administrators can manage officer access.',
+                                    photos: 'Replace website images and descriptions.',
+                                    analytics: 'Page views and clicks across the public website.',
+                                }[view]
+                            }
+                        </p>
+                    </div>
+                    {view === 'content' && (
+                        <button
+                            className="button button-dark"
+                            onClick={() => {
+                                setEditing(blank());
+                                setError('');
+                                setNotice('');
+                            }}
+                        >
+                            <Plus size={17} /> New content
+                        </button>
+                    )}
                 </header>
                 {feedback}
-                {view === 'photos' ? (
-                    <PhotosPanel uid={user!.uid} />
-                ) : view === 'analytics' ? (
-                    <AnalyticsPanel />
-                ) : (
-                    <DirectoryPanel key={view} kind={view} allowAdd={view !== 'form'} />
+                {view === 'content' && (
+                    <details className="officer-publishing-help">
+                        <summary>Publishing guide</summary>
+                        <p>
+                            <strong>Draft</strong> keeps an item private. <strong>Published</strong>{' '}
+                            makes it visible on the website immediately. <strong>Archived</strong>{' '}
+                            hides it while keeping it available for future edits.
+                        </p>
+                        <p>
+                            For events, include the date, time, location, and an HTTPS RSVP link.
+                            Enter dates in your device’s timezone; visitors see Central Time. Use
+                            Photos to update the available website image slots, then View website to
+                            check your changes.
+                        </p>
+                    </details>
                 )}
-                {showRecords && (
-                    <section
-                        className="officer-managed-records"
-                        aria-label={
-                            recordKind === 'form'
-                                ? 'Form drafts and published forms'
-                                : 'Resource posts'
-                        }
-                    >
-                        <div className="officer-library">
-                            <h2>
-                                {recordKind === 'form'
-                                    ? 'Form drafts and published forms'
-                                    : 'Resource posts'}
-                            </h2>
-                            {view === 'form' && (
-                                <button
-                                    className="button button-dark"
-                                    onClick={() => openDraft('form')}
-                                >
-                                    <Plus size={17} /> New form
-                                </button>
-                            )}
+                {view === 'content' ? (
+                    <>
+                        <div className="dashboard-stats">
+                            <div>
+                                <span>ALL CONTENT</span>
+                                <strong>{records.length.toString().padStart(2, '0')}</strong>
+                            </div>
+                            <div>
+                                <span>LIVE ON THE SITE</span>
+                                <strong>
+                                    {records
+                                        .filter((r) => r.status === 'published')
+                                        .length.toString()
+                                        .padStart(2, '0')}
+                                </strong>
+                            </div>
+                            <div>
+                                <span>WORK IN PROGRESS</span>
+                                <strong>
+                                    {records
+                                        .filter((r) => r.status === 'draft')
+                                        .length.toString()
+                                        .padStart(2, '0')}
+                                </strong>
+                            </div>
                         </div>
-                        {!recordsLoading && !recordsError && (
-                            <div className="officer-queue" role="group" aria-label="Content status">
-                                {(['draft', 'published', 'archived'] as const).map((status) => (
+                        <div className="content-toolbar">
+                            <div role="group" aria-label="Filter content type">
+                                {['all', ...contentKinds].map((kind) => (
                                     <button
-                                        key={status}
-                                        aria-pressed={visibility === status}
-                                        onClick={() => {
-                                            clearFilters();
-                                            setVisibility(visibility === status ? 'all' : status);
-                                        }}
+                                        className={filter === kind ? 'active' : ''}
+                                        key={kind}
+                                        onClick={() => setFilter(kind)}
                                     >
-                                        <strong>
-                                            {
-                                                sectionRecords.filter(
-                                                    (record) => record.status === status,
-                                                ).length
-                                            }
-                                        </strong>
-                                        {status === 'draft'
-                                            ? 'Drafts'
-                                            : status === 'published'
-                                              ? 'Published'
-                                              : 'Archived'}
+                                        {kind === 'all' ? 'All content' : kind + 's'}
                                     </button>
                                 ))}
                             </div>
-                        )}
-                        <div className="officer-library">
-                            {!recordsLoading && !recordsError && (
-                                <p role="status">
-                                    {displayed.length} of {sectionRecords.length} items
-                                </p>
-                            )}
-                        </div>
-                        <div className="content-toolbar">
                             <label className="dashboard-search">
-                                <Search size={17} aria-hidden="true" />
+                                <Search size={15} />
                                 <input
                                     aria-label="Search content"
-                                    placeholder="Search content…"
+                                    placeholder="Find something…"
                                     value={search}
                                     onChange={(e) => setSearch(e.target.value)}
                                 />
                             </label>
-                            <label>
-                                Status
-                                <select
-                                    value={visibility}
-                                    onChange={(e) => setVisibility(e.target.value)}
-                                >
-                                    <option value="all">All statuses</option>
-                                    <option value="draft">Draft</option>
-                                    <option value="published">Published</option>
-                                    <option value="archived">Archived</option>
-                                </select>
-                            </label>
                         </div>
                         <div className="content-list">
                             {recordsLoading ? (
-                                <p className="status-note" role="status">
-                                    Loading your content…
-                                </p>
-                            ) : recordsError ? (
-                                <div className="dashboard-empty">
-                                    <h2>Content is unavailable.</h2>
-                                    <p role="status">
-                                        Check your connection and officer access, then try again.
-                                    </p>
-                                    <button
-                                        className="button button-outline"
-                                        onClick={() => setRecordsRetry((count) => count + 1)}
-                                    >
-                                        Retry loading
-                                    </button>
-                                </div>
+                                <p className="status-note">Loading your content…</p>
                             ) : !displayed.length ? (
                                 <div className="dashboard-empty">
                                     <FileText size={32} />
                                     <h2>
-                                        {sectionRecords.length
+                                        {records.length
                                             ? 'No matching content.'
                                             : 'No content yet.'}
                                     </h2>
                                     <p>
-                                        {sectionRecords.length
+                                        {records.length
                                             ? 'Try another filter or search.'
-                                            : 'Only published items appear on the website.'}
+                                            : 'Create your first event, announcement, resource, or form. Only published items appear on the website.'}
                                     </p>
-                                    {sectionRecords.length > 0 && (
-                                        <button
-                                            className="button button-outline"
-                                            onClick={clearFilters}
-                                        >
-                                            Clear filters
-                                        </button>
-                                    )}
+                                    <button
+                                        className="button button-dark"
+                                        onClick={() => setEditing(blank())}
+                                    >
+                                        <Plus size={16} /> New draft
+                                    </button>
                                 </div>
                             ) : (
                                 displayed.map((r) => (
@@ -894,24 +857,16 @@ export default function OfficerPortal() {
                                             <FileText size={20} />
                                         </span>
                                         <div>
+                                            <span className="eyebrow">
+                                                {r.kind} / {r.category}
+                                            </span>
                                             <h3>{r.title}</h3>
-                                            <p>
-                                                {contentLabels[recordKind].name} · {r.category}
-                                                {r.date &&
-                                                    Number.isFinite(Date.parse(r.date)) &&
-                                                    ' · ' +
-                                                        new Intl.DateTimeFormat('en-US', {
-                                                            timeZone: 'America/Chicago',
-                                                            dateStyle: 'medium',
-                                                        }).format(new Date(r.date))}
-                                            </p>
                                         </div>
                                         <span className={`status-badge status-${r.status}`}>
                                             {r.status}
                                         </span>
                                         <button
                                             className="text-link"
-                                            aria-label={`Edit ${r.title}`}
                                             onClick={() => {
                                                 setEditing({
                                                     ...r,
@@ -926,202 +881,337 @@ export default function OfficerPortal() {
                                 ))
                             )}
                         </div>
-                    </section>
+                    </>
+                ) : view === 'photos' ? (
+                    <PhotosPanel uid={user!.uid} />
+                ) : view === 'analytics' ? (
+                    <AnalyticsPanel />
+                ) : (
+                    <TeamPanel team={team} currentUid={user!.uid} run={run} busy={busy} />
                 )}
             </div>
-            {editing &&
-                createPortal(
-                    <div className="editor-backdrop">
-                        <div
-                            className="content-editor"
-                            ref={editorRef}
-                            role="dialog"
-                            aria-modal="true"
-                            aria-labelledby="editor-title"
-                        >
-                            <header>
-                                <div>
-                                    <h2 id="editor-title">
-                                        {editing.id ? 'Edit' : 'New'}{' '}
-                                        {contentLabels[
-                                            editing.kind === 'form' ? 'form' : 'resource'
-                                        ].name.toLowerCase()}
-                                    </h2>
-                                </div>
-                                <button
-                                    onClick={() => {
-                                        setEditing(null);
-                                        setError('');
-                                    }}
-                                    aria-label="Close editor"
-                                >
-                                    <X />
-                                </button>
-                            </header>
-                            <form onSubmit={save}>
-                                <div className="field-pair">
-                                    <label>
-                                        Category
-                                        <select
-                                            value={editing.category}
-                                            onChange={(e) =>
-                                                setEditing({ ...editing, category: e.target.value })
-                                            }
-                                        >
-                                            {categories.map((k) => (
-                                                <option key={k}>{k}</option>
-                                            ))}
-                                        </select>
-                                    </label>
-                                </div>
+            {editing && (
+                <div className="editor-backdrop">
+                    <div
+                        className="content-editor"
+                        ref={editorRef}
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="editor-title"
+                    >
+                        <header>
+                            <div>
+                                <span className="eyebrow">CONTENT STUDIO</span>
+                                <h2 id="editor-title">
+                                    {editing.id ? 'Edit content' : 'New content'}
+                                </h2>
+                            </div>
+                            <button
+                                onClick={() => {
+                                    setEditing(null);
+                                    setError('');
+                                }}
+                                aria-label="Close editor"
+                            >
+                                <X />
+                            </button>
+                        </header>
+                        <form onSubmit={save}>
+                            <div className="field-pair">
                                 <label>
-                                    Title
-                                    <input
-                                        name="title"
-                                        required
-                                        maxLength={140}
-                                        value={editing.title}
-                                        onChange={(e) =>
-                                            setEditing({ ...editing, title: e.target.value })
-                                        }
-                                        placeholder={`${contentLabels[editing.kind === 'form' ? 'form' : 'resource'].name} title`}
-                                    />
-                                </label>
-                                <label>
-                                    Description
-                                    <textarea
-                                        required
-                                        maxLength={5000}
-                                        rows={5}
-                                        value={editing.description}
-                                        onChange={(e) =>
-                                            setEditing({ ...editing, description: e.target.value })
-                                        }
-                                        placeholder="Add the details visitors need."
-                                    />
-                                </label>
-                                <div className="field-pair">
-                                    <label>
-                                        {editing.kind === 'form' ? 'Deadline' : 'Date & time'} (your
-                                        device’s timezone)
-                                        <input
-                                            type="datetime-local"
-                                            required={
-                                                editing.kind === 'event' &&
-                                                editing.status === 'published'
-                                            }
-                                            value={editing.date}
-                                            onChange={(e) =>
-                                                setEditing({ ...editing, date: e.target.value })
-                                            }
-                                        />
-                                    </label>
-                                    <label>
-                                        Location
-                                        <input
-                                            maxLength={200}
-                                            value={editing.location}
-                                            onChange={(e) =>
-                                                setEditing({ ...editing, location: e.target.value })
-                                            }
-                                            placeholder="Room or venue"
-                                        />
-                                    </label>
-                                </div>
-                                <label>
-                                    Details / RSVP link
-                                    <input
-                                        type="url"
-                                        pattern="https://.*"
-                                        maxLength={2048}
-                                        value={editing.url}
-                                        onChange={(e) =>
-                                            setEditing({ ...editing, url: e.target.value })
-                                        }
-                                        placeholder="https://"
-                                    />
-                                </label>
-                                <label>
-                                    Image link (optional, HTTPS)
-                                    <input
-                                        type="url"
-                                        pattern="https://.*"
-                                        maxLength={2048}
-                                        value={editing.image}
-                                        onChange={(e) =>
-                                            setEditing({ ...editing, image: e.target.value })
-                                        }
-                                        placeholder="https://"
-                                    />
-                                </label>
-                                <label>
-                                    Visibility
+                                    Content type
                                     <select
-                                        value={editing.status}
+                                        value={editing.kind}
                                         onChange={(e) =>
                                             setEditing({
                                                 ...editing,
-                                                status: e.target.value as ContentRecord['status'],
+                                                kind: e.target.value as ContentKind,
                                             })
                                         }
                                     >
-                                        <option value="draft">Draft — officers only</option>
-                                        <option value="published">
-                                            Published — visible to everyone
-                                        </option>
-                                        <option value="archived">
-                                            Archived — hidden from the site
-                                        </option>
+                                        {contentKinds.map((k) => (
+                                            <option key={k}>{k}</option>
+                                        ))}
                                     </select>
                                 </label>
-                                <details className="officer-draft-preview">
-                                    <summary>Preview content</summary>
-                                    <h3>{editing.title.trim() || 'Untitled'}</h3>
-                                    {editing.description.trim() && <p>{editing.description}</p>}
-                                    {editing.location && <p>{editing.location}</p>}
-                                </details>
-                                <p className="editor-hint">
-                                    When published, this {editing.kind} appears on{' '}
-                                    {
-                                        contentLabels[editing.kind === 'form' ? 'form' : 'resource']
-                                            .destination
-                                    }
-                                    .
-                                </p>
-                                {error && (
-                                    <p className="form-error" role="alert">
-                                        {error}
-                                    </p>
-                                )}
-                                <div className="editor-actions">
-                                    <button
-                                        type="button"
-                                        className="button button-outline"
-                                        onClick={() => setEditing(null)}
+                                <label>
+                                    Category
+                                    <select
+                                        value={editing.category}
+                                        onChange={(e) =>
+                                            setEditing({ ...editing, category: e.target.value })
+                                        }
                                     >
-                                        Cancel
-                                    </button>
-                                    <button className="button button-dark" disabled={busy}>
-                                        <Save size={16} />
-                                        {busy
-                                            ? 'Saving…'
-                                            : editing.status === 'published'
-                                              ? 'Publish'
-                                              : editing.status === 'draft'
-                                                ? 'Save draft'
-                                                : 'Archive'}
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>,
-                    document.body,
-                )}
+                                        {categories.map((k) => (
+                                            <option key={k}>{k}</option>
+                                        ))}
+                                    </select>
+                                </label>
+                            </div>
+                            <label>
+                                Title
+                                <input
+                                    required
+                                    maxLength={140}
+                                    value={editing.title}
+                                    onChange={(e) =>
+                                        setEditing({ ...editing, title: e.target.value })
+                                    }
+                                    placeholder="Something worth showing up for"
+                                />
+                            </label>
+                            <label>
+                                Description
+                                <textarea
+                                    required
+                                    maxLength={5000}
+                                    rows={5}
+                                    value={editing.description}
+                                    onChange={(e) =>
+                                        setEditing({ ...editing, description: e.target.value })
+                                    }
+                                    placeholder="Give your community the details."
+                                />
+                            </label>
+                            <div className="field-pair">
+                                <label>
+                                    Date & time (your device’s timezone)
+                                    <input
+                                        type="datetime-local"
+                                        value={editing.date}
+                                        onChange={(e) =>
+                                            setEditing({ ...editing, date: e.target.value })
+                                        }
+                                    />
+                                </label>
+                                <label>
+                                    Location
+                                    <input
+                                        maxLength={200}
+                                        value={editing.location}
+                                        onChange={(e) =>
+                                            setEditing({ ...editing, location: e.target.value })
+                                        }
+                                        placeholder="GDC, a café, somewhere good…"
+                                    />
+                                </label>
+                            </div>
+                            <label>
+                                Details / RSVP link
+                                <input
+                                    type="url"
+                                    pattern="https://.*"
+                                    maxLength={2048}
+                                    value={editing.url}
+                                    onChange={(e) =>
+                                        setEditing({ ...editing, url: e.target.value })
+                                    }
+                                    placeholder="https://"
+                                />
+                            </label>
+                            <label>
+                                Image link (optional, HTTPS)
+                                <input
+                                    type="url"
+                                    pattern="https://.*"
+                                    maxLength={2048}
+                                    value={editing.image}
+                                    onChange={(e) =>
+                                        setEditing({ ...editing, image: e.target.value })
+                                    }
+                                    placeholder="https://"
+                                />
+                            </label>
+                            <label>
+                                Visibility
+                                <select
+                                    value={editing.status}
+                                    onChange={(e) =>
+                                        setEditing({
+                                            ...editing,
+                                            status: e.target.value as ContentRecord['status'],
+                                        })
+                                    }
+                                >
+                                    <option value="draft">Draft — officers only</option>
+                                    <option value="published">
+                                        Published — visible to everyone
+                                    </option>
+                                    <option value="archived">
+                                        Archived — hidden from the site
+                                    </option>
+                                </select>
+                            </label>
+                            <p className="editor-hint">
+                                Published {editing.kind}s appear automatically on{' '}
+                                {editing.kind === 'event'
+                                    ? 'the homepage and Events page'
+                                    : editing.kind === 'announcement'
+                                      ? 'the homepage'
+                                      : editing.kind === 'resource'
+                                        ? 'the resource hub and homepage'
+                                        : 'the Forms page'}
+                                . Event dates display in Central Time on the public site.
+                            </p>
+                            {error && (
+                                <p className="form-error" role="alert">
+                                    {error}
+                                </p>
+                            )}
+                            <div className="editor-actions">
+                                <button
+                                    type="button"
+                                    className="button button-outline"
+                                    onClick={() => setEditing(null)}
+                                >
+                                    Cancel
+                                </button>
+                                <button className="button button-dark" disabled={busy}>
+                                    <Save size={16} />
+                                    {busy
+                                        ? 'Saving…'
+                                        : editing.status === 'published'
+                                          ? 'Save & publish'
+                                          : 'Save changes'}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
 function toLocalInput(iso: string) {
     const d = new Date(iso);
-    if (!Number.isFinite(d.getTime())) return '';
     return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+}
+function TeamPanel({
+    team,
+    currentUid,
+    run,
+    busy,
+}: {
+    team: (OfficerRecord & { id: string })[];
+    currentUid: string;
+    run: (a: () => Promise<void>) => Promise<void>;
+    busy: boolean;
+}) {
+    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
+    const [status, setStatus] = useState('');
+    async function invite(e: FormEvent) {
+        e.preventDefault();
+        await run(async () => {
+            setStatus('');
+            const { auth } = firebaseClient();
+            const token = await auth.currentUser!.getIdToken();
+            const res = await fetch('/api/officers', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                body: JSON.stringify({ email, name }),
+            });
+            if (!res.ok) {
+                setStatus(
+                    res.status === 503
+                        ? 'Officer invitations are not configured on this deployment. Contact the project owner.'
+                        : 'The invitation could not be created. Check the address and your admin access.',
+                );
+                return;
+            }
+            await sendPasswordResetEmail(auth, email);
+            setStatus(
+                'Officer added. A password setup email has been requested. They must verify their email and enroll in 2FA before editing.',
+            );
+            setEmail('');
+            setName('');
+        });
+    }
+    return (
+        <>
+            <form className="team-invite" onSubmit={invite}>
+                <h2>Bring an officer on board.</h2>
+                <p>
+                    New accounts start as editors. You can promote an officer after they have
+                    joined.
+                </p>
+                <div className="field-pair">
+                    <label>
+                        Full name
+                        <input
+                            required
+                            maxLength={100}
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                    </label>
+                    <label>
+                        Officer email
+                        <input
+                            type="email"
+                            required
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </label>
+                </div>
+                <button disabled={busy} className="button button-dark">
+                    <Plus size={16} /> Add officer & send setup email
+                </button>
+                {status && (
+                    <p role="status" className="status-note">
+                        {status}
+                    </p>
+                )}
+            </form>
+            <div className="team-list">
+                {team.map((person) => (
+                    <div className="team-row" key={person.id}>
+                        <div>
+                            <strong>{person.name}</strong>
+                            <span>{person.email}</span>
+                        </div>
+                        <label>
+                            Role
+                            <select
+                                aria-label={`Role for ${person.name}`}
+                                disabled={busy || person.id === currentUid}
+                                value={person.role}
+                                onChange={(e) =>
+                                    run(async () => {
+                                        await updateDoc(
+                                            doc(firebaseClient().db, 'officers', person.id),
+                                            { role: e.target.value },
+                                        );
+                                    })
+                                }
+                            >
+                                <option value="editor">Editor</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </label>
+                        <button
+                            className="button button-outline"
+                            disabled={busy || person.id === currentUid}
+                            onClick={() =>
+                                run(async () => {
+                                    await updateDoc(
+                                        doc(firebaseClient().db, 'officers', person.id),
+                                        { active: !person.active },
+                                    );
+                                })
+                            }
+                        >
+                            {person.active ? 'Deactivate' : 'Reactivate'}
+                        </button>
+                    </div>
+                ))}
+            </div>
+            <p className="status-note">
+                Admins cannot change their own role or deactivate themselves here. Deactivation
+                removes content access immediately through database rules. Account or MFA recovery
+                must be handled by the Firebase project owner after identity verification.
+            </p>
+        </>
+    );
 }
