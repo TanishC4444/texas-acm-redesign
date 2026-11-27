@@ -3,31 +3,16 @@ import Link from 'next/link';
 import RuntimeHero from './hero';
 import ManagedPhoto from '@/components/revamp/site-photos';
 import {
-    BookOpen,
-    ArrowUpRight,
-    ClipboardList,
-    FileText,
     Instagram,
     Linkedin,
-    List,
-    CircleHelp,
 } from 'lucide-react';
-import Companies from './companies';
 import CalendarHub from './calendar-hub';
 import ChapterContent from './chapter-content';
 import InstagramFeed from '@/components/revamp/instagram-feed';
 import { useSiteDirectory } from './site-directory';
 import { safeSiteLink } from '@/lib/site-directory';
 import LandingFooter from './landing-footer';
-import ChapterSeparator from './chapter-separator';
 
-const resourceIcons = {
-    guide: BookOpen,
-    atoz: List,
-    forms: ClipboardList,
-    'resume-book': FileText,
-    faq: CircleHelp,
-};
 export default function RuntimeHome() {
     const { entries: links } = useSiteDirectory('link');
     const { entries: contacts } = useSiteDirectory('contact');
@@ -35,100 +20,34 @@ export default function RuntimeHome() {
     return (
         <div className="rt-page acm-home">
             <RuntimeHero />
-            <div className="acm-art-ribbon" aria-hidden="true">
-                <span>COME FOR THE CODE.</span>
-                <svg viewBox="0 0 40 40" fill="none">
-                    <path
-                        d="M20 2v36M2 20h36M7 7l26 26M7 33L33 7"
-                        stroke="currentColor"
-                        strokeWidth="5"
-                    />
-                </svg>
-                <em>Stay for the people.</em>
-                <span className="acm-ribbon-end">AT UT, TOGETHER.</span>
-            </div>
-            <Companies />
-            <section className="acm-chapter" id="chapter">
-                <figure className="acm-chapter-postcard">
-                    <ManagedPhoto
-                        slot="gallery-0"
-                        src="/studio/acmretreat25.webp"
-                        alt="Texas ACM students at the chapter retreat"
-                        width="1000"
-                        height="700"
-                        loading="lazy"
-                    />
-                    <figcaption>
-                        Out of the group chat. Into the good stuff.{' '}
-                        <span aria-hidden="true">↗</span>
-                    </figcaption>
-                </figure>
-                <div>
-                    <h2>
-                        Better <em>together.</em>
-                    </h2>
-                    <p>
-                        Technical workshops, company talks, game nights, and a community beyond
-                        class. Open to every major.
-                    </p>
-                    <Link className="rt-text-link" href="/about">
-                        Meet the chapter
-                    </Link>
-                </div>
-                <figure className="acm-instagram" id="updates">
-                    <ManagedPhoto
-                        slot="gallery-3"
-                        src="/studio/acmhand25.webp"
-                        alt="Texas ACM chapter members together"
-                        width="1000"
-                        height="600"
-                        loading="lazy"
-                    />
-                    <figcaption>
-                        <a
-                            href="https://www.instagram.com/texas_acm/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            @texas_acm
-                        </a>
-                    </figcaption>
-                </figure>
-            </section>
-            <ChapterSeparator variant="orbit" />
             <section
                 className="acm-involvement"
                 id="find-your-place"
                 aria-labelledby="involvement-heading"
             >
-                <div className="acm-art-section-heading">
-                    <span className="acm-poster-eyebrow">THREE WAYS IN. NO WRONG DOOR.</span>
-                    <h2 id="involvement-heading">
-                        Find your <em>thing.</em>
-                    </h2>
-                    <span className="acm-art-asterisk" aria-hidden="true">
-                        ✳
-                    </span>
-                </div>
+                <header className="acm-home-section-heading" id="chapter">
+                    <h2 id="involvement-heading">What we do</h2>
+                    <Link className="rt-text-link" href="/about">About the chapter</Link>
+                </header>
                 <div className="acm-involvement-photos">
                     {[
                         [
                             'Industry',
-                            'Meet the people building it.',
+                            'Company talks and career events.',
                             'acmformal25.webp',
                             'Texas ACM members at the chapter formal',
                             'industry',
                         ],
                         [
                             'Academics',
-                            'Learn beyond the lecture.',
+                            'Workshops and study resources.',
                             'pwp.webp',
                             'Texas ACM students meeting professors',
                             'academics',
                         ],
                         [
                             'Community',
-                            'Find your people.',
+                            'Socials and chapter events.',
                             'family-feud.webp',
                             'Students at Texas ACM Family Feud',
                             'community',
@@ -152,13 +71,10 @@ export default function RuntimeHome() {
                 </div>
             </section>
             <ChapterContent kind="announcement" />
-            <ChapterSeparator variant="path" />
             <CalendarHub />
             <section className="acm-resource-band" id="resources">
                 <header className="acm-resources-heading">
-                    <h2>
-                        A little <em>head start.</em>
-                    </h2>
+                    <h2>Student resources</h2>
                     <nav className="acm-social-icons" aria-label="Texas ACM social media">
                         <a
                             href="https://www.instagram.com/texas_acm/"
@@ -198,9 +114,7 @@ export default function RuntimeHome() {
                 <nav className="acm-resource-links" aria-label="Student resources">
                     {links
                         .filter((entry) => safeSiteLink(entry.url))
-                        .map(({ id, url, title, description }) => {
-                            const Icon =
-                                resourceIcons[id as keyof typeof resourceIcons] ?? FileText;
+                        .map(({ id, url, title }) => {
                             const external = url.startsWith('https://');
                             return (
                                 <Link
@@ -210,14 +124,7 @@ export default function RuntimeHome() {
                                     target={external ? '_blank' : undefined}
                                     rel={external ? 'noopener noreferrer' : undefined}
                                 >
-                                    <Icon size={22} aria-hidden="true" />
                                     <strong>{title}</strong>
-                                    <span>{description}</span>
-                                    <ArrowUpRight
-                                        className="acm-resource-arrow"
-                                        size={18}
-                                        aria-hidden="true"
-                                    />
                                 </Link>
                             );
                         })}

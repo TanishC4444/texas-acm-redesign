@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
-import { defaults, options, validateSettings } from '../lib/runtime-settings';
+import { defaults, options, validateSettings, resolveContrast } from '../lib/runtime-settings';
 import { eventBucket, publicUrl, textOnly } from '../lib/runtime-calendar';
 import { deadlineStatus, normalizeDeadline } from '../lib/runtime-forms';
 import { GET } from '../app/api/calendar/route';
@@ -10,9 +10,15 @@ describe('Runtime settings', () => {
             configurations = configurations.flatMap((c) =>
                 values.map((value) => ({ ...c, [key]: value })),
             );
-        expect(configurations.length).toBe(480);
+        expect(configurations.length).toBe(720);
         for (const c of configurations)
             expect(validateSettings(JSON.parse(JSON.stringify(c)))).toEqual(c);
+    });
+    it('defaults dark mode to high contrast and light mode to standard', () => {
+        expect(resolveContrast(defaults.contrast, true)).toBe('high');
+        expect(resolveContrast(defaults.contrast, false)).toBe('standard');
+        expect(resolveContrast('standard', true)).toBe('standard');
+        expect(resolveContrast('high', false)).toBe('high');
     });
     it('rejects invalid hash and storage values', () => {
         expect(

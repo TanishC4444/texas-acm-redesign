@@ -4,7 +4,6 @@ import { Pause, Play } from 'lucide-react';
 import { useRuntime } from './provider';
 import { Join, RouteLink } from './primitives';
 import LayeredPhoto, { type HeroPhoto } from './layered-photo';
-import ChapterReveal, { INTRO_DURATION } from '@/components/revamp/logo-reveal';
 const photos: HeroPhoto[] = [
     {
         src: '/studio/acmformal25.webp',
@@ -35,11 +34,10 @@ const photos: HeroPhoto[] = [
             'M 0 1067 L 0 591 Q 6 569 23 552 Q 8 528 19 501 Q 29 469 67 463 Q 100 461 113 490 Q 128 517 114 543 L 100 560 Q 141 573 170 604 Q 174 559 188 539 Q 195 502 220 485 Q 243 469 271 478 Q 308 479 324 507 Q 340 532 328 568 Q 357 580 376 603 L 402 1067 Z M 542 1067 L 540 733 Q 547 687 574 653 L 586 631 Q 574 605 581 574 Q 590 537 618 532 Q 651 523 668 547 Q 685 569 676 601 L 666 620 Q 709 630 735 656 L 747 1067 Z M 725 1067 L 733 781 Q 739 758 783 745 Q 771 729 775 706 Q 766 682 777 658 Q 786 635 808 623 Q 827 613 857 616 Q 890 616 906 641 Q 923 661 916 691 Q 911 715 910 740 Q 953 751 979 774 Q 1010 801 1004 839 L 1030 1067 Z',
     },
 ];
-let introduced = false;
 export default function RuntimeHero() {
     const { settings } = useRuntime();
     const [active, setActive] = useState(0);
-    const [intro, setIntro] = useState(false);
+    const intro = false;
     const [paused, setPaused] = useState(false);
     const [focused, setFocused] = useState(false);
     const [fullMotion, setFullMotion] = useState(false);
@@ -54,26 +52,6 @@ export default function RuntimeHero() {
         return () => media.removeEventListener('change', update);
     }, [settings.motion]);
     const playing = !paused && fullMotion && settings.layout !== 'read';
-    useEffect(() => {
-        if (introduced) return;
-        introduced = true;
-        if (location.hash && !location.hash.startsWith('#look=')) return;
-        if (
-            document.documentElement.dataset.motionResolved !== 'full' ||
-            document.documentElement.dataset.layout === 'read'
-        )
-            return;
-        setIntro(true);
-    }, []);
-    useEffect(() => {
-        if (!intro) return;
-        const timer = setTimeout(() => setIntro(false), INTRO_DURATION);
-        return () => clearTimeout(timer);
-    }, [intro]);
-    useEffect(() => {
-        if (!intro) return;
-        if (document.documentElement.dataset.motionResolved !== 'full') setIntro(false);
-    }, [intro, settings.motion]);
     useEffect(() => {
         if (
             paused ||
@@ -91,7 +69,6 @@ export default function RuntimeHero() {
     }, [settings.motion, settings.layout, paused, focused, intro]);
     return (
         <>
-            {intro && <ChapterReveal onSkip={() => setIntro(false)} />}
             <section
                 className="vibrant-opening acm-immersive-hero"
                 data-intro={intro}
@@ -104,53 +81,23 @@ export default function RuntimeHero() {
             >
                 <div className="acm-poster-heading">
                     <div className="acm-poster-copy">
-                        <span className="acm-poster-eyebrow">
-                            THE UNIVERSITY OF TEXAS AT AUSTIN <span aria-hidden="true">↗</span> OPEN
-                            TO EVERY MAJOR
-                        </span>
                         <h1 id="acm-home-title">
                             <img
+                                className="acm-wordmark-light"
                                 src="/texasacm-wordmark.svg"
                                 width="800"
                                 height="145"
                                 alt="Texas ACM"
                             />
+                            <img className="acm-wordmark-dark" src="/texasacm-wordmark-dark.svg" width="800" height="145" alt="Texas ACM" />
                         </h1>
                     </div>
-                    <div className="acm-poster-note">
-                        <span className="acm-welcome-stamp">
-                            All majors.
-                            <br />
-                            All welcome.
-                        </span>
-                        <p>
-                            Computer science, good people,
-                            <br />
-                            and ideas worth making real.
-                        </p>
-                        <a href="#find-your-place">
-                            Find your place <span aria-hidden="true">↓</span>
-                        </a>
-                    </div>
-                    <svg
-                        className="acm-poster-scribble"
-                        viewBox="0 0 220 100"
-                        fill="none"
-                        aria-hidden="true"
-                    >
-                        <path
-                            d="M8 70C52 12 159 4 187 34C221 71 99 112 69 76C42 43 143 27 207 49M194 35L210 49L192 62"
-                            stroke="currentColor"
-                            strokeWidth="3"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        />
-                    </svg>
+                    <p className="acm-hero-description">UT Austin’s computer science community.<br />{' '}Open to every major.</p>
                 </div>
                 <div className="vibrant-stage">
                     <div className="acm-hero-main">
                         <div className="vibrant-art">
-                            <div className="vibrant-photos" aria-label="Chapter photos">
+                            <div className="vibrant-photos" role="group" aria-label="Chapter photos">
                                 {photos.map((photo, i) => (
                                     <LayeredPhoto
                                         key={photo.src}

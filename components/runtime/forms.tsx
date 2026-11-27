@@ -34,10 +34,10 @@ export default function FormsPage() {
             `${f.title} ${f.description}`.toLowerCase().includes(query.toLowerCase()),
     );
     return (
-        <div className="rt-page">
+        <div className="rt-page acm-forms-page">
             <PageIntro
                 label="Forms"
-                title="Take the next step."
+                title="Forms"
                 description="Chapter forms and opportunities, with current deadlines."
             />
             <div className="rt-form-controls rt-cell">

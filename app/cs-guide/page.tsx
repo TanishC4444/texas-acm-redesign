@@ -4,10 +4,10 @@ import UsefulInformation from '@/components/resources/cs-guide/useful-informatio
 export const metadata = { title: 'CS Guide' };
 export default function Guide() {
     return (
-        <div className="rt-page">
+        <div className="rt-page acm-guide-page">
             <PageIntro
                 label="CS Guide"
-                title="Start here. Keep exploring."
+                title="CS Guide"
                 description="Academic, research and career resources for UTCS students."
             />
             <div className="rt-split" id="guide" data-section-title="Start">

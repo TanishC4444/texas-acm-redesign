@@ -4,7 +4,7 @@ export const defaults = {
     accent: 'green',
     motion: 'auto',
     text: '100',
-    contrast: 'standard',
+    contrast: 'auto',
     spacing: 'standard',
     links: 'standard',
 } as const;
@@ -14,7 +14,7 @@ export type Settings = {
     accent: 'green';
     motion: 'auto' | 'full' | 'reduced' | 'off';
     text: '100' | '115' | '130' | '150' | '200';
-    contrast: 'standard' | 'high';
+    contrast: 'auto' | 'standard' | 'high';
     spacing: 'standard' | 'relaxed';
     links: 'standard' | 'underlined';
 };
@@ -24,7 +24,7 @@ export const options: { [K in keyof Settings]: readonly Settings[K][] } = {
     accent: ['green'],
     motion: ['auto', 'full', 'reduced', 'off'],
     text: ['100', '115', '130', '150', '200'],
-    contrast: ['standard', 'high'],
+    contrast: ['auto', 'standard', 'high'],
     spacing: ['standard', 'relaxed'],
     links: ['standard', 'underlined'],
 };
@@ -38,6 +38,9 @@ export function validateSettings(raw: unknown): Settings {
         }
     return next;
 }
+export function resolveContrast(contrast: Settings['contrast'], dark: boolean) {
+    return contrast === 'auto' ? (dark ? 'high' : 'standard') : contrast;
+}
 export function applySettings(value: Settings) {
     const el = document.documentElement;
     const dark =
@@ -46,6 +49,7 @@ export function applySettings(value: Settings) {
     el.dataset.theme = dark ? 'dark' : 'light';
     el.classList.toggle('dark', dark);
     for (const [key, val] of Object.entries(value)) if (key !== 'theme') el.dataset[key] = val;
+    el.dataset.contrast = resolveContrast(value.contrast, dark);
     el.dataset.motionResolved =
         value.motion === 'auto'
             ? matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -53,4 +57,4 @@ export function applySettings(value: Settings) {
                 : 'full'
             : value.motion;
 }
-export const settingsScript = `try{const o=${JSON.stringify(options)},d=${JSON.stringify(defaults)};let s={...d};const h=new URLSearchParams(location.hash.slice(1));const raw=h.has('look')?JSON.parse(h.get('look')):JSON.parse(localStorage.getItem('acm-runtime-settings')||'{}');for(const k in o)if(raw&&o[k].includes(raw[k]))s[k]=raw[k];const e=document.documentElement;const dark=s.theme==='dark'||(s.theme==='system'&&matchMedia('(prefers-color-scheme: dark)').matches);e.dataset.theme=dark?'dark':'light';e.classList.toggle('dark',dark);for(const k in s)if(k!=='theme')e.dataset[k]=s[k];e.dataset.motionResolved=s.motion==='auto'?(matchMedia('(prefers-reduced-motion: reduce)').matches?'reduced':'full'):s.motion;if(h.has('look'))localStorage.setItem('acm-runtime-settings',JSON.stringify(s));}catch{document.documentElement.dataset.theme='dark';}`;
+export const settingsScript = `try{const o=${JSON.stringify(options)},d=${JSON.stringify(defaults)};let s={...d};const h=new URLSearchParams(location.hash.slice(1));const raw=h.has('look')?JSON.parse(h.get('look')):JSON.parse(localStorage.getItem('acm-runtime-settings')||'{}');for(const k in o)if(raw&&o[k].includes(raw[k]))s[k]=raw[k];const e=document.documentElement;const dark=s.theme==='dark'||(s.theme==='system'&&matchMedia('(prefers-color-scheme: dark)').matches);e.dataset.theme=dark?'dark':'light';e.classList.toggle('dark',dark);for(const k in s)if(k!=='theme')e.dataset[k]=s[k];e.dataset.contrast=s.contrast==='auto'?(dark?'high':'standard'):s.contrast;e.dataset.motionResolved=s.motion==='auto'?(matchMedia('(prefers-reduced-motion: reduce)').matches?'reduced':'full'):s.motion;if(h.has('look'))localStorage.setItem('acm-runtime-settings',JSON.stringify(s));}catch{document.documentElement.dataset.theme='dark';document.documentElement.dataset.contrast='high';}`;

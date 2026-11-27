@@ -1,0 +1,82 @@
+/* Officer workspace uses the same theme tokens as the public chapter pages. */
+.runtime-app :is(.officer-entry, .officer-app, .content-editor) {
+    --ink: var(--rt-fg); --paper: var(--rt-bg); --line: var(--rt-line);
+    --mint: var(--chapter-soft); --mint-light: var(--rt-surface);
+    --machine-green: var(--chapter-green); --machine-orange: var(--signal-orange);
+    --machine-muted: var(--rt-muted);
+    color: var(--rt-fg); background: var(--rt-bg);
+    font-family: var(--font-geist), sans-serif; font-size: 1rem;
+}
+.runtime-app .officer-entry { padding: 56px var(--signal-edge) 180px; gap: clamp(32px, 6vw, 90px); }
+.runtime-app .officer-story { background: transparent; }
+.runtime-app .officer-story h1 { font-family: var(--font-geist), sans-serif; font-size: clamp(2.6rem, 5vw, 5rem); font-weight: 650; letter-spacing: -.055em; color: var(--rt-fg); }
+.runtime-app .officer-story > p { max-width: 42ch; font-size: 1rem; color: var(--rt-muted); }
+.runtime-app :is(.officer-entry, .officer-app, .content-editor) :is(p, li) { font-size: 1rem; line-height: 1.65; }
+.runtime-app :is(.officer-entry, .officer-app, .content-editor) :is(small, .eyebrow, .security-pill, .editor-hint, .account-reference, .setup-key-label) { font-size: .875rem !important; line-height: 1.6; letter-spacing: 0; color: var(--rt-muted); }
+.runtime-app :is(.officer-entry, .officer-app, .content-editor) :is(label, input, select, textarea, .text-link, .button) { font-size: 1rem; }
+.runtime-app .login-window { background: var(--rt-surface); border: 1px solid var(--rt-line); border-top: 4px solid var(--signal-blue); border-radius: 12px; overflow: hidden; box-shadow: none; }
+.runtime-app .login-window .window-bar { display: none; }
+.runtime-app .login-body { padding: clamp(24px, 4vw, 40px); }
+.runtime-app .login-body h2 { color: var(--rt-fg); font-size: 2rem; margin-top: 0; }
+.runtime-app .login-body :is(p, small) { color: var(--rt-muted); }
+.runtime-app .login-body > .eyebrow { display: none; }
+.runtime-app :is(.officer-entry, .officer-app, .content-editor) :is(input:not([type='checkbox']), select, textarea) {
+    background: var(--rt-bg); color: var(--rt-fg); border: 1px solid var(--rt-muted);
+    border-radius: 6px; min-height: 48px; padding: 12px; color-scheme: inherit;
+}
+.runtime-app :is(.officer-entry, .officer-app, .content-editor) input::placeholder { color: var(--rt-muted); opacity: 1; }
+.runtime-app .password-control input { padding-right: 78px !important; }
+.runtime-app .password-control button { color: var(--rt-fg); }
+.runtime-app .signin-steps li { background: var(--rt-bg); color: var(--rt-muted); border-color: var(--rt-muted); }
+.runtime-app .signin-steps li[aria-current] { background: var(--art-purple); color: var(--art-ink); border-color: #5264a2; }
+.runtime-app :is(.officer-entry, .officer-app, .content-editor) .button-dark { background: var(--rt-signal); color: var(--rt-signal-ink); border: 1px solid var(--rt-signal); min-height: 48px; font-weight: 650; }
+.runtime-app :is(.officer-entry, .officer-app, .content-editor) .button-outline { background: transparent; color: var(--rt-fg); border: 1px solid var(--rt-muted); min-height: 44px; }
+.runtime-app :is(.officer-entry, .officer-app, .content-editor) .text-link { color: var(--chapter-green); text-underline-offset: 4px; min-height: 44px; }
+.runtime-app :is(.officer-entry, .officer-app, .content-editor) button:disabled { opacity: .65; cursor: not-allowed; }
+.runtime-app .officer-app { padding-bottom: 160px; }
+.runtime-app .officer-sidebar { background: var(--rt-surface); border-color: var(--rt-line); }
+.runtime-app .officer-sidebar > :is(button, a) { color: var(--rt-fg); font-size: 1rem; min-height: 48px; border: 1px solid transparent; border-radius: 6px; }
+.runtime-app .officer-sidebar button[aria-current] { background: var(--art-purple); color: var(--art-ink); border-color: var(--art-purple); font-weight: 650; }
+.runtime-app .officer-sidebar > :is(button, a):hover { background: var(--chapter-soft); color: var(--rt-fg); }
+.runtime-app .sidebar-account :is(strong, small) { color: var(--rt-fg); font-size: .875rem; }
+.runtime-app .officer-main { background: var(--rt-bg); color: var(--rt-fg); }
+.runtime-app .dashboard-heading { border-bottom: 3px solid var(--signal-orange); padding-bottom: 18px; margin-bottom: 28px; }
+.runtime-app .officer-app :is(.dashboard-heading p, .dashboard-empty p, .editor-hint, .team-row span) { color: var(--rt-muted); }
+.runtime-app .officer-app .dashboard-stats { border-color: var(--rt-line); }
+.runtime-app .dashboard-stats > div { background: var(--rt-surface); border-color: var(--rt-line); border-top: 3px solid var(--signal-blue); }
+.runtime-app .dashboard-stats > div:nth-child(2) { border-top-color: var(--chapter-green); }
+.runtime-app .dashboard-stats > div:nth-child(3) { border-top-color: var(--signal-orange); }
+.runtime-app .dashboard-stats span { color: var(--rt-muted); font-size: .875rem; letter-spacing: 0; }
+.runtime-app .officer-app :is(.content-toolbar button, .officer-queue button) { font-size: 1rem; min-height: 44px; }
+.runtime-app .officer-app .content-toolbar button.active { color: var(--rt-signal-ink); background: var(--rt-signal); }
+.runtime-app .officer-app .officer-queue button[aria-pressed='true'] { color: var(--art-ink); background: var(--art-lime); border-color: var(--art-lime); }
+.runtime-app .officer-directory-form { background: var(--rt-surface); border-color: var(--rt-line); padding: 24px; border-radius: 8px; }
+.runtime-app .officer-directory-list li { padding-block: 16px; }
+.runtime-app .content-row { background: var(--rt-surface); color: var(--rt-fg); border-color: var(--rt-line); }
+.runtime-app .content-row .text-link { font-size: 1rem; }
+.runtime-app .content-type { background: var(--chapter-soft); color: var(--chapter-green); border-color: var(--rt-line); }
+.runtime-app .status-badge { font: 600 .875rem/1.5 var(--font-geist), sans-serif; letter-spacing: 0; text-transform: none; background: var(--art-purple); color: var(--art-ink); }
+.runtime-app .status-published { background: var(--art-lime); color: var(--art-ink); }
+.runtime-app .status-archived { background: var(--rt-surface); color: var(--rt-fg); border: 1px solid var(--rt-muted); }
+.runtime-app .status-draft { background: var(--art-orange); color: var(--art-ink); }
+.runtime-app .content-editor { border-left: 1px solid var(--rt-line); }
+.runtime-app .content-editor :is(.editor-hint, .status-note) { color: var(--rt-muted); }
+.runtime-app .content-editor > header { border-color: var(--rt-line); }
+.runtime-app .setup-key { color: var(--rt-fg); background: var(--rt-bg); border: 1px solid var(--rt-muted); font-size: 1rem; }
+.runtime-app .totp-qr { background: white; padding: 12px; }
+.runtime-app .form-error { color: #77231d !important; background: #ffe0d8; border-color: #a54837; font-size: 1rem; }
+.runtime-app .form-success { color: #21492d !important; background: #d7edc2; border-color: #52733b; font-size: 1rem; }
+.runtime-app :is(.officer-entry, .officer-app, .content-editor) :is(input, textarea, select, button, a):focus-visible { outline: 3px solid var(--chapter-green); outline-offset: 3px; }
+.runtime-app .photo-library button[aria-pressed='true'] { border-color: var(--signal-orange); }
+.runtime-app .analytics-panel :is(td, th) { color: var(--rt-fg); border-color: var(--rt-line); font-size: 1rem; }
+@media (max-width: 760px) {
+    .runtime-app .officer-entry { grid-template-columns: 1fr; padding-top: 32px; }
+    .runtime-app .officer-story { padding-top: 0; }
+    .runtime-app .officer-app { grid-template-columns: 1fr; }
+    .runtime-app .officer-sidebar { border-right: 0; border-bottom: 1px solid var(--rt-line); }
+    .runtime-app .officer-main { padding: 28px var(--signal-edge); }
+    .runtime-app .content-row { flex-wrap: wrap; }
+    .runtime-app .photo-editor, .runtime-app .field-pair { grid-template-columns: 1fr; }
+    .runtime-app .dashboard-stats > div { padding: 16px; }
+}
+:root[data-contrast='high'] .runtime-app :is(.signin-steps li[aria-current], .officer-sidebar button[aria-current], .status-badge, .officer-queue button[aria-pressed='true']) { background: Canvas; color: CanvasText; border: 2px solid CanvasText; }

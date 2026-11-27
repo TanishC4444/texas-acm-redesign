@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { ArrowUpRight } from 'lucide-react';
 const guideSections = [
     {
         theme: 'Getting Started at UTCS',
@@ -51,10 +50,9 @@ const guideSections = [
 export default function QuickAccess() {
     return (
         <div className="guide-directory">
-            {guideSections.map((section, i) => (
+            {guideSections.map((section) => (
                 <article key={section.theme}>
                     <div className="guide-directory-title">
-                        <span>0{i + 1}</span>
                         <h3>{section.theme}</h3>
                     </div>
                     <div>
@@ -68,7 +66,6 @@ export default function QuickAccess() {
                                         rel="noopener noreferrer"
                                     >
                                         {link.name}
-                                        <ArrowUpRight size={15} />
                                     </Link>
                                 </li>
                             ))}

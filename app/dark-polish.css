@@ -1,0 +1,163 @@
+/* Dark mode uses colored light on dark surfaces, rather than light-mode panels. */
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app {
+    --night-sage: #245441;
+    --night-violet: #45376c;
+    --night-copper: #663e2c;
+    --night-edge: #dce7df4d;
+    --night-text: #f0f5ee;
+    --night-muted: #ced8d0;
+}
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app :is(.acm-involvement, .acm-landing-footer, .acm-about-intro, .acm-partner-opening, .rt-page-intro, .acm-package-options > article, .acm-resource-links > a) {
+    --rt-fg: var(--night-text); --rt-muted: var(--night-muted);
+    --rt-line: var(--night-edge); --art-ink: var(--night-text);
+    color: var(--night-text); border-color: var(--night-edge);
+}
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-involvement {
+    --rt-bg: #243b35;
+    background: radial-gradient(ellipse at 100% 0%, #9976ff50, transparent 60%), radial-gradient(ellipse at 0% 100%, #75d99d38, transparent 60%), #243b35 !important;
+}
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-involvement-photos > article:nth-child(n) {
+    background: linear-gradient(145deg, #ffffff05, transparent), #285340;
+    border-color: var(--night-edge);
+}
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-involvement-photos > article:nth-child(2) { background-color: #45386c; }
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-involvement-photos > article:nth-child(3) { background-color: #62422f; }
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-involvement :is(h2, h3, p, a) { color: var(--night-text); }
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-involvement-photos p { color: var(--night-muted); }
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-resource-band .acm-resource-links > a:nth-child(n) {
+    background: radial-gradient(ellipse at 100% 0%, #bce77330, transparent 75%), var(--night-sage);
+    border-color: var(--night-edge); color: var(--night-text);
+}
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-resource-band .acm-resource-links > a:nth-child(3n + 2) { background: radial-gradient(ellipse at 100% 0%, #ba9aff38, transparent 75%), var(--night-violet); }
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-resource-band .acm-resource-links > a:nth-child(3n) { background: radial-gradient(ellipse at 100% 0%, #ffae7133, transparent 75%), var(--night-copper); }
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-resource-band .acm-resource-links > a:hover { border-color: var(--chapter-green); }
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-landing-footer {
+    background: radial-gradient(ellipse at 100% 0%, #9d7bff60, transparent 60%), linear-gradient(125deg, #2f6246, #23473e), #23473e;
+    border-color: var(--night-edge);
+}
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-landing-footer :is(h2, a, strong, span) { color: var(--night-text); }
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-landing-footer a.acm-footer-join { background: var(--art-lime); color: #24332e !important; border-color: var(--art-lime); box-shadow: none; }
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-footer-links { border-color: var(--night-edge); }
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-footer-socials a:hover { background: #ffffff10; }
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-about-intro {
+    background: radial-gradient(ellipse at 100% 0%, #ffad7040, transparent 60%), linear-gradient(120deg, #304b70, #563f78), #304b70 !important;
+}
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-about-intro :is(h1, p, a.rt-text-link) { color: var(--night-text) !important; }
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-about-intro h1 em { color: #c3c9ff; }
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-partner-opening {
+    background: radial-gradient(ellipse at 100% 0%, #bb85ff4d, transparent 60%), linear-gradient(120deg, #5d3b30, #6a3f48), #5d3b30 !important;
+}
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-partner-opening h1 { color: var(--night-text); }
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-partner-opening h1 em { color: #ffc594; }
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-partner-opening a.rt-button { background: var(--art-lime); color: #24332e !important; border-color: var(--art-lime); }
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-package-options > article:nth-child(n) {
+    background: linear-gradient(145deg, #be9bff30, transparent), var(--night-violet);
+    border-color: var(--night-edge);
+}
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-package-options > article:nth-child(2) { background-color: var(--night-sage); }
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-package-options > article:nth-child(3) { background-color: var(--night-copper); }
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-package-options article :is(h3, p, li) { color: var(--night-text) !important; }
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .rt-page .rt-page-intro {
+    background: radial-gradient(ellipse at 100% 0%, #a38aff4d, transparent 65%), linear-gradient(120deg, #345c40, #2c505b), #345c40 !important;
+}
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .rt-page .rt-page-intro :is(h1, p) { color: var(--night-text) !important; }
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-glossary-page .rt-page-intro { background: linear-gradient(120deg, #334e78, #543b7d, #2a5b48), #334e78 !important; }
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-forms-page .rt-page-intro { background: linear-gradient(120deg, #64402c, #69404c, #503d77), #64402c !important; }
+/* Visible focus on every dark panel, including icon links and editors. */
+:root[data-theme='dark'] .runtime-app :is(a, button, input, textarea, select, summary):focus-visible { outline: 3px solid #d2eaa2; outline-offset: 4px; }
+:root[data-theme='dark'] .runtime-app .rt-dock { border-color: #dce7df40; }
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .officer-profile { background: var(--rt-surface); color: var(--rt-fg); border-color: var(--rt-muted); }
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .officer-profile :is(h2, p, a, button) { color: var(--rt-fg); }
+/* Browser-native fields and scroll-to-focus must follow the selected theme. */
+:root[data-theme='dark'] { color-scheme: dark; }
+:root[data-theme='light'] { color-scheme: light; }
+html { scroll-padding-block: 24px 120px; }
+.runtime-app :is(a, button, input, select, textarea, summary, [tabindex]) { scroll-margin-block: 24px 120px; }
+.runtime-app .rt-skip:focus-visible { color: CanvasText; background: Canvas; outline: 3px solid Highlight; z-index: 300; }
+.runtime-app .rt-glossary-tools input::placeholder, .runtime-app .rt-form-controls input::placeholder, .runtime-app .acm-event-search input::placeholder { color: var(--rt-muted); opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto !important; }
+    .runtime-app *, .runtime-app *::before, .runtime-app *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
+.runtime-app .officer-card .officer-card-name { font: 650 1.4rem/1.25 var(--font-geist), sans-serif; letter-spacing: -.04em; margin: 16px 0 4px; color: var(--rt-fg); }
+/* Adjacent-month dates remain readable; the surface, rather than opacity, distinguishes them. */
+.runtime-app .acm-month-week button[data-outside='true'] { opacity: 1; }
+.runtime-app .acm-month-week button[data-outside='true'] .acm-month-number { color: var(--rt-muted); }
+.runtime-app .acm-month-week button[data-outside='true'] .acm-month-number { opacity: 1; }
+/* At enlarged text sizes, officer sign-in reflows without horizontal scrolling. */
+.runtime-app .officer-entry > *, .runtime-app .officer-story, .runtime-app .login-window, .runtime-app .login-body { min-width: 0; max-width: 100%; }
+.runtime-app .officer-story h1, .runtime-app .login-body h2 { overflow-wrap: anywhere; }
+.runtime-app .officer-entry .security-pill { white-space: normal; flex-wrap: wrap; }
+.runtime-app .officer-entry .signin-steps { flex-wrap: wrap; }
+.runtime-app .officer-entry .login-body :is(.button, .text-link) { white-space: normal; overflow-wrap: anywhere; }
+@media (max-width: 760px) { .runtime-app .officer-entry { grid-template-columns: minmax(0, 1fr); } }
+
+/* A faint material grain, keeping the chapter palette and layout intact. */
+:root:not([data-contrast='high']) body.runtime-app::after {
+    content: ''; position: fixed; inset: 0; z-index: 89;
+    pointer-events: none; opacity: .035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='.5' filter='url(%23grain)'/%3E%3C/svg%3E");
+}
+
+/* Dark surfaces use one restrained chapter palette throughout. */
+:root[data-theme='dark']:not([data-contrast='high']) {
+    --rt-bg: #191e1c;
+    --rt-surface: #242c27;
+    --rt-fg: #f5f6f1;
+    --rt-muted: #c8d0c9;
+    --rt-line: #d5dfd035;
+    --chapter-soft: #2c3d30;
+    --chapter-green: #c7de9a;
+    --rt-signal: #c7de9a;
+    --rt-signal-ink: #1b2a20;
+    --signal-orange: #f4af78;
+    --signal-blue: #c4d6c5;
+}
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app {
+    --night-sage: #293d2f; --night-violet: #2b3630; --night-copper: #3b3028;
+    --night-text: #f5f6f1; --night-muted: #c8d0c9;
+    --aura-violet: transparent; --aura-green: #809f4210; --aura-orange: #ed9c5b12;
+    --dock-fill: #202722fa; --dock-active: #c7de9a;
+    --dock-active-ink: #1b2a20; --dock-edge: #c7de9a3d;
+}
+:root[data-theme='dark']:not([data-contrast='high']) body.runtime-app { background: #191e1c !important; }
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-immersive-hero.acm-immersive-hero {
+    background: radial-gradient(ellipse at 88% 2%, #b8632522, transparent 58%), linear-gradient(145deg, #202b22, #191e1c 75%) !important;
+}
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-involvement {
+    background: linear-gradient(150deg, #25342a, #1d2621 75%) !important;
+}
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-involvement-photos > article:nth-child(n) {
+    background: #25312a; border-color: #c1d3bd40;
+}
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-calendar {
+    background: linear-gradient(150deg, #202923, #191e1c 75%) !important;
+}
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-resource-band {
+    background: linear-gradient(145deg, #29372a, #202923 75%) !important;
+}
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-resource-band .acm-resource-links > a:nth-child(n) {
+    background: linear-gradient(145deg, #314532, #27392c); border-color: #c1d3bd40;
+}
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-resource-band .acm-resource-links > a:nth-child(3n + 2) { background: linear-gradient(145deg, #3e3328, #322c25); }
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-resource-band .acm-resource-links > a:nth-child(3n) { background: linear-gradient(145deg, #2e3a31, #263029); }
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-landing-footer {
+    background: linear-gradient(130deg, #35472e, #25372b 80%), #25372b;
+}
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app :is(.acm-about-intro, .rt-page .rt-page-intro) {
+    background: radial-gradient(ellipse at 100% 0%, #b2c77714, transparent 65%), linear-gradient(135deg, #2b3e30, #202b24) !important;
+}
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-partner-opening,
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-forms-page .rt-page-intro {
+    background: linear-gradient(135deg, #3f3025, #292a23 80%) !important;
+}
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-about-intro h1 em { color: #c7de9a; }
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-package-options > article:nth-child(n) {
+    background: linear-gradient(145deg, #2c3c30, #253027); border-color: #c1d3bd40;
+}
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .acm-package-options > article:nth-child(3) { background: linear-gradient(145deg, #403327, #302a23); }
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .officer-entry {
+    background: radial-gradient(ellipse at 95% 0%, #d5955017, transparent 65%), #191e1c !important;
+}
+:root[data-theme='dark']:not([data-contrast='high']) .runtime-app .officer-app { background-image: none; }

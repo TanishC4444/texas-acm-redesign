@@ -25,10 +25,10 @@ export default function Glossary() {
             `${t.term} ${t.description} ${t.category}`.toLowerCase().includes(query.toLowerCase()),
     );
     return (
-        <div className="rt-page">
+        <div className="rt-page acm-glossary-page">
             <PageIntro
                 label="CS A–Z"
-                title="Find the term."
+                title="CS A–Z"
                 description="Tools, courses and campus life, explained."
             />
             <section className="rt-cell rt-glossary-tools">

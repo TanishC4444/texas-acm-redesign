@@ -1,5 +1,5 @@
 import ManagedPhoto from '@/components/revamp/site-photos';
-import Companies, { CorporateContact, PartnerDirectory } from '@/components/runtime/companies';
+import { CorporateContact, PartnerDirectory } from '@/components/runtime/companies';
 export const metadata = { title: 'Partnerships' };
 export default function Partnership() {
     return (
@@ -7,9 +7,8 @@ export default function Partnership() {
             <section className="acm-partner-opening">
                 <div>
                     <h1>
-                        Connect with <em>Texas computing.</em>
+                        Partner with <em>Texas ACM.</em>
                     </h1>
-                    <p>Meet the students shaping what comes next.</p>
                     <CorporateContact label="Partner with ACM" />
                 </div>
                 <div className="acm-partner-image">
@@ -23,7 +22,6 @@ export default function Partnership() {
                     />
                 </div>
             </section>
-            <Companies />
             <section className="acm-packages" id="packages">
                 <header className="acm-packages-title" id="benefits">
                     <div>
@@ -76,9 +74,6 @@ export default function Partnership() {
                         </article>
                     ))}
                 </div>
-                <p className="acm-package-note">
-                    Contact our team for current terms and availability.
-                </p>
             </section>
             <PartnerDirectory />
         </div>

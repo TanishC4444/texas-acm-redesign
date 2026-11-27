@@ -5,40 +5,41 @@
     --rt-signal: inherit;
     --rt-signal-ink: inherit;
 }
+/* Muted chapter colors carry structure without fluorescent surfaces. */
 .runtime-app {
-    --art-orange: #ff914d;
-    --art-lime: #dff278;
-    --art-purple: #cbb8f2;
-    --art-ink: #1c3429;
-    --art-paper: #fff7e8;
+    --art-orange: #eaa06a;
+    --art-lime: #bfdc7e;
+    --art-purple: #afb9ed;
+    --art-ink: #24332e;
+    --art-paper: #f5f7f6;
 }
 :root:not([data-theme='light']):not([data-contrast='high']) {
-    --rt-bg: #15281f;
-    --rt-surface: #203b2c;
-    --rt-fg: #fff7e8;
-    --rt-muted: #ceddca;
-    --rt-line: #d6e2c73b;
-    --chapter-green: #dff278;
-    --chapter-soft: #2c4432;
-    --rt-signal: #dff278;
-    --rt-signal-ink: #1c3429;
-    --signal-orange: #ffac70;
-    --signal-blue: #cbb8f2;
-    --art-title: #ffac70;
+    --rt-bg: #27312f;
+    --rt-surface: #333e3b;
+    --rt-fg: #eef2ef;
+    --rt-muted: #c1cbc5;
+    --rt-line: #d7e1db36;
+    --chapter-green: #c3dc8e;
+    --chapter-soft: #3b4942;
+    --rt-signal: #c3dc8e;
+    --rt-signal-ink: #24332e;
+    --signal-orange: #efad77;
+    --signal-blue: #bdc8fa;
+    --art-title: #efad77;
 }
 :root[data-theme='light']:not([data-contrast='high']) {
-    --rt-bg: #fff7e8;
-    --rt-surface: #f0edda;
-    --rt-fg: #1c3429;
-    --rt-muted: #465c49;
-    --rt-line: #244c373b;
-    --chapter-green: #285e35;
-    --chapter-soft: #e3ebc8;
-    --rt-signal: #285e35;
-    --rt-signal-ink: #fff7e8;
-    --signal-orange: #a94016;
-    --signal-blue: #58418d;
-    --art-title: #b8471e;
+    --rt-bg: #f5f7f6;
+    --rt-surface: #e9eeeb;
+    --rt-fg: #24332e;
+    --rt-muted: #52615a;
+    --rt-line: #334c3e36;
+    --chapter-green: #42634e;
+    --chapter-soft: #dce5de;
+    --rt-signal: #42634e;
+    --rt-signal-ink: #f5f7f6;
+    --signal-orange: #86553b;
+    --signal-blue: #4c6380;
+    --art-title: #86553b;
 }
 :root:not([data-contrast='high']) .runtime-app .acm-immersive-hero.acm-immersive-hero {
     background: var(--rt-bg) !important;

@@ -1,4 +1,5 @@
 'use client';
+import { containDialogFocus } from '@/lib/dialog-focus';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState, useMemo } from 'react';
@@ -8,11 +9,8 @@ import {
     Moon,
     Monitor,
     Settings2,
-    LogIn,
+    Menu,
     Search,
-    UsersRound,
-    Handshake,
-    TicketCheck,
 } from 'lucide-react';
 import { useRuntime } from './provider';
 import { options, type Settings } from '@/lib/runtime-settings';
@@ -44,8 +42,38 @@ export function RuntimeDock() {
     const panelOpen = r.panel !== null;
     const trigger = useRef<HTMLElement | null>(null);
     const [selected, setSelected] = useState(0);
-    const longPress = useRef<ReturnType<typeof setTimeout> | null>(null);
-    const held = useRef(false);
+    const dock = useRef<HTMLElement>(null);
+    const menuButton = useRef<HTMLButtonElement>(null);
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [section, setSection] = useState('');
+    useEffect(() => {
+        const update = () => setSection(location.hash);
+        update();
+        setMenuOpen(false);
+        window.addEventListener('hashchange', update);
+        return () => window.removeEventListener('hashchange', update);
+    }, [path]);
+    useEffect(() => {
+        if (!menuOpen) return;
+        const firstLink = Array.from(dock.current?.querySelectorAll<HTMLAnchorElement>('.rt-dock-utilities a') ?? [])
+            .find((link) => link.offsetParent !== null);
+        firstLink?.focus();
+        const dismiss = (event: PointerEvent) => {
+            if (!dock.current?.contains(event.target as Node)) setMenuOpen(false);
+        };
+        const escape = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                setMenuOpen(false);
+                menuButton.current?.focus();
+            }
+        };
+        document.addEventListener('pointerdown', dismiss);
+        document.addEventListener('keydown', escape);
+        return () => {
+            document.removeEventListener('pointerdown', dismiss);
+            document.removeEventListener('keydown', escape);
+        };
+    }, [menuOpen]);
     const results = useMemo(() => {
         const q = r.query.trim().toLowerCase();
         const rows: { title: string; href: string; group: string; action?: () => void }[] = [
@@ -125,14 +153,6 @@ export function RuntimeDock() {
             r.announce('Unable to copy. Check clipboard permission.');
         }
     }
-    async function copyPage() {
-        try {
-            await navigator.clipboard.writeText(location.href);
-            r.announce('Page link copied.');
-        } catch {
-            r.announce('Unable to copy page link.');
-        }
-    }
     function activate(index: number) {
         const item = results[index];
         if (!item) return;
@@ -147,93 +167,54 @@ export function RuntimeDock() {
             <a className="rt-skip" href="#main-content">
                 Skip to content
             </a>
-            <nav className="rt-dock" aria-label="Site navigation">
-                <Link
-                    className="rt-dock-logo"
-                    href="/"
-                    aria-label="Texas ACM home; right-click to copy page link"
-                    onContextMenu={(e) => {
-                        e.preventDefault();
-                        void copyPage();
-                    }}
-                    onPointerDown={() => {
-                        held.current = false;
-                        longPress.current = setTimeout(() => {
-                            held.current = true;
-                            void copyPage();
-                        }, 650);
-                    }}
-                    onPointerUp={() => {
-                        if (longPress.current) clearTimeout(longPress.current);
-                    }}
-                    onPointerLeave={() => {
-                        if (longPress.current) clearTimeout(longPress.current);
-                    }}
-                    onPointerCancel={() => {
-                        if (longPress.current) clearTimeout(longPress.current);
-                    }}
-                    onClick={(e) => {
-                        if (held.current) e.preventDefault();
-                    }}
-                >
-                    <img src="/texasacm-symbol.svg" width="30" height="24" alt="" />
+            <nav className="rt-dock" aria-label="Site navigation" ref={dock}>
+                <Link className="rt-dock-logo" href="/" aria-label="Texas ACM home"
+                    aria-current={path === '/' && !section ? 'page' : undefined}
+                    onClick={() => { setSection(''); setMenuOpen(false); }}>
+                    <strong><span className="rt-dock-brand-full">Texas </span>ACM</strong>
                 </Link>
-                {[
-                    { href: '/about', label: 'About', Icon: UsersRound },
-                    { href: '/partnership', label: 'Partnerships', Icon: Handshake },
-                    { href: '/signin', label: 'Event sign-in', Icon: TicketCheck },
-                ].map(({ href, label, Icon }) => (
-                    <Link
-                        key={href}
-                        href={href}
-                        aria-label={label}
-                        title={label}
-                        aria-current={path === href ? 'page' : undefined}
-                    >
-                        <Icon size={19} aria-hidden="true" />
-                    </Link>
-                ))}
-                <a
-                    href="/officer"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Officer login, opens a new tab"
-                >
-                    <LogIn size={17} />
-                    <span className="rt-dock-label">Officer login</span>
-                </a>
-                <button
-                    onClick={() =>
-                        r.change({
-                            theme:
-                                r.settings.theme === 'system'
-                                    ? 'dark'
-                                    : r.settings.theme === 'dark'
-                                      ? 'light'
-                                      : 'system',
-                        })
-                    }
-                    aria-label={`Theme: ${r.settings.theme}. Switch to ${r.settings.theme === 'system' ? 'dark' : r.settings.theme === 'dark' ? 'light' : 'system'} theme`}
-                >
-                    {r.settings.theme === 'system' ? (
-                        <Monitor size={16} />
-                    ) : r.settings.theme === 'dark' ? (
-                        <Moon size={16} />
-                    ) : (
-                        <Sun size={16} />
-                    )}
-                </button>
-                <button
-                    onClick={() => r.openPanel('display')}
-                    aria-label="Open accessibility and display settings"
-                    aria-haspopup="dialog"
-                    aria-controls="acm-control-panel"
-                    aria-expanded={r.panel === 'display'}
-                >
-                    <Settings2 size={16} />
+                <div className="rt-dock-primary">
+                    {[
+                        { href: '/about', label: 'About' },
+                        { href: '/#calendar', label: 'Calendar' },
+                        { href: '/#resources', label: 'Resources' },
+                    ].map(({ href, label }) => (
+                        <Link key={href} href={href}
+                            aria-current={(href.includes('#') ? path === '/' && section === '#' + href.split('#')[1] : path === href) ? 'page' : undefined}
+                            onClick={() => { setSection(href.includes('#') ? '#' + href.split('#')[1] : ''); setMenuOpen(false); }}>
+                            {label}
+                        </Link>
+                    ))}
+                </div>
+                <div className="rt-dock-utilities" id="acm-dock-utilities" data-open={menuOpen}>
+                    <Link className="rt-dock-extra-about" href="/about" onClick={() => setMenuOpen(false)}>About</Link>
+                    <Link className="rt-dock-extra-primary" href="/#calendar" onClick={() => {setSection('#calendar'); setMenuOpen(false);}}>Calendar</Link>
+                    <Link className="rt-dock-extra-primary" href="/#resources" onClick={() => {setSection('#resources'); setMenuOpen(false);}}>Resources</Link>
+                    <Link href="/partnership" aria-current={path === '/partnership' ? 'page' : undefined} onClick={() => setMenuOpen(false)}>Partnerships</Link>
+                    <Link href="/signin" onClick={() => setMenuOpen(false)}>Event sign-in</Link>
+                    <a href="/officer" target="_blank" rel="noopener noreferrer" aria-label="Officer login, opens a new tab" onClick={() => setMenuOpen(false)}>Officer login</a>
+                    <div className="rt-dock-preferences">
+                        <button type="button"
+                            onClick={() => r.change({theme: r.settings.theme === 'system' ? 'dark' : r.settings.theme === 'dark' ? 'light' : 'system'})}
+                            aria-label={`Theme: ${r.settings.theme}. Switch to ${r.settings.theme === 'system' ? 'dark' : r.settings.theme === 'dark' ? 'light' : 'system'} theme`}>
+                            {r.settings.theme === 'system' ? <Monitor size={17} /> : r.settings.theme === 'dark' ? <Moon size={17} /> : <Sun size={17} />}
+                            <span className="rt-dock-control-label">Theme: {r.settings.theme}</span>
+                        </button>
+                        <button type="button" onClick={() => {setMenuOpen(false); if (menuButton.current?.offsetParent) menuButton.current.focus(); r.openPanel('display');}}
+                            aria-label="Open accessibility and display settings" aria-haspopup="dialog"
+                            aria-controls="acm-control-panel" aria-expanded={r.panel === 'display'}>
+                            <Settings2 size={17} /><span className="rt-dock-control-label">Display settings</span>
+                        </button>
+                    </div>
+                </div>
+                <button type="button" className="rt-dock-menu" ref={menuButton}
+                    aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+                    aria-expanded={menuOpen} aria-controls="acm-dock-utilities" onClick={() => setMenuOpen(!menuOpen)}>
+                    {menuOpen ? <X size={18} /> : <Menu size={18} />}<span>Menu</span>
                 </button>
             </nav>
             <dialog
+                onKeyDown={containDialogFocus}
                 ref={dialog}
                 id="acm-control-panel"
                 className="rt-palette"
@@ -362,7 +343,7 @@ export function RuntimeDock() {
                                                         onClick={() => r.change({ [key]: value })}
                                                     >
                                                         {value === 'auto'
-                                                            ? 'System'
+                                                            ? key === 'contrast' ? 'Automatic' : 'System'
                                                             : key === 'text'
                                                               ? value + '%'
                                                               : value}

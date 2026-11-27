@@ -118,11 +118,10 @@ export default function CalendarHub() {
         <section className="acm-calendar" id="calendar" aria-labelledby="calendar-heading">
             <header className="acm-calendar-heading">
                 <div>
-                    <span className="acm-kicker">THE CHAPTER, IN MOTION</span>
                     <h2 id="calendar-heading">
-                        Your next <em>good plan.</em>
+                        Upcoming events
                     </h2>
-                    <p>Workshops, familiar faces, and something to look forward to.</p>
+
                 </div>
                 <a
                     className="acm-calendar-subscribe"
@@ -303,7 +302,6 @@ export default function CalendarHub() {
                         )}
                         {selected && (
                             <div key={selected.id} className="acm-event-feature-copy">
-                                <span className="acm-kicker">ON YOUR RADAR</span>
                                 <h3>{selected.title}</h3>
                                 <p>
                                     <time dateTime={selected.start}>

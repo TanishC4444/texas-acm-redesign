@@ -6,8 +6,8 @@ import { directoryAnchor } from '@/lib/site-directory';
 export default function FAQ() {
     const { entries } = useSiteDirectory('faq');
     return (
-        <div className="rt-page">
-            <PageIntro label="FAQ" title="Get a direct answer." />
+        <div className="rt-page acm-faq-page">
+            <PageIntro label="FAQ" title="FAQ" />
             <div className="rt-split">
                 <nav className="rt-cell rt-sticky rt-faq-nav" aria-label="Questions">
                     {entries.map((item) => (

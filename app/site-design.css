@@ -1,0 +1,147 @@
+/* Shared chapter palette, readable navigation, and quiet content layouts. */
+.runtime-app { --page-gutter: var(--signal-edge); font-size: 1rem; }
+.runtime-app .rt-page { padding-bottom: 100px; }
+.runtime-app .acm-home { padding-bottom: 0; }
+.runtime-app .rt-page :is(p, li) { font-size: 1rem; line-height: 1.65; }
+.runtime-app .rt-page :is(.rt-label, .rt-mono, .rt-chip, time) { font-size: .875rem; letter-spacing: 0; }
+.runtime-app .rt-page :is(.rt-button, .rt-text-link) { font-size: 1rem; }
+.runtime-app .rt-dock {
+    width: max-content; max-width: calc(100vw - 24px); min-height: 60px;
+    gap: 3px; padding: 7px; border: 1px solid var(--rt-line);
+    background: var(--rt-bg); border-radius: 16px; overflow-x: auto;
+    box-shadow: 0 8px 30px #0003;
+}
+.runtime-app .rt-dock > :is(a, button) {
+    width: auto; flex: 0 0 auto; min-width: 44px; min-height: 44px;
+    padding: 10px 13px; font-size: .9375rem; line-height: 1.2;
+    border-radius: 9px; color: var(--rt-fg);
+}
+.runtime-app .rt-dock .rt-dock-logo { color: var(--chapter-green); }
+.runtime-app .rt-dock > a[aria-current='page'] { background: var(--chapter-soft); }
+.runtime-app .rt-dock > a:hover { background: var(--chapter-soft); }
+.runtime-app .rt-page-intro {
+    padding: clamp(40px, 6vw, 80px) var(--signal-edge);
+    background: var(--art-lime); color: var(--art-ink);
+    border: 0; border-radius: 0; margin: 0;
+}
+.runtime-app .rt-page-intro h1 { color: inherit; margin: 0; font-size: clamp(3rem, 7vw, 7rem); line-height: 1; }
+.runtime-app .rt-page-intro p { color: inherit; max-width: 52ch; margin: 20px 0 0; }
+.runtime-app .acm-glossary-page .rt-page-intro { background: var(--art-purple); }
+.runtime-app .acm-forms-page .rt-page-intro { background: var(--art-orange); }
+.runtime-app .acm-guide-page .rt-page-intro { background: var(--art-lime); }
+.runtime-app .rt-page .rt-cell { padding: clamp(24px, 3vw, 48px); }
+.runtime-app .rt-page .rt-page-intro { padding: clamp(40px, 6vw, 80px) var(--signal-edge); }
+.runtime-app .rt-page .rt-split { gap: 0; grid-template-columns: minmax(230px, .7fr) minmax(0, 1.7fr); }
+.runtime-app .rt-guide { background: var(--rt-bg); }
+.runtime-app .rt-guide .guide-directory article { padding-block: 26px; }
+.runtime-app .rt-guide .guide-directory article:first-child { padding-top: 0; }
+.runtime-app .guide-directory-title > span { display: none; }
+.runtime-app .guide-directory :is(p, a) { font-size: 1rem; }
+.runtime-app .guide-directory-title h3 { font-size: clamp(1.4rem, 2vw, 2rem); }
+.runtime-app .rt-guide .guide-directory-title { display: block; }
+.runtime-app .acm-guide-page > .rt-split:nth-of-type(2) > .rt-sticky { background: var(--chapter-soft); }
+.runtime-app .rt-faq-nav { background: var(--chapter-soft); }
+.runtime-app .rt-faq-nav a { display: block; padding-block: 12px; font-size: 1rem; }
+.runtime-app .rt-stack > article { margin: 0; }
+.runtime-app .rt-stack > article:nth-child(even) { background: var(--rt-surface); }
+.runtime-app .rt-stack h2 { font-size: clamp(1.5rem, 2.5vw, 2.5rem); }
+.runtime-app .rt-glossary-tools { background: var(--rt-surface); display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+.runtime-app .rt-glossary-tools > input { flex: 1 1 300px; }
+.runtime-app .rt-glossary-tools label { font-size: 1rem; }
+.runtime-app .rt-alphabet { width: 100%; display: flex; flex-wrap: wrap; gap: 4px; }
+.runtime-app .rt-alphabet button { min-width: 38px; min-height: 44px; font-size: 1rem; }
+.runtime-app :is(.rt-term-row, .rt-form-row):nth-child(even) { background: var(--rt-surface); }
+.runtime-app .rt-page :is(input, select) { font-size: 1rem; min-height: 48px; max-width: 100%; }
+.runtime-app .rt-term-row { gap: clamp(20px, 5vw, 80px); }
+.runtime-app .rt-term-row h2 { font-size: clamp(1.5rem, 2.5vw, 2.5rem); }
+.runtime-app .rt-form-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; background: var(--rt-surface); }
+.runtime-app .rt-form-controls input { flex: 1 1 280px; }
+.runtime-app .rt-form-row { align-items: center; gap: 24px; }
+.runtime-app .acm-about-intro { background: var(--art-purple) !important; color: var(--art-ink); padding: clamp(30px, 5vw, 72px) var(--signal-edge); gap: 48px; }
+.runtime-app .acm-about-intro :is(h1, p, a) { color: inherit; }
+.runtime-app .acm-about-intro h1 em { color: #5c3f86; }
+.runtime-app .officer-directory { padding: 48px var(--signal-edge); }
+.runtime-app .officer-grid { gap: 32px 24px; }
+.runtime-app .officer-card h3 { font-size: 1.4rem; margin-top: 16px; }
+.runtime-app .officer-card p { font-size: 1rem; }
+.runtime-app .acm-officer-profile-cue { display: none; }
+.runtime-app .acm-partner-opening { background: var(--art-orange) !important; color: var(--art-ink); padding: clamp(36px, 5vw, 72px) var(--signal-edge); }
+.runtime-app .acm-partner-opening h1 { color: inherit; }
+.runtime-app .acm-partner-opening h1 em { color: #5a2919; }
+.runtime-app .acm-partner-opening .rt-button { margin-top: 28px; color: var(--art-paper); background: var(--art-ink); border-color: var(--art-ink); }
+.runtime-app .acm-packages { display: block; padding: 56px var(--signal-edge); background: var(--rt-bg) !important; }
+.runtime-app .acm-packages-title { display: flex; gap: 30px; align-items: center; justify-content: space-between; margin-bottom: 32px; }
+.runtime-app .acm-packages-title p { max-width: 58ch; }
+.runtime-app .acm-packages > .acm-package-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.runtime-app .acm-package-options article { padding: 28px; background: var(--art-purple); color: var(--art-ink); border-radius: 0; border: 0; }
+.runtime-app .acm-package-options article:nth-child(2) { background: var(--art-lime); }
+.runtime-app .acm-package-options article:nth-child(3) { background: var(--art-orange); }
+.runtime-app .acm-package-options h3 { color: inherit; font-size: 2rem; }
+.runtime-app .acm-package-options ul { padding-left: 20px; margin-top: 24px; }
+.runtime-app .acm-package-options li + li { margin-top: 10px; }
+.runtime-app .acm-partner-directory { padding: 48px var(--signal-edge); background: var(--chapter-soft); }
+.runtime-app .acm-sponsor-tier { background: transparent; }
+.runtime-app .acm-home-section-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; margin-bottom: 24px; }
+.runtime-app .acm-home-section-heading h2 { margin: 0; font-size: clamp(2rem, 4vw, 4rem); }
+.runtime-app .acm-hero-description { margin: 0; align-self: end; color: var(--rt-fg); }
+.runtime-app .acm-resource-links { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; width: 100%; }
+.runtime-app .acm-resource-links > a { display: flex; min-height: 100px; padding: 24px; border: 1px solid #1c342950; border-radius: 0; background: transparent; color: inherit; box-shadow: none; transform: none; }
+.runtime-app .acm-resource-links > a strong { font-size: clamp(1.25rem, 2.2vw, 2rem); }
+.runtime-app .acm-resource-links > a:hover { background: #1c342912; text-decoration: underline; text-underline-offset: 6px; }
+.runtime-app .acm-resource-links > a::after { content: none; }
+.runtime-app .acm-footer-links > nav a, .runtime-app .acm-footer-fineprint, .runtime-app .acm-footer-join { font-size: 1rem; }
+.runtime-app .acm-landing-footer { border-radius: 0; }
+.runtime-app .acm-photo-counter { display: none; }
+.runtime-app .acm-immersive-hero .vibrant-art { box-shadow: none; border-radius: 0; }
+.runtime-app .acm-involvement-photos > article { rotate: none; transform: none; }
+.runtime-app .acm-involvement-photos > article img { border-radius: 0; box-shadow: none; }
+:root[data-contrast='high'] .runtime-app :is(.rt-page-intro, .acm-about-intro, .acm-partner-opening, .acm-package-options article) { background: Canvas !important; color: CanvasText; }
+@media (max-width: 760px) {
+    .runtime-app .rt-dock { justify-content: flex-start; left: 12px; right: 12px; bottom: 12px; transform: none; width: auto; max-width: none; }
+    .runtime-app .rt-dock > :is(a, button) { padding-inline: 10px; font-size: .875rem; }
+    .runtime-app .rt-page .rt-split { display: block; }
+    .runtime-app .rt-sticky { position: static; }
+    .runtime-app .acm-packages-title { display: block; }
+    .runtime-app .acm-packages > .acm-package-options { grid-template-columns: 1fr; }
+    .runtime-app .acm-resource-links { grid-template-columns: 1fr 1fr; }
+    .runtime-app .acm-about-intro { gap: 28px; }
+    .runtime-app .acm-home-section-heading { align-items: start; flex-direction: column; gap: 8px; }
+    .runtime-app .rt-term-row, .runtime-app .rt-form-row { grid-template-columns: 1fr; }
+}
+@media (max-width: 420px) {
+    .runtime-app .acm-resource-links { grid-template-columns: 1fr; }
+    .runtime-app .acm-resource-links > a { min-height: 76px; }
+}
+/* Override legacy surface rules on colored section headers. */
+.runtime-app .rt-page .rt-page-intro { background: var(--art-lime) !important; border-left: 0 !important; }
+.runtime-app .acm-glossary-page .rt-page-intro { background: var(--art-purple) !important; }
+.runtime-app .acm-forms-page .rt-page-intro { background: var(--art-orange) !important; }
+.runtime-app .rt-page .rt-page-intro :is(h1, p) { color: var(--art-ink) !important; }
+.runtime-app .rt-dock { background: var(--rt-bg) !important; }
+@media (max-width: 760px) { .runtime-app .rt-dock { translate: none; } }
+:root[data-contrast='high'] .runtime-app .rt-page .rt-page-intro { background: Canvas !important; }
+:root[data-contrast='high'] .runtime-app .rt-page .rt-page-intro :is(h1, p) { color: CanvasText !important; }
+.runtime-app .acm-partner-opening a.rt-button { color: var(--art-paper) !important; }
+.runtime-app .acm-about-intro a.rt-text-link { color: var(--art-ink) !important; }
+
+/* Keep secondary headings within the muted chapter palette. */
+.runtime-app .acm-about-intro h1 em { color: #465c77; }
+.runtime-app .acm-partner-opening h1 em { color: #553c2f; }
+.runtime-app .acm-involvement-photos > article { box-shadow: none; }
+.runtime-app .acm-calendar { border-top-width: 1px; }
+/* Explicit ink on colored panels prevents inherited theme colors disappearing. */
+.runtime-app .acm-package-options article :is(h3, p, li) { color: var(--art-ink) !important; }
+.runtime-app .acm-landing-footer a.acm-footer-join { color: var(--art-paper) !important; background: var(--art-ink); }
+.runtime-app .acm-hero-actions a.rt-primary { color: var(--art-ink) !important; background: var(--art-lime) !important; }
+.runtime-app :is(a, button, input, select):focus-visible { outline: 3px solid var(--chapter-green); outline-offset: 4px; }
+.runtime-app :is(.acm-partner-opening, .acm-about-intro, .acm-resource-band, .acm-landing-footer) :is(a, button):focus-visible { outline-color: var(--art-ink); }
+@media (max-width: 1000px) {
+    .runtime-app .rt-dock { flex-wrap: wrap; justify-content: center; overflow: visible; width: max-content; max-width: calc(100vw - 24px); height: auto; border-radius: 14px; }
+    .runtime-app .rt-page { padding-bottom: 160px; }
+    .runtime-app .acm-landing-footer { padding-bottom: 160px; }
+}
+@media (max-width: 760px) {
+    .runtime-app .rt-dock { width: auto; max-width: none; }
+    .runtime-app .rt-dock > :is(a, button) { padding: 8px 10px; }
+}
+:root[data-contrast='high'] .runtime-app .acm-package-options article :is(h3, p, li) { color: CanvasText !important; }

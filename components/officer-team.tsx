@@ -1,4 +1,5 @@
 'use client';
+import { containDialogFocus } from '@/lib/dialog-focus';
 import { useEffect, useRef, useState } from 'react';
 import { Github, Globe, Instagram, Linkedin, X } from 'lucide-react';
 import { safeDirectoryImage, safeSiteLink } from '@/lib/site-directory';
@@ -60,13 +61,13 @@ export default function OfficerTeam() {
                             trigger.current = e.currentTarget;
                             setSelection(officer.id);
                         }}
-                        aria-label={`About ${officer.title}, ${officer.category}`}
+                        aria-haspopup="dialog"
                     >
                         <span className="acm-officer-portrait">
                             {safeDirectoryImage(officer.image) ? (
                                 <img
                                     src={officer.image}
-                                    alt={officer.title}
+                                    alt=""
                                     width="480"
                                     height="600"
                                     loading="lazy"
@@ -77,17 +78,15 @@ export default function OfficerTeam() {
                                     {officer.title.slice(0, 1)}
                                 </span>
                             )}
-                            <span className="acm-officer-profile-cue" aria-hidden="true">
-                                View profile
-                            </span>
                         </span>
-                        <h3>{officer.title}</h3>
+                        <h2 className="officer-card-name">{officer.title}</h2>
                         <p>{officer.category}</p>
                     </button>
                 ))}
             </div>
             {selected && (
                 <dialog
+                    onKeyDown={containDialogFocus}
                     ref={dialog}
                     className="officer-profile"
                     aria-labelledby="officer-profile-name"

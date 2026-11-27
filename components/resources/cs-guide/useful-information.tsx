@@ -51,7 +51,7 @@ export default function UsefulInformation() {
                         {item.links.map(([label, url]) => (
                             <li key={url}>
                                 <a href={url} target="_blank" rel="noopener noreferrer">
-                                    {label} ↗
+                                    {label}
                                 </a>
                             </li>
                         ))}
