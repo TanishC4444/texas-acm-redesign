@@ -1,0 +1,125 @@
+.community-section {
+    padding: clamp(24px, 4vw, 54px) var(--signal-edge);
+    border-bottom: 1px solid var(--rt-line);
+}
+.community-preview > header {
+    background: var(--rt-surface);
+}
+.community-jumps,
+.community-switches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+}
+.community-jumps a {
+    min-height: 44px;
+    align-content: center;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+.community-portfolios,
+.community-hack,
+.community-directory,
+.community-game {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: 16px;
+}
+.community-portfolios {
+    margin-top: 18px;
+}
+.community-portfolio {
+    display: grid;
+    gap: 6px;
+    padding-bottom: 12px;
+    text-decoration: none;
+}
+.community-portfolio strong {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.community-thumb {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 9;
+    background: #d2e5f1;
+    color: #204662;
+    font:
+        600 clamp(2rem, 5vw, 4rem) var(--font-geist-mono),
+        monospace;
+}
+.community-portfolio:nth-child(2) .community-thumb {
+    background: #f1e0d4;
+    color: #713b20;
+}
+.community-portfolio:nth-child(3) .community-thumb {
+    background: #dceee3;
+    color: #24543d;
+}
+.community-switches {
+    margin-top: 14px;
+}
+.community-switches button[aria-pressed='true'] {
+    background: var(--rt-signal);
+    color: var(--rt-signal-ink);
+}
+.community-directory {
+    margin-top: 16px;
+}
+.community-directory dt {
+    font-weight: 650;
+}
+.community-directory dd {
+    margin: 4px 0 0;
+    color: var(--rt-muted);
+}
+.community-guesses {
+    display: grid;
+    gap: 4px;
+    margin-bottom: 12px;
+}
+.community-guesses li {
+    display: flex;
+    gap: 4px;
+}
+.community-guesses span {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    aspect-ratio: 1;
+    border: 1px solid var(--rt-line);
+}
+.community-guesses [data-correct='true'] {
+    background: var(--rt-signal);
+    color: var(--rt-signal-ink);
+}
+.community-game form {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.community-game input {
+    width: 8ch;
+    min-height: 44px;
+    padding-inline: 6px;
+    border: 1px solid var(--rt-line);
+    background: var(--rt-surface);
+    color: var(--rt-fg);
+}
+.community-game button:disabled {
+    opacity: 0.55;
+    cursor: default;
+}
+.community-score {
+    padding: 18px;
+    background: var(--rt-surface);
+}
+.community-score li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--rt-line);
+}

@@ -1,4 +1,5 @@
-import { redirect } from 'next/navigation';
+import FormsPage from '@/components/runtime/forms';
+export const metadata = { title: 'Forms' };
 export default function Page() {
-    redirect('/resources#forms');
+    return <FormsPage />;
 }

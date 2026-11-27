@@ -3,7 +3,7 @@ export default function PartnershipHero() {
     return (
         <ChapterPageHero
             photoSlot="industry"
-            title={'Corporate partnerships'}
+            title={'Corporate Partnerships'}
             description={
                 'Connect with UT Austin students through Texas ACM talks, events, and partnerships.'
             }

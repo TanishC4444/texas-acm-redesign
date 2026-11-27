@@ -22,7 +22,7 @@ const pillars = [
 export default function WhatWeDo() {
     return (
         <section className="chapter-pillars studio-section">
-            <h2>Three pillars. One chapter.</h2>
+            <h2>Three Pillars. One Chapter.</h2>
             <p>
                 Texas ACM supports the academic, professional, and social development of UT Austin
                 students.
@@ -33,7 +33,7 @@ export default function WhatWeDo() {
                         <Icon size={40} aria-hidden="true" />
                         <h3>{name}</h3>
                         <p>{text}</p>
-                        <span>Explore events ↗</span>
+                        <span>Explore Events ↗</span>
                     </a>
                 ))}
             </div>

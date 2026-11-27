@@ -3,7 +3,7 @@ export default function CalendarHero() {
     return (
         <ChapterPageHero
             photoSlot="community"
-            title={'Chapter calendar'}
+            title={'Chapter Calendar'}
             description={
                 'Your live chapter calendar. Workshops, tech talks, and time with your people.'
             }

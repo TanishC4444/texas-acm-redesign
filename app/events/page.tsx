@@ -1,62 +1,15 @@
-import Link from 'next/link';
-import ChapterPageHero from '@/components/revamp/page-hero';
-import { ArrowUpRight } from 'lucide-react';
-import { PublishedCards } from '@/components/revamp/live-content';
-import CorporateEvents from '@/components/corporate-events';
-import AcademicEvents from '@/components/academic-events';
-import SocialEvents from '@/components/social-events';
-export const metadata = { title: 'Events' };
-export default function EventsPage() {
+import SectionRedirect from '@/components/runtime/section-redirect';
+
+export default function Events() {
     return (
-        <>
-            <ChapterPageHero
-                photoSlot="events"
-                title="Chapter events"
-                description="Academic, industry, and community events hosted by Texas ACM."
-                image="familyfeud25"
-                alt="Texas ACM community event"
-                href="/calendar"
-                action="Open the calendar"
-            />
-            <div className="studio-section">
-                <div className="section-heading">
-                    <div>
-                        <span className="eyebrow">COMING UP</span>
-                        <h2>Upcoming events</h2>
-                    </div>
-                    <a className="text-link" href="https://www.instagram.com/texas_acm/">
-                        The latest on Instagram ↗
-                    </a>
-                </div>
-                <p className="event-attendance-note">
-                    Event times are shown in Central Time. Check each event’s details for its
-                    location, RSVP, cost, and any attendance requirements. The shared calendar has
-                    the current chapter schedule.
-                </p>
-                <PublishedCards kind="event" />
-                <nav className="event-category-links" aria-label="Event categories">
-                    <a href="#industry">01 / Industry ↗</a>
-                    <a href="#academics">02 / Academics ↗</a>
-                    <a href="#community">03 / Community ↗</a>
-                </nav>
-            </div>
-            <div className="legacy-content">
-                <div id="industry" className="category-banner">
-                    <span className="eyebrow">01 / INDUSTRY</span>
-                    <h2>Industry events</h2>
-                </div>
-                <CorporateEvents />
-                <div id="academics" className="category-banner">
-                    <span className="eyebrow">02 / ACADEMICS</span>
-                    <h2>Academic events</h2>
-                </div>
-                <AcademicEvents />
-                <div id="community" className="category-banner">
-                    <span className="eyebrow">03 / COMMUNITY</span>
-                    <h2>Community events</h2>
-                </div>
-                <SocialEvents />
-            </div>
-        </>
+        <SectionRedirect
+            fallback="/#calendar"
+            label="Go to the calendar"
+            destinations={{
+                industry: '/#industry',
+                academics: '/#academics',
+                community: '/#community',
+            }}
+        />
     );
 }

@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useRef } from 'react';
-import { SoundToggle, useSiteSound } from './site-sound';
+import { useSiteSound } from './site-sound';
 export const INTRO_DURATION = 3400;
 export default function ChapterReveal({ onSkip }: { onSkip: () => void }) {
     const dialog = useRef<HTMLDialogElement>(null);
@@ -27,9 +27,6 @@ export default function ChapterReveal({ onSkip }: { onSkip: () => void }) {
                 onSkip();
             }}
         >
-            <div className="identity-intro-sound">
-                <SoundToggle />
-            </div>
             <div className="identity-camera">
                 <svg
                     className="identity-lockup"
@@ -48,7 +45,7 @@ export default function ChapterReveal({ onSkip }: { onSkip: () => void }) {
                                 transform="rotate(-45 86.655 131)"
                                 stroke="#ff791d"
                             />
-                            <circle cx="109.5" cy="130.351" r="95" stroke="#16945b" />
+                            <circle cx="109.5" cy="130.351" r="95" stroke="#4a8dcc" />
                         </g>
                         <mask
                             id="identity-wordmark"
@@ -93,7 +90,7 @@ export default function ChapterReveal({ onSkip }: { onSkip: () => void }) {
                 onClick={onSkip}
                 aria-label="Skip introduction"
             >
-                Skip intro
+                ×
             </button>
         </dialog>
     );
