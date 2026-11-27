@@ -20,3 +20,7 @@ The older screenshots in the detailed notes show the upstream baseline. They are
 Source, branch identity, and existing review artifacts were inspected. No conflicting branch was overwritten and no production deployment was changed during cleanup.
 
 [Detailed project notes](docs/project-guide.md)
+
+![Local preview of codex/acm-professional-makeover-2026-11-26 at 14bdf16](docs/redesign-preview/named-branch.jpg)
+
+This capture is the named branch at `14bdf16`, not the default branch. Its existing calendar embed rendered during this local check.
