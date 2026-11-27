@@ -31,3 +31,9 @@ The reconciled application passed TypeScript, 55 application tests, 25 Firestore
 The current runtime combines the officer branch's backend/content/security work with the newer calendar branch's timezone handling, month view, focus controls, contrast behavior, and visual refinements. The previously reverted professional makeover stays reverted. The source working trees and original commit histories are retained in the merge ancestry and named source branches; no original local checkout was reset or deleted.
 
 [Reconciliation details](docs/BRANCH-RECONCILIATION.md) · [Earlier design notes](docs/project-guide.md)
+
+## Design preview — work in progress
+
+This is a real local capture of the `codex/acm-professional-makeover-2026-11-26` branch at `14bdf16`, retained as a design reference. The design is still in progress; this is not an upstream production launch.
+
+![ACM local design reference](docs/acm-branch-preview.jpg)
