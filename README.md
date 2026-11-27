@@ -1,5 +1,7 @@
 # Texas ACM Redesign
 
+> **Work in progress.** Branch reconciliation and the checks below are engineering milestones. The redesign is still being developed; it is not a finished launch or a change to the official upstream site.
+
 A reconciled working fork of [texasacm/website](https://github.com/texasacm/website), with a chapter website, interactive calendar, resource directory, officer tools, and Firebase-backed content. This repository is the fork, not the official upstream deployment.
 
 ## Run
