@@ -1,39 +1,44 @@
 # Texas ACM Redesign
 
-> **Work in progress.** Branch reconciliation and the checks below are engineering milestones. The redesign is still being developed; it is not a finished launch or a change to the official upstream site.
+**Work in progress.** A working fork of [texasacm/website](https://github.com/texasacm/website) with a chapter website, interactive calendar, resource directory, officer tools, and Firebase-backed content. This fork is under development and is not the official Texas ACM deployment.
 
-A reconciled working fork of [texasacm/website](https://github.com/texasacm/website), with a chapter website, interactive calendar, resource directory, officer tools, and Firebase-backed content. This repository is the fork, not the official upstream deployment.
+## Run locally
 
-## Run
-
-Requires Node.js 22+.
+Requires Git, Node.js 22+, and npm.
 
 ```sh
+git clone https://github.com/TanishC4444/texas-acm-redesign.git
+cd texas-acm-redesign
 npm ci
 npm run dev
 ```
 
-The development server uses `.next-dev` so it does not overwrite the production build. Copy `.env.example` to `.env.local` and configure Firebase to exercise officer tools. The public calendar supports the published calendar feed without a private API key.
+Open <http://localhost:3000>, or the URL Next.js prints if that port is busy. Stop with Ctrl+C. Development uses `.next-dev` so it does not overwrite the production build.
 
-## Checks
+## Configure connected features
+
+Copy `.env.example` to `.env.local` for Firebase and other integrations. Public pages can be explored before enabling officer tools; those tools need a configured Firebase project, authorized staff identity, and matching database/storage rules. The calendar can use its public feed without a private Calendar API key.
+
+Use the variable names and comments in `.env.example`. Keep service-account JSON, Instagram tokens, and other privileged settings server-side. Do not commit `.env.local` or production records.
+
+## Check your setup
 
 ```sh
 npm run typecheck
 npm test
 npm run build
+```
+
+For Firestore and Storage rule checks, also install Java 21+:
+
+```sh
 npm run test:rules
 ```
 
-The reconciled application passed TypeScript, 55 application tests, 25 Firestore/Storage rule tests, and a production build. Rule tests use emulators and synthetic identities; no real staff records were changed. Image and hook lint warnings remain non-blocking build warnings.
+The reconciled code passed TypeScript, 55 application tests, 25 emulator rule tests, and a production build. Emulator tests use synthetic identities. Image and hook lint warnings remain; these results do not establish production staff access or a finished launch.
 
-## Branch reconciliation
+If officer tools report missing configuration, check `.env.local` and restart the development server. For a production-style local preview, run `npm run build` followed by `npm start`.
 
-The current runtime combines the officer branch's backend/content/security work with the newer calendar branch's timezone handling, month view, focus controls, contrast behavior, and visual refinements. The previously reverted professional makeover stays reverted. The source working trees and original commit histories are retained in the merge ancestry and named source branches; no original local checkout was reset or deleted.
+## Development references
 
-[Reconciliation details](docs/BRANCH-RECONCILIATION.md) · [Earlier design notes](docs/project-guide.md)
-
-## Design preview — work in progress
-
-This is a real local capture of the `codex/acm-professional-makeover-2026-11-26` branch at `14bdf16`, retained as a design reference. The design is still in progress; this is not an upstream production launch.
-
-![ACM local design reference](docs/acm-branch-preview.jpg)
+[Branch reconciliation](docs/BRANCH-RECONCILIATION.md) preserves the officer/backend work and newer calendar improvements. The reverted makeover stays reverted. [Earlier design notes](docs/project-guide.md) and [an earlier branch capture](docs/acm-branch-preview.jpg) are historical references, not screenshots of the current reconciled interface.
